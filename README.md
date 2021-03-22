@@ -1,5 +1,5 @@
 # IAESTE Szakal Backend
-======================
+
 ## Running
 cd into backend dir, then
 ```docker-compose up --build```
