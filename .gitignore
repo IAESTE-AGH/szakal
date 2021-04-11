@@ -1,0 +1,10 @@
+# Environment
+env/
+
+# pycache
+__pychache__/
+*.py[cod]
+*$py.class
+
+# secrets
+backend/backend/settings_secret.py
