@@ -1,3 +1,5 @@
+begin;
+
 CREATE EXTENSION pgcrypto;
 CREATE TABLE users(
     user_id INT NOT NULL,
@@ -58,7 +60,7 @@ CREATE TABLE assignments (
     PRIMARY KEY (event_id, user_id, company_id),
     FOREIGN KEY (event_id)  REFERENCES events (event_id),
     FOREIGN KEY (user_id)  REFERENCES users (user_id),
-    FOREIGN KEY (company_id)  REFERENCES companies (company_id),
+    FOREIGN KEY (company_id)  REFERENCES companies (company_id)
 );
 
 CREATE TABLE statuses (
@@ -123,3 +125,5 @@ CREATE TABLE contacts (
     FOREIGN KEY (company_id) REFERENCES companies (company_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
+
+commit;
