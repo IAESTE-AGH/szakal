@@ -14,7 +14,12 @@ class Assignments(models.Model):
     company = models.ForeignKey('Companies', models.DO_NOTHING)
     active = models.BooleanField(blank=True, null=True)
 
+    def __str__(self):
+        return f'{self.event.name} - {self.company.name}'
+
     class Meta:
+        verbose_name = 'Assignment'
+        verbose_name_plural = 'Assignments'
         managed = False
         db_table = 'assignments'
         unique_together = (('event', 'user', 'company'),)
@@ -90,7 +95,12 @@ class Categories(models.Model):
     category_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
         managed = False
         db_table = 'categories'
 
@@ -99,7 +109,11 @@ class CategoriesCompanies(models.Model):
     category = models.OneToOneField(Categories, models.DO_NOTHING, primary_key=True)
     company = models.ForeignKey('Companies', models.DO_NOTHING)
 
+    def __str__(self):
+        return f'{self.category.name} - {self.company.name}'
+
     class Meta:
+        verbose_name_plural = 'CategoriesCompanies'
         managed = False
         db_table = 'categories_companies'
         unique_together = (('category', 'company'),)
@@ -120,7 +134,12 @@ class Companies(models.Model):
     rating = models.FloatField(blank=True, null=True)
     number_of_ratings = models.IntegerField(blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
+        verbose_name = 'Company'
+        verbose_name_plural = 'Companies'
         managed = False
         db_table = 'companies'
 
@@ -133,7 +152,11 @@ class ContactPersons(models.Model):
     email = models.CharField(max_length=75, blank=True, null=True)
     phone = models.CharField(max_length=15, blank=True, null=True)
 
+    def __str__(self):
+        return f'{self.company} - {self.name}'
+
     class Meta:
+        verbose_name_plural = 'ContactPersons'
         managed = False
         db_table = 'contact_persons'
 
@@ -152,7 +175,12 @@ class Contacts(models.Model):
     comment = models.TextField(blank=True, null=True)
     rating = models.IntegerField(blank=True, null=True)
 
+    def __str__(self):
+        return f'{self.company.name} - {self.event.name}'
+
     class Meta:
+        verbose_name = 'Contact'
+        verbose_name_plural = 'Contacts'
         managed = False
         db_table = 'contacts'
 
@@ -205,7 +233,12 @@ class Events(models.Model):
     event_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
+        verbose_name = 'Event'
+        verbose_name_plural = 'Events'
         managed = False
         db_table = 'events'
 
@@ -214,7 +247,12 @@ class Industries(models.Model):
     industry_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
+        verbose_name = 'Industry'
+        verbose_name_plural = 'Industries'
         managed = False
         db_table = 'industries'
 
@@ -223,7 +261,11 @@ class IndustriesCompanies(models.Model):
     industry = models.OneToOneField(Industries, models.DO_NOTHING, primary_key=True)
     company = models.ForeignKey(Companies, models.DO_NOTHING)
 
+    def __str__(self):
+        return f'{self.industry.name} - {self.company.name}'
+
     class Meta:
+        verbose_name_plural = 'IndustriesCompanies'
         managed = False
         db_table = 'industries_companies'
         unique_together = (('industry', 'company'),)
@@ -234,7 +276,12 @@ class Statuses(models.Model):
     sort_order = models.IntegerField()
     name = models.CharField(max_length=20, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
+        verbose_name = 'Status'
+        verbose_name_plural = 'Statuses'
         managed = False
         db_table = 'statuses'
 
@@ -243,7 +290,12 @@ class Types(models.Model):
     type_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
+        verbose_name = 'Type'
+        verbose_name_plural = 'Types'
         managed = False
         db_table = 'types'
 
