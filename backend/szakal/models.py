@@ -8,23 +8,6 @@
 from django.db import models
 
 
-class Assignments(models.Model):
-    event = models.OneToOneField('Events', models.DO_NOTHING, primary_key=True)
-    user = models.ForeignKey('Users', models.DO_NOTHING)
-    company = models.ForeignKey('Companies', models.DO_NOTHING)
-    active = models.BooleanField(blank=True, null=True)
-
-    def __str__(self):
-        return f'{self.event.name} - {self.company.name}'
-
-    class Meta:
-        verbose_name = 'Assignment'
-        verbose_name_plural = 'Assignments'
-        managed = False
-        db_table = 'assignments'
-        unique_together = (('event', 'user', 'company'),)
-
-
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
 
@@ -89,6 +72,67 @@ class AuthUserUserPermissions(models.Model):
         managed = False
         db_table = 'auth_user_user_permissions'
         unique_together = (('user', 'permission'),)
+
+
+class DjangoAdminLog(models.Model):
+    action_time = models.DateTimeField()
+    object_id = models.TextField(blank=True, null=True)
+    object_repr = models.CharField(max_length=200)
+    action_flag = models.SmallIntegerField()
+    change_message = models.TextField()
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'django_admin_log'
+
+
+class DjangoContentType(models.Model):
+    app_label = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'django_content_type'
+        unique_together = (('app_label', 'model'),)
+
+
+class DjangoMigrations(models.Model):
+    app = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    applied = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_migrations'
+
+
+class DjangoSession(models.Model):
+    session_key = models.CharField(primary_key=True, max_length=40)
+    session_data = models.TextField()
+    expire_date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_session'
+
+
+class Assignments(models.Model):
+    event = models.OneToOneField('Events', models.DO_NOTHING, primary_key=True)
+    user = models.ForeignKey('Users', models.DO_NOTHING)
+    company = models.ForeignKey('Companies', models.DO_NOTHING)
+    active = models.BooleanField(blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.event.name} - {self.company.name}'
+
+    class Meta:
+        verbose_name = 'Assignment'
+        verbose_name_plural = 'Assignments'
+        managed = False
+        db_table = 'assignments'
+        unique_together = (('event', 'user', 'company'),)
 
 
 class Categories(models.Model):
@@ -183,50 +227,6 @@ class Contacts(models.Model):
         verbose_name_plural = 'Contacts'
         managed = False
         db_table = 'contacts'
-
-
-class DjangoAdminLog(models.Model):
-    action_time = models.DateTimeField()
-    object_id = models.TextField(blank=True, null=True)
-    object_repr = models.CharField(max_length=200)
-    action_flag = models.SmallIntegerField()
-    change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'django_admin_log'
-
-
-class DjangoContentType(models.Model):
-    app_label = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'django_content_type'
-        unique_together = (('app_label', 'model'),)
-
-
-class DjangoMigrations(models.Model):
-    app = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    applied = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_migrations'
-
-
-class DjangoSession(models.Model):
-    session_key = models.CharField(primary_key=True, max_length=40)
-    session_data = models.TextField()
-    expire_date = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_session'
 
 
 class Events(models.Model):
