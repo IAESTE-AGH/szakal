@@ -1,3 +1,15 @@
 from django.contrib import admin
+from .models import *
 
-# Register your models here.
+admin.site.register(Users)
+admin.site.register(Assignments)
+admin.site.register(Industries)
+admin.site.register(Companies)
+admin.site.register(Categories)
+admin.site.register(Contacts)
+admin.site.register(Events)
+admin.site.register(Statuses)
+admin.site.register(Types)
+admin.site.register(ContactPersons)
+admin.site.register(IndustriesCompanies)
+admin.site.register(CategoriesCompanies)
