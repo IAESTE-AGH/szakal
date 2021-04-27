@@ -119,10 +119,11 @@ class DjangoSession(models.Model):
 
 
 class Assignments(models.Model):
-    event = models.OneToOneField('Events', models.DO_NOTHING, primary_key=True)
+    id = models.IntegerField(primary_key=True)
+    event = models.ForeignKey('Events', models.DO_NOTHING)
     user = models.ForeignKey('Users', models.DO_NOTHING)
     company = models.ForeignKey('Companies', models.DO_NOTHING)
-    active = models.BooleanField(blank=True, null=True)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.event.name} - {self.company.name}'
@@ -136,8 +137,8 @@ class Assignments(models.Model):
 
 
 class Categories(models.Model):
-    category_id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=20, blank=True, null=True)
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
@@ -150,30 +151,31 @@ class Categories(models.Model):
 
 
 class CategoriesCompanies(models.Model):
-    category = models.OneToOneField(Categories, models.DO_NOTHING, primary_key=True)
+    id = models.IntegerField(primary_key=True)
+    category = models.ForeignKey('Categories', models.DO_NOTHING)
     company = models.ForeignKey('Companies', models.DO_NOTHING)
 
     def __str__(self):
         return f'{self.category.name} - {self.company.name}'
 
     class Meta:
-        verbose_name_plural = 'CategoriesCompanies'
+        verbose_name_plural = 'Categories Companies'
         managed = False
         db_table = 'categories_companies'
         unique_together = (('category', 'company'),)
 
 
 class Companies(models.Model):
-    company_id = models.IntegerField(primary_key=True)
-    name = models.TextField(blank=True, null=True)
+    id = models.IntegerField(primary_key=True)
+    name = models.TextField()
+    phone = models.CharField(max_length=15)
     address = models.TextField(blank=True, null=True)
-    phone = models.CharField(max_length=15, blank=True, null=True)
     www = models.TextField(blank=True, null=True)
     email = models.CharField(max_length=50, blank=True, null=True)
-    insert_date = models.DateTimeField(blank=True, null=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-    update_user_id = models.IntegerField(blank=True, null=True)
-    deleted = models.BooleanField(blank=True, null=True)
+    insert_date = models.DateTimeField()
+    update_date = models.DateTimeField()
+    update_user_id = models.IntegerField(blank=True, null=True)  # todo
+    deleted = models.BooleanField(default=False)
     delete_date = models.DateTimeField(blank=True, null=True)
     rating = models.FloatField(blank=True, null=True)
     number_of_ratings = models.IntegerField(blank=True, null=True)
@@ -189,33 +191,33 @@ class Companies(models.Model):
 
 
 class ContactPersons(models.Model):
-    contact_person_id = models.IntegerField(primary_key=True)
-    company = models.ForeignKey(Companies, models.DO_NOTHING)
-    name = models.CharField(max_length=50, blank=True, null=True)
+    id = models.IntegerField(primary_key=True)
+    company = models.ForeignKey('Companies', models.DO_NOTHING)
+    name = models.CharField(max_length=50)
+    phone = models.CharField(max_length=15)
+    email = models.CharField(max_length=75)
     position = models.CharField(max_length=50, blank=True, null=True)
-    email = models.CharField(max_length=75, blank=True, null=True)
-    phone = models.CharField(max_length=15, blank=True, null=True)
 
     def __str__(self):
         return f'{self.company} - {self.name}'
 
     class Meta:
-        verbose_name_plural = 'ContactPersons'
+        verbose_name_plural = 'Contact Persons'
         managed = False
         db_table = 'contact_persons'
 
 
 class Contacts(models.Model):
-    contact_id = models.IntegerField(primary_key=True)
-    contact_person = models.ForeignKey(ContactPersons, models.DO_NOTHING)
-    type = models.ForeignKey('Types', models.DO_NOTHING)
+    id = models.IntegerField(primary_key=True)
+    contact_person = models.ForeignKey('ContactPersons', models.DO_NOTHING)  # todo czo to jest
+    type = models.ForeignKey('ContactTypes', models.DO_NOTHING)
     event = models.ForeignKey('Events', models.DO_NOTHING)
     status = models.ForeignKey('Statuses', models.DO_NOTHING)
-    company = models.ForeignKey(Companies, models.DO_NOTHING)
+    company = models.ForeignKey('Companies', models.DO_NOTHING)
     user = models.ForeignKey('Users', models.DO_NOTHING)
-    accepted = models.BooleanField(blank=True, null=True)
-    last_update = models.DateTimeField(blank=True, null=True)
-    date = models.DateTimeField(blank=True, null=True)
+    accepted = models.BooleanField()
+    last_update = models.DateTimeField()  # todo auto_add_now
+    date = models.DateTimeField()
     comment = models.TextField(blank=True, null=True)
     rating = models.IntegerField(blank=True, null=True)
 
@@ -230,8 +232,8 @@ class Contacts(models.Model):
 
 
 class Events(models.Model):
-    event_id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=20, blank=True, null=True)
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
@@ -244,8 +246,8 @@ class Events(models.Model):
 
 
 class Industries(models.Model):
-    industry_id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=20, blank=True, null=True)
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
@@ -258,23 +260,24 @@ class Industries(models.Model):
 
 
 class IndustriesCompanies(models.Model):
-    industry = models.OneToOneField(Industries, models.DO_NOTHING, primary_key=True)
-    company = models.ForeignKey(Companies, models.DO_NOTHING)
+    id = models.IntegerField(primary_key=True)
+    industry = models.ForeignKey('Industries', models.DO_NOTHING)
+    company = models.ForeignKey('Companies', models.DO_NOTHING)
 
     def __str__(self):
         return f'{self.industry.name} - {self.company.name}'
 
     class Meta:
-        verbose_name_plural = 'IndustriesCompanies'
+        verbose_name_plural = 'Industries Companies'
         managed = False
         db_table = 'industries_companies'
         unique_together = (('industry', 'company'),)
 
 
 class Statuses(models.Model):
-    status_id = models.IntegerField(primary_key=True)
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=20)
     sort_order = models.IntegerField()
-    name = models.CharField(max_length=20, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -286,27 +289,27 @@ class Statuses(models.Model):
         db_table = 'statuses'
 
 
-class Types(models.Model):
-    type_id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=20, blank=True, null=True)
+class ContactTypes(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = 'Type'
-        verbose_name_plural = 'Types'
+        verbose_name = 'Contact Type'
+        verbose_name_plural = 'Contact Types'
         managed = False
         db_table = 'types'
 
 
 class Users(models.Model):
-    user_id = models.IntegerField(primary_key=True)
-    email = models.CharField(max_length=50, blank=True, null=True)
+    id = models.IntegerField(primary_key=True)
     username = models.CharField(max_length=50, blank=True, null=True)
     password = models.TextField()
     name = models.CharField(max_length=25, blank=True, null=True)
     surname = models.CharField(max_length=25, blank=True, null=True)
+    email = models.CharField(max_length=50, blank=True, null=True)
     working_group = models.CharField(max_length=10, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
     logins = models.IntegerField(blank=True, null=True)
@@ -316,5 +319,7 @@ class Users(models.Model):
     points = models.IntegerField(blank=True, null=True)
 
     class Meta:
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
         managed = False
         db_table = 'users'
