@@ -6,5 +6,11 @@
 </head>
 <body>
 register here
+<form action="." method="POST">
+
+{% csrf_token %}
+    {{ form.as_p }}
+<button type="submit">SUBMIT</button>
+</form>
 </body>
 </html>
