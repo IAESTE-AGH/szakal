@@ -1,5 +1,10 @@
-def user(request):
-    pass
+from django.views.generic import CreateView
+from django.contrib.auth.models import User
+
+
+class CreateUser(CreateView):
+    model = User
+    fields = ['username']
 
 
 def industry(request):
@@ -23,4 +28,8 @@ def top_10_users(request):
 
 
 def current_event(request):
+    pass
+
+
+def login(request):
     pass
