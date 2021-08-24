@@ -124,8 +124,8 @@ class Assignments(models.Model):
     class Meta:
         verbose_name = 'Assignment'
         verbose_name_plural = 'Assignments'
-        managed = False
-        db_table = 'assignments'
+        managed = True
+        db_table = 'szakal_assignments'
         unique_together = (('event', 'user', 'company'),)
 
 
@@ -139,8 +139,8 @@ class Categories(models.Model):
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
-        managed = False
-        db_table = 'categories'
+        managed = True
+        db_table = 'szakal_categories'
 
 
 class CategoriesCompanies(models.Model):
@@ -153,8 +153,8 @@ class CategoriesCompanies(models.Model):
 
     class Meta:
         verbose_name_plural = 'Categories Companies'
-        managed = False
-        db_table = 'categories_companies'
+        managed = True
+        db_table = 'szakal_categories_companies'
         unique_together = (('category', 'company'),)
 
 
@@ -179,8 +179,8 @@ class Companies(models.Model):
     class Meta:
         verbose_name = 'Company'
         verbose_name_plural = 'Companies'
-        managed = False
-        db_table = 'companies'
+        managed = True
+        db_table = 'szakal_companies'
 
 
 class ContactPersons(models.Model):
@@ -196,8 +196,8 @@ class ContactPersons(models.Model):
 
     class Meta:
         verbose_name_plural = 'Contact Persons'
-        managed = False
-        db_table = 'contact_persons'
+        managed = True
+        db_table = 'szakal_contact_persons'
 
 
 class Contacts(models.Model):
@@ -220,8 +220,8 @@ class Contacts(models.Model):
     class Meta:
         verbose_name = 'Contact'
         verbose_name_plural = 'Contacts'
-        managed = False
-        db_table = 'contacts'
+        managed = True
+        db_table = 'szakal_contacts'
 
 
 class Events(models.Model):
@@ -234,8 +234,8 @@ class Events(models.Model):
     class Meta:
         verbose_name = 'Event'
         verbose_name_plural = 'Events'
-        managed = False
-        db_table = 'events'
+        managed = True
+        db_table = 'szakal_events'
 
 
 class Industries(models.Model):
@@ -248,8 +248,8 @@ class Industries(models.Model):
     class Meta:
         verbose_name = 'Industry'
         verbose_name_plural = 'Industries'
-        managed = False
-        db_table = 'industries'
+        managed = True
+        db_table = 'szakal_industries'
 
 
 class IndustriesCompanies(models.Model):
@@ -262,8 +262,8 @@ class IndustriesCompanies(models.Model):
 
     class Meta:
         verbose_name_plural = 'Industries Companies'
-        managed = False
-        db_table = 'industries_companies'
+        managed = True
+        db_table = 'szakal_industries_companies'
         unique_together = (('industry', 'company'),)
 
 
@@ -278,8 +278,8 @@ class Statuses(models.Model):
     class Meta:
         verbose_name = 'Status'
         verbose_name_plural = 'Statuses'
-        managed = False
-        db_table = 'statuses'
+        managed = True
+        db_table = 'szakal_statuses'
 
 
 class ContactTypes(models.Model):
@@ -292,8 +292,8 @@ class ContactTypes(models.Model):
     class Meta:
         verbose_name = 'Contact Type'
         verbose_name_plural = 'Contact Types'
-        managed = False
-        db_table = 'types'
+        managed = True
+        db_table = 'szakal_types'
 
 
 class Users(models.Model):
@@ -314,5 +314,5 @@ class Users(models.Model):
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
-        managed = False
-        db_table = 'users'
+        managed = True
+        db_table = 'szakal_users'
