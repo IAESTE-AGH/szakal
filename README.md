@@ -1,29 +1,86 @@
-# IAESTE Szakal Backend
+# IAESTE Szakal
 
-## Running
+## SETUP
 
-cd into backend dir, then
+###install docker
 
-`docker-compose up --build`
+`apt install docker.io`
 
-if you need to build the cointainers; ditch the build option when you have nothing new to build
+###pull latest mysql image
 
-## Accessing app
+`docker pull mysql/mysql-mysql-server:latest`
 
-Web app can be accessed at localhost:8000
+###to not use sudo all the time with docker command run this (or something similar xd)
 
-## Accessing pgadmin
+`usermod -aG docker $USER`
 
-Pgadmin can be accessed at localhost:5051.
-Login credentials are (email) pgadmin4@pgadmin.org (password) root
-To connect to DB, create server connection and in the connection tab put:
-hostname: db
-port: 5432
-maintenance database: postgres
-username: postgres
+###create and run docker container
 
-## psqling into postgres from host CLI
+`docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=<password> mysql/mysql-server -d mysql`
 
-With db container up:
+###setup virtual environment and install requirements
 
-`psql -h localhost -p 5432 -d postgres -U postgres`
+`python3 -m venv venv`
+
+`source venv/bin/activate`
+
+`pip3 install -r requirements.txt`
+
+###setup environmental variables
+
+`vim env.sh`
+
+export DB_NAME=szakal
+
+export DB_USER=XXXX
+
+export DB_PASSWORD=XXXX
+
+export DB_HOST=127.0.0.1
+
+export DB_PORT=3306
+
+####esc ->  wq to escape vim
+
+`. ./env.sh`
+
+###migrate stuff
+
+`python3 manage.py makemigrations`
+
+`python3 manage.py migrate`
+
+## On beginning of work
+
+`docker start mysql`
+
+## On finish
+
+`docker stop mysql`
+
+##Accessing database
+
+###Mysql Workbench
+
+####Install
+`sudo snap install mysql-workbench-community`
+
+`sudo snap connect mysql-workbench-community:password-manager-service :password-manager-service`
+
+####Running
+
+`mysql-workbench-community`
+
+###Console
+
+`mysql -u <name> -p -h 127.0.0.1 -n szakal`
+
+###If there is problem with access, follow these steps
+
+`docker exec -it mysql bash`
+
+`mysql -u <name> -p -h 127.0.0.1`
+
+`mysql> flush privilages;`
+
+####and now try again
