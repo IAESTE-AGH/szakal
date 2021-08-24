@@ -1,10 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Assignment(models.Model):
     id = models.IntegerField(primary_key=True)
     event = models.ForeignKey('Event', models.DO_NOTHING)
-    user = models.ForeignKey('User', models.DO_NOTHING)
+    user = models.ForeignKey(User, models.DO_NOTHING)
     company = models.ForeignKey('Company', models.DO_NOTHING)
     active = models.BooleanField(default=True)
 
@@ -97,7 +98,7 @@ class Contact(models.Model):
     event = models.ForeignKey('Event', models.DO_NOTHING)
     status = models.ForeignKey('Status', models.DO_NOTHING)
     company = models.ForeignKey('Company', models.DO_NOTHING)
-    user = models.ForeignKey('User', models.DO_NOTHING)
+    user = models.ForeignKey(User, models.DO_NOTHING)
     accepted = models.BooleanField()
     last_update = models.DateTimeField()
     date = models.DateTimeField()
@@ -184,25 +185,3 @@ class ContactType(models.Model):
         verbose_name_plural = 'Contact Types'
         managed = True
         db_table = 'szakal_types'
-
-
-class User(models.Model):
-    id = models.IntegerField(primary_key=True)
-    username = models.CharField(max_length=50, blank=True, null=True)
-    password = models.TextField()
-    name = models.CharField(max_length=25, blank=True, null=True)
-    surname = models.CharField(max_length=25, blank=True, null=True)
-    email = models.CharField(max_length=50, blank=True, null=True)
-    working_group = models.CharField(max_length=10, blank=True, null=True)
-    created_at = models.DateTimeField(blank=True, null=True)
-    logins = models.IntegerField(blank=True, null=True)
-    last_login = models.DateTimeField(blank=True, null=True)
-    accepted = models.BooleanField(blank=True, null=True)
-    active = models.BooleanField(blank=True, null=True)
-    points = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
-        managed = True
-        db_table = 'szakal_users'
