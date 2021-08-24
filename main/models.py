@@ -1,10 +1,3 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
 
@@ -174,7 +167,7 @@ class Companies(models.Model):
     email = models.CharField(max_length=50, blank=True, null=True)
     insert_date = models.DateTimeField()
     update_date = models.DateTimeField()
-    update_user_id = models.IntegerField(blank=True, null=True)  # todo
+    update_user_id = models.IntegerField(blank=True, null=True)
     deleted = models.BooleanField(default=False)
     delete_date = models.DateTimeField(blank=True, null=True)
     rating = models.FloatField(blank=True, null=True)
@@ -209,14 +202,14 @@ class ContactPersons(models.Model):
 
 class Contacts(models.Model):
     id = models.IntegerField(primary_key=True)
-    contact_person = models.ForeignKey('ContactPersons', models.DO_NOTHING)  # todo czo to jest
+    contact_person = models.ForeignKey('ContactPersons', models.DO_NOTHING)
     type = models.ForeignKey('ContactTypes', models.DO_NOTHING)
     event = models.ForeignKey('Events', models.DO_NOTHING)
     status = models.ForeignKey('Statuses', models.DO_NOTHING)
     company = models.ForeignKey('Companies', models.DO_NOTHING)
     user = models.ForeignKey('Users', models.DO_NOTHING)
     accepted = models.BooleanField()
-    last_update = models.DateTimeField()  # todo auto_add_now
+    last_update = models.DateTimeField()
     date = models.DateTimeField()
     comment = models.TextField(blank=True, null=True)
     rating = models.IntegerField(blank=True, null=True)
