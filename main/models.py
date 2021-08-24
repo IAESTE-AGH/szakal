@@ -111,7 +111,7 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-class Assignments(models.Model):
+class Assignment(models.Model):
     id = models.IntegerField(primary_key=True)
     event = models.ForeignKey('Events', models.DO_NOTHING)
     user = models.ForeignKey('Users', models.DO_NOTHING)
@@ -129,7 +129,7 @@ class Assignments(models.Model):
         unique_together = (('event', 'user', 'company'),)
 
 
-class Categories(models.Model):
+class Category(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
 
@@ -143,7 +143,7 @@ class Categories(models.Model):
         db_table = 'szakal_categories'
 
 
-class CategoriesCompanies(models.Model):
+class CategoryCompany(models.Model):
     id = models.IntegerField(primary_key=True)
     category = models.ForeignKey('Categories', models.DO_NOTHING)
     company = models.ForeignKey('Companies', models.DO_NOTHING)
@@ -158,7 +158,7 @@ class CategoriesCompanies(models.Model):
         unique_together = (('category', 'company'),)
 
 
-class Companies(models.Model):
+class Company(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.TextField()
     phone = models.CharField(max_length=15)
@@ -183,7 +183,7 @@ class Companies(models.Model):
         db_table = 'szakal_companies'
 
 
-class ContactPersons(models.Model):
+class ContactPerson(models.Model):
     id = models.IntegerField(primary_key=True)
     company = models.ForeignKey('Companies', models.DO_NOTHING)
     name = models.CharField(max_length=50)
@@ -200,7 +200,7 @@ class ContactPersons(models.Model):
         db_table = 'szakal_contact_persons'
 
 
-class Contacts(models.Model):
+class Contact(models.Model):
     id = models.IntegerField(primary_key=True)
     contact_person = models.ForeignKey('ContactPersons', models.DO_NOTHING)
     type = models.ForeignKey('ContactTypes', models.DO_NOTHING)
@@ -224,7 +224,7 @@ class Contacts(models.Model):
         db_table = 'szakal_contacts'
 
 
-class Events(models.Model):
+class Event(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
 
@@ -238,7 +238,7 @@ class Events(models.Model):
         db_table = 'szakal_events'
 
 
-class Industries(models.Model):
+class Industry(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
 
@@ -252,7 +252,7 @@ class Industries(models.Model):
         db_table = 'szakal_industries'
 
 
-class IndustriesCompanies(models.Model):
+class IndustryCompany(models.Model):
     id = models.IntegerField(primary_key=True)
     industry = models.ForeignKey('Industries', models.DO_NOTHING)
     company = models.ForeignKey('Companies', models.DO_NOTHING)
@@ -267,7 +267,7 @@ class IndustriesCompanies(models.Model):
         unique_together = (('industry', 'company'),)
 
 
-class Statuses(models.Model):
+class Status(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
     sort_order = models.IntegerField()
@@ -282,7 +282,7 @@ class Statuses(models.Model):
         db_table = 'szakal_statuses'
 
 
-class ContactTypes(models.Model):
+class ContactType(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
 
@@ -296,7 +296,7 @@ class ContactTypes(models.Model):
         db_table = 'szakal_types'
 
 
-class Users(models.Model):
+class User(models.Model):
     id = models.IntegerField(primary_key=True)
     username = models.CharField(max_length=50, blank=True, null=True)
     password = models.TextField()
