@@ -2,23 +2,23 @@
 
 ## SETUP
 
-###install docker
+### Install docker
 
 `apt install docker.io`
 
-###pull latest mysql image
+### Pull latest mysql image
 
 `docker pull mysql/mysql-mysql-server:latest`
 
-###to not use sudo all the time with docker command run this (or something similar xd)
+### To not use sudo all the time with docker command run this (or something similar xd)
 
 `usermod -aG docker $USER`
 
-###create and run docker container
+### Create and run docker container
 
 `docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=<password> mysql/mysql-server -d mysql`
 
-###setup virtual environment and install requirements
+### Setup virtual environment and install requirements
 
 `python3 -m venv venv`
 
@@ -26,7 +26,7 @@
 
 `pip3 install -r requirements.txt`
 
-###setup environmental variables
+### Setup environmental variables
 
 `vim env.sh`
 
@@ -40,11 +40,11 @@ export DB_HOST=127.0.0.1
 
 export DB_PORT=3306
 
-####esc ->  wq to escape vim
+#### Esc ->  wq to escape vim
 
 `. ./env.sh`
 
-###migrate stuff
+### Migrate stuff
 
 `python3 manage.py makemigrations`
 
@@ -58,24 +58,24 @@ export DB_PORT=3306
 
 `docker stop mysql`
 
-##Accessing database
+## Accessing database
 
-###Mysql Workbench
+### Mysql Workbench
 
-####Install
+#### Install
 `sudo snap install mysql-workbench-community`
 
 `sudo snap connect mysql-workbench-community:password-manager-service :password-manager-service`
 
-####Running
+#### Running
 
 `mysql-workbench-community`
 
-###Console
+### Console
 
 `mysql -u <name> -p -h 127.0.0.1 -n szakal`
 
-###If there is problem with access, follow these steps
+### If there is problem with access, follow these steps
 
 `docker exec -it mysql bash`
 
@@ -83,4 +83,4 @@ export DB_PORT=3306
 
 `mysql> flush privilages;`
 
-####and now try again
+#### And now try again
