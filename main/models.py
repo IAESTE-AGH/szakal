@@ -113,9 +113,9 @@ class DjangoSession(models.Model):
 
 class Assignment(models.Model):
     id = models.IntegerField(primary_key=True)
-    event = models.ForeignKey('Events', models.DO_NOTHING)
-    user = models.ForeignKey('Users', models.DO_NOTHING)
-    company = models.ForeignKey('Companies', models.DO_NOTHING)
+    event = models.ForeignKey('Event', models.DO_NOTHING)
+    user = models.ForeignKey('User', models.DO_NOTHING)
+    company = models.ForeignKey('Company', models.DO_NOTHING)
     active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -145,8 +145,8 @@ class Category(models.Model):
 
 class CategoryCompany(models.Model):
     id = models.IntegerField(primary_key=True)
-    category = models.ForeignKey('Categories', models.DO_NOTHING)
-    company = models.ForeignKey('Companies', models.DO_NOTHING)
+    category = models.ForeignKey('Category', models.DO_NOTHING)
+    company = models.ForeignKey('Company', models.DO_NOTHING)
 
     def __str__(self):
         return f'{self.category.name} - {self.company.name}'
@@ -185,7 +185,7 @@ class Company(models.Model):
 
 class ContactPerson(models.Model):
     id = models.IntegerField(primary_key=True)
-    company = models.ForeignKey('Companies', models.DO_NOTHING)
+    company = models.ForeignKey('Company', models.DO_NOTHING)
     name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
     email = models.CharField(max_length=75)
@@ -202,12 +202,12 @@ class ContactPerson(models.Model):
 
 class Contact(models.Model):
     id = models.IntegerField(primary_key=True)
-    contact_person = models.ForeignKey('ContactPersons', models.DO_NOTHING)
-    type = models.ForeignKey('ContactTypes', models.DO_NOTHING)
-    event = models.ForeignKey('Events', models.DO_NOTHING)
-    status = models.ForeignKey('Statuses', models.DO_NOTHING)
-    company = models.ForeignKey('Companies', models.DO_NOTHING)
-    user = models.ForeignKey('Users', models.DO_NOTHING)
+    contact_person = models.ForeignKey('ContactPerson', models.DO_NOTHING)
+    type = models.ForeignKey('ContactType', models.DO_NOTHING)
+    event = models.ForeignKey('Event', models.DO_NOTHING)
+    status = models.ForeignKey('Status', models.DO_NOTHING)
+    company = models.ForeignKey('Company', models.DO_NOTHING)
+    user = models.ForeignKey('User', models.DO_NOTHING)
     accepted = models.BooleanField()
     last_update = models.DateTimeField()
     date = models.DateTimeField()
@@ -254,8 +254,8 @@ class Industry(models.Model):
 
 class IndustryCompany(models.Model):
     id = models.IntegerField(primary_key=True)
-    industry = models.ForeignKey('Industries', models.DO_NOTHING)
-    company = models.ForeignKey('Companies', models.DO_NOTHING)
+    industry = models.ForeignKey('Industry', models.DO_NOTHING)
+    company = models.ForeignKey('Company', models.DO_NOTHING)
 
     def __str__(self):
         return f'{self.industry.name} - {self.company.name}'
