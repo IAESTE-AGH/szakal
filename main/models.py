@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 
 
 class Assignment(models.Model):
-    id = models.IntegerField(primary_key=True)
     event = models.ForeignKey('Event', models.DO_NOTHING)
     user = models.ForeignKey(User, models.DO_NOTHING)
     company = models.ForeignKey('Company', models.DO_NOTHING)
@@ -21,7 +20,6 @@ class Assignment(models.Model):
 
 
 class Category(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
 
     def __str__(self):
@@ -35,7 +33,6 @@ class Category(models.Model):
 
 
 class CategoryCompany(models.Model):
-    id = models.IntegerField(primary_key=True)
     category = models.ForeignKey('Category', models.DO_NOTHING)
     company = models.ForeignKey('Company', models.DO_NOTHING)
 
@@ -50,7 +47,6 @@ class CategoryCompany(models.Model):
 
 
 class Company(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.TextField()
     phone = models.CharField(max_length=15)
     address = models.TextField(blank=True, null=True)
@@ -58,7 +54,7 @@ class Company(models.Model):
     email = models.CharField(max_length=50, blank=True, null=True)
     insert_date = models.DateTimeField()
     update_date = models.DateTimeField()
-    update_user_id = models.IntegerField(blank=True, null=True)
+    update_user = models.ForeignKey(User, models.DO_NOTHING)
     deleted = models.BooleanField(default=False)
     delete_date = models.DateTimeField(blank=True, null=True)
     rating = models.FloatField(blank=True, null=True)
@@ -75,7 +71,6 @@ class Company(models.Model):
 
 
 class ContactPerson(models.Model):
-    id = models.IntegerField(primary_key=True)
     company = models.ForeignKey('Company', models.DO_NOTHING)
     name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
@@ -92,7 +87,6 @@ class ContactPerson(models.Model):
 
 
 class Contact(models.Model):
-    id = models.IntegerField(primary_key=True)
     contact_person = models.ForeignKey('ContactPerson', models.DO_NOTHING)
     type = models.ForeignKey('ContactType', models.DO_NOTHING)
     event = models.ForeignKey('Event', models.DO_NOTHING)
@@ -116,7 +110,6 @@ class Contact(models.Model):
 
 
 class Event(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
 
     def __str__(self):
@@ -130,7 +123,6 @@ class Event(models.Model):
 
 
 class Industry(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
 
     def __str__(self):
@@ -144,7 +136,6 @@ class Industry(models.Model):
 
 
 class IndustryCompany(models.Model):
-    id = models.IntegerField(primary_key=True)
     industry = models.ForeignKey('Industry', models.DO_NOTHING)
     company = models.ForeignKey('Company', models.DO_NOTHING)
 
@@ -159,7 +150,6 @@ class IndustryCompany(models.Model):
 
 
 class Status(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
     sort_order = models.IntegerField()
 
@@ -174,7 +164,6 @@ class Status(models.Model):
 
 
 class ContactType(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
 
     def __str__(self):
