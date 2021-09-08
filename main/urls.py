@@ -10,5 +10,5 @@ urlpatterns = [
     path('statistics/', views.statistics, name='statistics'),
     path('top_10_users/', views.top_10_users, name='top_10_users'),
     path('current_event/', views.current_event, name='current_event'),
-    path('/', views.home, name='home')
+    path('', views.home, name='home')
 ]
