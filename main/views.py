@@ -13,6 +13,15 @@ class RegisterView(CreateView):
     form_class = UserForm
     success_url = reverse_lazy('home')
 
+    def form_valid(self, form):
+        form.save()
+        user = authenticate(
+            username=self.request.POST['username'],
+            password=self.request.POST['password']
+        )
+        login(self.request, user)
+        return HttpResponseRedirect(self.success_url)
+
 
 class AddIndustryView(CreateView):
     template_name = 'default_form.html'
@@ -45,8 +54,4 @@ def top_10_users(request):
 
 
 def current_event(request):
-    pass
-
-
-def login(request):
     pass

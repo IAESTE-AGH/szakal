@@ -6,7 +6,7 @@ urlpatterns = [
     path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('password_reset/', PasswordResetView.as_view(), name='password_reset'),
+    path('password_reset/', PasswordResetView.as_view(), name='password_reset'),  # todo test
 
     path('event/', views.event, name='event'),
     path('industry/', views.industry, name='industry'),

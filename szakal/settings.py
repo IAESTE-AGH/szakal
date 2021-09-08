@@ -130,5 +130,5 @@ STATICFILES_DIRS = (
     ('main/static'),
 )
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'  # todo remove after (if) implementing profile using generic stuff
 LOGOUT_REDIRECT_URL = '/'
