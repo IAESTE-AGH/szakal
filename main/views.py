@@ -2,6 +2,8 @@ from django.views.generic import CreateView
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 
 from main.forms import IndustryForm, UserForm
 
