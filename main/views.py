@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login
 from main.forms import IndustryForm, UserForm
 
 
-class CreateUserView(CreateView):
+class RegisterView(CreateView):
     template_name = 'auth/user_form.html'
     form_class = UserForm
     success_url = reverse_lazy('home')
