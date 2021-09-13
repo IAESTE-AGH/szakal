@@ -6,4 +6,14 @@
 <a href="/register">Zarejestruj sie</a>
 <a href="/login">Zaloguj sie</a>
 <a href="/logout">Wyloguj sie</a>
+
+<h3>Statystyki</h3>
+<p>Company count: {{ company_count }}</p>
+<p>Companies unmanaged: {{ companies_unmanaged }}</p>
+<p>User count: {{ user_count }}</p>
+<br>
+<p>My companies:</p>
+{% for company in user_managed_companies %}
+<li>{{ company }}</li>
+{% endfor %}
 {% endblock %}

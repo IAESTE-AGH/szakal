@@ -28,3 +28,8 @@ class DefaultForm(ModelForm):
 class IndustryForm(DefaultForm):
     class Meta(DefaultForm.Meta):
         model = Industry
+
+
+# class IndustryForm(DefaultForm):
+#     class Meta(DefaultForm.Meta):
+#         model = Industry

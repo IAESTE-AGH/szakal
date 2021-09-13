@@ -3,9 +3,14 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django import template
 
 from main.forms import IndustryForm, UserForm
+from main.models import Company
+
+register = template.Library()
 
 
 class RegisterView(CreateView):
@@ -30,7 +35,14 @@ class AddIndustryView(CreateView):
 
 
 def home(request):
-    return render(request, 'home.html')
+    context = {
+    "company_count": Company.objects.all().count(),
+    "companies_unmanaged": Company.objects.filter(assigned_user=None).count(),
+    "user_count": User.objects.all().count(),
+    "user_managed_companies": Company.objects.filter(assigned_user=request.user).all()
+    }
+
+    return render(request, 'home.html', context)
 
 
 def industry(request):
