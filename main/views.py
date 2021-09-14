@@ -39,12 +39,6 @@ class RegisterView(CreateView):
         return HttpResponseRedirect(self.success_url)
 
 
-class AddIndustryView(CreateView):
-    template_name = 'default_form.html'
-    form_class = IndustryForm
-    success_url = reverse_lazy('industry')
-
-
 def home(request):
     if request.user.is_authenticated:
         context = {
@@ -65,6 +59,7 @@ class AddObjectView(CreateView):
         'Industry'
     ]
     template_name = 'default_form.html'
+    # todo decide what to do with success_url
     success_url = '/'
 
     @assign_form
@@ -74,27 +69,3 @@ class AddObjectView(CreateView):
     @assign_form
     def post(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
-
-
-def industry(request):
-    return render(request, 'home.html')
-
-
-def company(request):
-    pass
-
-
-def event(request):
-    pass
-
-
-def statistics(request):
-    pass
-
-
-def top_10_users(request):
-    pass
-
-
-def current_event(request):
-    pass

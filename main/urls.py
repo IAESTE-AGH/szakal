@@ -11,13 +11,5 @@ urlpatterns = [
 
     path('add/<str:object_to_add>/', staff_member_required(views.AddObjectView.as_view()), name='add'),
 
-    path('event/', views.event, name='event'),
-    path('industry/', views.industry, name='industry'),
-    path('industry/add/', views.AddIndustryView.as_view(), name='add_industry'),
-    path('company/', views.company, name='company'),
-    path('statistics/', views.statistics, name='statistics'),
-    path('top_10_users/', views.top_10_users, name='top_10_users'),
-    path('current_event/', views.current_event, name='current_event'),
-
     path('', views.home, name='home')
 ]
