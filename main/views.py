@@ -14,6 +14,16 @@ from main.models import Company
 register = template.Library()
 
 
+def assign_form(func):
+    def wrap(self, request, *args, **kwargs):
+        self.object = None
+        self.form_class = eval(
+            f'{self.kwargs["object_to_add"].capitalize()}Form'
+            if self.kwargs['object_to_add'].capitalize() in self.predefined_models else None)
+        return func(self, request, *args, **kwargs)
+    return wrap
+
+
 class RegisterView(CreateView):
     template_name = 'auth/user_form.html'
     form_class = UserForm
@@ -57,20 +67,13 @@ class AddObjectView(CreateView):
     template_name = 'default_form.html'
     success_url = '/'
 
+    @assign_form
     def get(self, request, *args, **kwargs):
-        self.object = None
-        self.form_class = eval(
-            f'{self.kwargs["object_to_add"].capitalize()}Form'
-            if self.kwargs['object_to_add'].capitalize() in self.predefined_models else None)
-
         return super().get(request, *args, **kwargs)
 
+    @assign_form
     def post(self, request, *args, **kwargs):
-        self.object = None
-        self.form_class = eval(
-            f'{self.kwargs["object_to_add"].capitalize()}Form'
-            if self.kwargs['object_to_add'].capitalize() in self.predefined_models else None)
-        return super().post(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
 
 def industry(request):
