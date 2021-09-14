@@ -1,7 +1,7 @@
 from django.forms import ModelForm, PasswordInput
 
 from django.contrib.auth.models import User
-from main.models import Industry
+from main.models import Industry, Company
 
 
 class UserForm(ModelForm):
@@ -30,6 +30,6 @@ class IndustryForm(DefaultForm):
         model = Industry
 
 
-# class IndustryForm(DefaultForm):
-#     class Meta(DefaultForm.Meta):
-#         model = Industry
+class CompanyForm(DefaultForm):
+    class Meta(DefaultForm.Meta):
+        model = Company

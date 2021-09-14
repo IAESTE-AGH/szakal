@@ -3,11 +3,12 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django import template
 
-from main.forms import IndustryForm, UserForm
+from main.forms import IndustryForm, UserForm, CompanyForm
 from main.models import Company
 
 register = template.Library()
@@ -35,14 +36,41 @@ class AddIndustryView(CreateView):
 
 
 def home(request):
-    context = {
-    "company_count": Company.objects.all().count(),
-    "companies_unmanaged": Company.objects.filter(assigned_user=None).count(),
-    "user_count": User.objects.all().count(),
-    "user_managed_companies": Company.objects.filter(assigned_user=request.user).all()
-    }
+    if request.user.is_authenticated:
+        context = {
+            "company_count": Company.objects.all().count(),
+            "companies_unmanaged": Company.objects.filter(assigned_user=None).count(),
+            "user_count": User.objects.all().count(),
+            "user_managed_companies": Company.objects.filter(assigned_user=request.user).all()
+        }
 
-    return render(request, 'home.html', context)
+        return render(request, 'home.html', context)
+    else:
+        return HttpResponseRedirect('/login/')
+
+
+class AddObjectView(CreateView):
+    predefined_models = [
+        'Company',
+        'Industry'
+    ]
+    template_name = 'default_form.html'
+    success_url = '/'
+
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        self.form_class = eval(
+            f'{self.kwargs["object_to_add"].capitalize()}Form'
+            if self.kwargs['object_to_add'].capitalize() in self.predefined_models else None)
+
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        self.form_class = eval(
+            f'{self.kwargs["object_to_add"].capitalize()}Form'
+            if self.kwargs['object_to_add'].capitalize() in self.predefined_models else None)
+        return super().post(request, *args, **kwargs)
 
 
 def industry(request):
