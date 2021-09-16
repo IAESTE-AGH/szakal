@@ -55,6 +55,17 @@ class Home(LoginRequiredMixin, View):
         return render(request, self.template, context)
 
 
+class MyCompanies(LoginRequiredMixin, View):
+    template = 'my_companies.html'
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            'my_companies': Company.objects.filter(assigned_user=request.user).all()
+        }
+
+        return render(request, self.template, context)
+
+
 class AddObjectView(CreateView):
     # todo split into predefined_models for staff and for normal user
     predefined_models = [

@@ -11,5 +11,6 @@ urlpatterns = [
 
     path('add/<str:object_to_add>/', staff_member_required(views.AddObjectView.as_view()), name='add'),
 
+    path('my_companies', views.MyCompanies.as_view(), name='my_companies'),
     path('', views.Home.as_view(), name='home')
 ]
