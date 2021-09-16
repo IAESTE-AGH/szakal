@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Branże</h1>
+<h2>{{ request.user.username }}</h2>
+
+{% for industry in object_list %}
+    <p>{{ industry.id }} | {{ industry.name }}</p>
+{% endfor %}
+
+{% endblock %}

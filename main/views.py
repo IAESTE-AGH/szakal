@@ -11,7 +11,7 @@ from django import template
 from django.views import View
 
 from main.forms import UserForm
-from main.models import Company
+from main.models import Company, Industry
 
 register = template.Library()
 
@@ -56,7 +56,7 @@ class Home(LoginRequiredMixin, View):
 
 
 class Companies(LoginRequiredMixin, ListView):
-    template_name = 'my_companies.html'
+    template_name = 'companies.html'
     model = Company
 
 
@@ -73,6 +73,11 @@ class AllCompanies(Companies):
 class TakenCompanies(Companies):
     def get_queryset(self):
         return Company.objects.filter(assigned_user__isnull=False)
+
+
+class Industries(LoginRequiredMixin, ListView):
+    template_name = 'industries.html'
+    model = Industry
 
 
 class AddObjectView(CreateView):
