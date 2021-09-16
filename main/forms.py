@@ -1,7 +1,7 @@
 from django.forms import ModelForm, PasswordInput
 
 from django.contrib.auth.models import User
-from main.models import Industry, Company
+from main.models import Industry, Company, Category
 
 
 class UserForm(ModelForm):
@@ -33,3 +33,8 @@ class IndustryForm(DefaultForm):
 class CompanyForm(DefaultForm):
     class Meta(DefaultForm.Meta):
         model = Company
+
+
+class CategoryForm(DefaultForm):
+    class Meta(DefaultForm.Meta):
+        model = Category
