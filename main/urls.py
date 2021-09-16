@@ -13,5 +13,7 @@ urlpatterns = [
 
     path('my_companies', views.MyCompanies.as_view(), name='my_companies'),
     path('all_companies', views.AllCompanies.as_view(), name='all_companies'),
+    path('taken_companies', views.TakenCompanies.as_view(), name='taken_companies'),
+
     path('', views.Home.as_view(), name='home')
 ]

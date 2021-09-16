@@ -70,6 +70,11 @@ class AllCompanies(Companies):
         return Company.objects.all()
 
 
+class TakenCompanies(Companies):
+    def get_queryset(self):
+        return Company.objects.filter(assigned_user__isnull=False)
+
+
 class AddObjectView(CreateView):
     # todo split into predefined_models for staff and for normal user
     predefined_models = [
