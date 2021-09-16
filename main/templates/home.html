@@ -3,9 +3,9 @@
 <h1>HOME PAGE</h1>
 <h2>{{ request.user.username }}</h2>
 
-<a href="/register">Zarejestruj sie</a>
-<a href="/login">Zaloguj sie</a>
-<a href="/logout">Wyloguj sie</a>
+<a href="{%url 'register'%}">Zarejestruj sie</a>
+<a href="{%url 'login'%}">Zaloguj sie</a>
+<a href="{%url 'logout'%}">Wyloguj sie</a>
 
 <h3>Statystyki</h3>
 <p>Company count: {{ company_count }}</p>
