@@ -6,9 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django import template
+from django.views import View
 
-from main.forms import IndustryForm, UserForm, CompanyForm
+from main.forms import UserForm
 from main.models import Company
 
 register = template.Library()
@@ -21,6 +23,7 @@ def assign_form(func):
             f'{self.kwargs["object_to_add"].capitalize()}Form'
             if self.kwargs['object_to_add'].capitalize() in self.predefined_models else None)
         return func(self, request, *args, **kwargs)
+
     return wrap
 
 
@@ -39,21 +42,21 @@ class RegisterView(CreateView):
         return HttpResponseRedirect(self.success_url)
 
 
-def home(request):
-    if request.user.is_authenticated:
+class Home(LoginRequiredMixin, View):
+    template = 'home.html'
+
+    def get(self, request, *args, **kwargs):
         context = {
             "company_count": Company.objects.all().count(),
             "companies_unmanaged": Company.objects.filter(assigned_user=None).count(),
             "user_count": User.objects.all().count(),
             "user_managed_companies": Company.objects.filter(assigned_user=request.user).all()
         }
-
-        return render(request, 'home.html', context)
-    else:
-        return HttpResponseRedirect('/login/')
+        return render(request, self.template, context)
 
 
 class AddObjectView(CreateView):
+    # todo split into predefined_models for staff and for normal user
     predefined_models = [
         'Company',
         'Industry'
