@@ -3,7 +3,7 @@
 <h1>Firmy</h1>
 <h2>{{ request.user.username }}</h2>
 
-{% for company in my_companies %}
+{% for company in object_list %}
     <p>{{ company.id }} | {{ company.name }}</p>
 {% endfor %}
 

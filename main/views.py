@@ -1,4 +1,4 @@
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -55,15 +55,19 @@ class Home(LoginRequiredMixin, View):
         return render(request, self.template, context)
 
 
-class MyCompanies(LoginRequiredMixin, View):
-    template = 'my_companies.html'
+class Companies(LoginRequiredMixin, ListView):
+    template_name = 'my_companies.html'
+    model = Company
 
-    def get(self, request, *args, **kwargs):
-        context = {
-            'my_companies': Company.objects.filter(assigned_user=request.user).all()
-        }
 
-        return render(request, self.template, context)
+class MyCompanies(Companies):
+    def get_queryset(self):
+        return Company.objects.filter(assigned_user=self.request.user)
+
+
+class AllCompanies(Companies):
+    def get_queryset(self):
+        return Company.objects.all()
 
 
 class AddObjectView(CreateView):
