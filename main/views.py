@@ -11,7 +11,7 @@ from django import template
 from django.views import View
 
 from main.forms import UserForm
-from main.models import Company, Industry
+from main.models import Company, Industry, Event, Contact
 
 register = template.Library()
 
@@ -25,7 +25,8 @@ PREDEFINED_MODELS = [
     'Assignment',
     'Company',
     'Contact',
-    'Industry'
+    'Industry',
+    'Event'
 ]
 
 
