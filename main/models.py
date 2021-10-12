@@ -55,7 +55,7 @@ class Company(models.Model):
     insert_date = models.DateTimeField()
     update_date = models.DateTimeField()
     update_person_name = models.CharField(max_length=100, blank=True, null=True)
-    assigned_user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
     deleted = models.BooleanField(default=False)
     delete_date = models.DateTimeField(blank=True, null=True)
     rating = models.FloatField(blank=True, null=True)

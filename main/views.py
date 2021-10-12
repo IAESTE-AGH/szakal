@@ -15,6 +15,19 @@ from main.models import Company, Industry
 
 register = template.Library()
 
+PREDEFINED_MODELS_USER = [
+    'Assignment',
+    'Company',
+    'Contact'
+]
+
+PREDEFINED_MODELS = [
+    'Assignment',
+    'Company',
+    'Contact',
+    'Industry'
+]
+
 
 def assign_form(func):
     def wrap(self, request, *args, **kwargs):
@@ -48,36 +61,38 @@ class Home(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         context = {
             "company_count": Company.objects.all().count(),
-            "companies_unmanaged": Company.objects.filter(assigned_user=None).count(),
+            "companies_unmanaged": Company.objects.filter(user=None).count(),
             "user_count": User.objects.all().count(),
-            "user_managed_companies": Company.objects.filter(assigned_user=request.user).all()
+            "user_managed_companies": Company.objects.filter(user=request.user).all()
         }
         return render(request, self.template, context)
 
 
-class Companies(LoginRequiredMixin, ListView):
-    template_name = 'companies.html'
-    model = Company
-
-
-class MyCompanies(Companies):
+class ListObjectsView(LoginRequiredMixin, ListView):
     def get_queryset(self):
-        return Company.objects.filter(assigned_user=self.request.user)
+        self.model = self.kwargs['model'].capitalize()
 
+        if self.model in PREDEFINED_MODELS:
+            self.template_name = f'{self.model.lower()}.html'
+        else:
+            raise ValueError
 
-class AllCompanies(Companies):
-    def get_queryset(self):
-        return Company.objects.all()
+        whos = self.kwargs['whos']
 
+        if whos == 'all':
+            model = eval(self.model)
+            return model.objects.all()
 
-class TakenCompanies(Companies):
-    def get_queryset(self):
-        return Company.objects.filter(assigned_user__isnull=False)
-
-
-class Industries(LoginRequiredMixin, ListView):
-    template_name = 'industries.html'
-    model = Industry
+        elif self.model in PREDEFINED_MODELS_USER:
+            model = eval(self.model)
+            if whos == 'my':
+                return model.objects.filter(user=self.request.user)
+            elif whos == 'taken':
+                return model.objects.filter(user__isnull=False)
+            else:
+                raise ValueError
+        else:
+            raise ValueError
 
 
 class AddObjectView(CreateView):
