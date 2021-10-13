@@ -11,6 +11,8 @@ urlpatterns = [
 
     path('<str:object>/add/', staff_member_required(views.AddObjectView.as_view()), name='add'),
 
+    path('<str:object>/<int:pk>/delete/', staff_member_required(views.DeleteObjectView.as_view()), name='delete'),
+
     path('<str:object>/<int:pk>/', staff_member_required(views.UpdateObjectView.as_view()), name='update'),
 
     path('<str:object>/<str:whos>/', views.ListObjectsView.as_view(), name='list'),

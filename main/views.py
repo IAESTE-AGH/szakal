@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -36,7 +36,7 @@ PREDEFINED_MODELS = [
 ]
 
 
-def assign_form(create=False, update=False):
+def assign_form(create=False, update=False, delete=False):
     def decorator(func):
         def wrap(self, request, *args, **kwargs):
             object_ = self.kwargs['object'].capitalize()
@@ -47,11 +47,15 @@ def assign_form(create=False, update=False):
                     self.form_class = eval(f'{object_}UpdateForm')
                 elif create:
                     self.form_class = eval(f'{object_}CreateForm')
+                elif delete:
+                    pass
 
                 self.success_url = f'/{object_.lower()}'
                 return func(self, request, *args, **kwargs)
             return ValueError
+
         return wrap
+
     return decorator
 
 
@@ -134,5 +138,17 @@ class AddObjectView(CreateView):
         return super().get(request, *args, **kwargs)
 
     @assign_form(create=True)
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
+
+
+class DeleteObjectView(DeleteView):
+    template_name = 'default_form.html'
+
+    @assign_form(delete=True)
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+    @assign_form(delete=True)
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
