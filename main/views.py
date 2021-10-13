@@ -1,3 +1,5 @@
+import datetime
+
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -89,26 +91,27 @@ class Home(LoginRequiredMixin, View):
 
 class ListObjectsView(LoginRequiredMixin, ListView):
     def get_queryset(self):
-        self.model = self.kwargs['object'].capitalize()
+        model = self.kwargs['object'].capitalize()
 
-        if self.model in PREDEFINED_MODELS:
-            self.template_name = f'{self.model.lower()}.html'
-            model = eval(self.model)
+        if model in PREDEFINED_MODELS:
+            self.template_name = f'{model.lower()}.html'
         else:
             raise ValueError
 
         whos = self.kwargs.get('whos')
-
         if not whos:
+            model = eval(model)
             return model.objects.all()
-        elif model == Event:
+        elif model == 'Event':
+            model = eval(model)
             if whos == 'local':
                 return model.objects.filter(local=True)
             elif whos == 'global':
                 return model.objects.filter(local=False)
             else:
                 raise ValueError
-        elif self.model in PREDEFINED_MODELS_USER_MANAGED:
+        elif model in PREDEFINED_MODELS_USER_MANAGED:
+            model = eval(model)
             if whos == 'my':
                 return model.objects.filter(user=self.request.user)
             elif whos == 'taken':
@@ -157,3 +160,17 @@ class DeleteObjectView(DeleteView):
     @assign_form(delete=True)
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
+
+
+def assign_user_view(request, object, pk):
+    if object.capitalize() in PREDEFINED_MODELS_USER_MANAGED:
+        model = eval(object.capitalize())
+        object_ = model.objects.filter(id=pk).first()
+        if object_.user:
+            raise PermissionError('already taken')
+        else:
+            object_.user = request.user
+            object_.save()
+    else:
+        raise ValueError
+    return HttpResponseRedirect(f'/{object}')

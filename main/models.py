@@ -2,7 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Assignment(models.Model):
+class TimeStampMixin(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class Assignment(TimeStampMixin):
     event = models.ForeignKey('Event', models.DO_NOTHING)
     user = models.ForeignKey(User, models.DO_NOTHING)
     company = models.ForeignKey('Company', models.DO_NOTHING)
@@ -46,14 +54,12 @@ class CategoryCompany(models.Model):
         unique_together = (('category', 'company'),)
 
 
-class Company(models.Model):
+class Company(TimeStampMixin):
     name = models.TextField()
     phone = models.CharField(max_length=15)
     address = models.TextField(blank=True, null=True)
     www = models.TextField(blank=True, null=True)
     email = models.CharField(max_length=50, blank=True, null=True)
-    insert_date = models.DateTimeField()
-    update_date = models.DateTimeField()
     update_person_name = models.CharField(max_length=100, blank=True, null=True)
     user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
     deleted = models.BooleanField(default=False)
@@ -71,7 +77,7 @@ class Company(models.Model):
         db_table = 'szakal_companies'
 
 
-class ContactPerson(models.Model):
+class ContactPerson(TimeStampMixin):
     company = models.ForeignKey('Company', models.DO_NOTHING)
     name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
@@ -87,7 +93,7 @@ class ContactPerson(models.Model):
         db_table = 'szakal_contact_persons'
 
 
-class Contact(models.Model):
+class Contact(TimeStampMixin):
     contact_person = models.ForeignKey('ContactPerson', models.DO_NOTHING)
     type = models.ForeignKey('ContactType', models.DO_NOTHING)
     event = models.ForeignKey('Event', models.DO_NOTHING)
@@ -95,7 +101,6 @@ class Contact(models.Model):
     company = models.ForeignKey('Company', models.DO_NOTHING)
     user = models.ForeignKey(User, models.DO_NOTHING)
     accepted = models.BooleanField()
-    last_update = models.DateTimeField()
     date = models.DateTimeField()
     comment = models.TextField(blank=True, null=True)
     rating = models.IntegerField(blank=True, null=True)

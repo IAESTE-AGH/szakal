@@ -33,6 +33,7 @@ class IndustryCreateForm(DefaultForm):
 class CompanyCreateForm(DefaultForm):
     class Meta(DefaultForm.Meta):
         model = Company
+        exclude = ('update_date', 'insert_date')
 
 
 class CompanyUpdateForm(DefaultForm):
