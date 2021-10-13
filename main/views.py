@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -10,8 +10,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django import template
 from django.views import View
 
-from main.forms import UserForm
-from main.models import Company, Industry, Event, Contact
+from main.forms import *
+from main.models import *
 
 register = template.Library()
 
@@ -19,6 +19,12 @@ PREDEFINED_MODELS_USER = [
     'Assignment',
     'Company',
     'Contact'
+]
+
+PREDEFINED_MODELS_STAFF = [
+    'Company',
+    'Industry',
+    'Event'
 ]
 
 PREDEFINED_MODELS = [
@@ -30,15 +36,26 @@ PREDEFINED_MODELS = [
 ]
 
 
-def assign_form(func):
-    def wrap(self, request, *args, **kwargs):
-        self.object = None
-        self.form_class = eval(
-            f'{self.kwargs["object_to_add"].capitalize()}Form'
-            if self.kwargs['object_to_add'].capitalize() in self.predefined_models else None)
-        return func(self, request, *args, **kwargs)
+def assign_form(create=False, update=False):
+    def decorator(func):
+        def wrap(self, request, *args, **kwargs):
+            object_ = self.kwargs['object'].capitalize()
+            if object_ in PREDEFINED_MODELS:
+                self.model = eval(object_)
+                self.object = None
+                if update:
+                    self.form_class = eval(f'{object_}UpdateForm')
+                elif create:
+                    print('heree')
+                    self.form_class = eval(f'{object_}CreateForm')
 
-    return wrap
+                print(self.form_class)
+                self.success_url = f'/list/{object_.lower()}/all'
+                return func(self, request, *args, **kwargs)
+            print('here')
+            return ValueError
+        return wrap
+    return decorator
 
 
 class RegisterView(CreateView):
@@ -71,16 +88,16 @@ class Home(LoginRequiredMixin, View):
 
 class ListObjectsView(LoginRequiredMixin, ListView):
     def get_queryset(self):
-        self.model = self.kwargs['model'].capitalize()
+        self.model = self.kwargs['object'].capitalize()
 
         if self.model in PREDEFINED_MODELS:
             self.template_name = f'{self.model.lower()}.html'
         else:
             raise ValueError
 
-        whos = self.kwargs['whos']
+        whos = self.kwargs.get('whos')
 
-        if whos == 'all':
+        if not whos:
             model = eval(self.model)
             return model.objects.all()
 
@@ -96,6 +113,27 @@ class ListObjectsView(LoginRequiredMixin, ListView):
             raise ValueError
 
 
+class UpdateObjectView(UpdateView):
+    # todo split into predefined_models for staff and for normal user
+    predefined_models = [
+        'Company',
+        'Industry'
+    ]
+    template_name = 'default_form.html'
+
+    # todo IMPORTANT: figure out permissions and who can modify what, maybe create more form types
+
+    @assign_form(update=True)
+    def get(self, request, *args, **kwargs):
+        print(f'get {self.success_url}')
+        return super().get(request, *args, **kwargs)
+
+    @assign_form(update=True)
+    def post(self, request, *args, **kwargs):
+        print(f'post {self.success_url}')
+        return super().get(request, *args, **kwargs)
+
+
 class AddObjectView(CreateView):
     # todo split into predefined_models for staff and for normal user
     predefined_models = [
@@ -106,10 +144,10 @@ class AddObjectView(CreateView):
     # todo decide what to do with success_url
     success_url = '/'
 
-    @assign_form
+    @assign_form(create=True)
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 
-    @assign_form
+    @assign_form(create=True)
     def post(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)

@@ -22,24 +22,31 @@ class UserForm(ModelForm):
 
 class DefaultForm(ModelForm):
     class Meta:
-        exclude = ('id',)
+        fields = '__all__'
+        # exclude = ('id',)
 
 
-class IndustryForm(DefaultForm):
+class IndustryCreateForm(DefaultForm):
     class Meta(DefaultForm.Meta):
         model = Industry
 
 
-class CompanyForm(DefaultForm):
+class CompanyCreateForm(DefaultForm):
     class Meta(DefaultForm.Meta):
         model = Company
 
 
-class CategoryForm(DefaultForm):
+class CompanyUpdateForm(DefaultForm):
+    class Meta(DefaultForm.Meta):
+        model = Company
+        exclude = ('update_date', 'insert_date', 'deleted', 'delete_date', 'number_of_ratings', 'update_person_name')
+
+
+class CategoryCreateForm(DefaultForm):
     class Meta(DefaultForm.Meta):
         model = Category
 
 
-class EventForm(DefaultForm):
+class EventCreateForm(DefaultForm):
     class Meta(DefaultForm.Meta):
         model = Event

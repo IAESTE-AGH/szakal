@@ -9,9 +9,12 @@ urlpatterns = [
     path('accounts/logout/', LogoutView.as_view(), name='logout'),
     path('password_reset/', PasswordResetView.as_view(), name='password_reset'),  # todo test
 
-    path('add/<str:object_to_add>/', staff_member_required(views.AddObjectView.as_view()), name='add'),
+    path('<str:object>/add/', staff_member_required(views.AddObjectView.as_view()), name='add'),
 
-    path('list/<str:model>/<str:whos>', views.ListObjectsView.as_view(), name='list'),
+    path('<str:object>/update/<int:pk>/', staff_member_required(views.UpdateObjectView.as_view()), name='update'),
+
+    path('<str:object>/list/<str:whos>/', views.ListObjectsView.as_view(), name='list'),
+    path('<str:object>/', views.ListObjectsView.as_view(), name='list_all'),
 
     path('', views.Home.as_view(), name='home')
 ]
