@@ -15,7 +15,7 @@ from main.models import *
 
 register = template.Library()
 
-PREDEFINED_MODELS_USER = [
+PREDEFINED_MODELS_USER_MANAGED = [
     'Assignment',
     'Company',
     'Contact'
@@ -93,17 +93,22 @@ class ListObjectsView(LoginRequiredMixin, ListView):
 
         if self.model in PREDEFINED_MODELS:
             self.template_name = f'{self.model.lower()}.html'
+            model = eval(self.model)
         else:
             raise ValueError
 
         whos = self.kwargs.get('whos')
 
         if not whos:
-            model = eval(self.model)
             return model.objects.all()
-
-        elif self.model in PREDEFINED_MODELS_USER:
-            model = eval(self.model)
+        elif model == Event:
+            if whos == 'local':
+                return model.objects.filter(local=True)
+            elif whos == 'global':
+                return model.objects.filter(local=False)
+            else:
+                raise ValueError
+        elif self.model in PREDEFINED_MODELS_USER_MANAGED:
             if whos == 'my':
                 return model.objects.filter(user=self.request.user)
             elif whos == 'taken':

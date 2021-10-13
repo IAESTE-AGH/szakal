@@ -23,7 +23,6 @@ class UserForm(ModelForm):
 class DefaultForm(ModelForm):
     class Meta:
         fields = '__all__'
-        # exclude = ('id',)
 
 
 class IndustryCreateForm(DefaultForm):
