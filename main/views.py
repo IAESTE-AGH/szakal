@@ -46,13 +46,10 @@ def assign_form(create=False, update=False):
                 if update:
                     self.form_class = eval(f'{object_}UpdateForm')
                 elif create:
-                    print('heree')
                     self.form_class = eval(f'{object_}CreateForm')
 
-                print(self.form_class)
-                self.success_url = f'/list/{object_.lower()}/all'
+                self.success_url = f'/{object_.lower()}'
                 return func(self, request, *args, **kwargs)
-            print('here')
             return ValueError
         return wrap
     return decorator
@@ -115,34 +112,22 @@ class ListObjectsView(LoginRequiredMixin, ListView):
 
 class UpdateObjectView(UpdateView):
     # todo split into predefined_models for staff and for normal user
-    predefined_models = [
-        'Company',
-        'Industry'
-    ]
     template_name = 'default_form.html'
 
     # todo IMPORTANT: figure out permissions and who can modify what, maybe create more form types
 
     @assign_form(update=True)
     def get(self, request, *args, **kwargs):
-        print(f'get {self.success_url}')
         return super().get(request, *args, **kwargs)
 
     @assign_form(update=True)
     def post(self, request, *args, **kwargs):
-        print(f'post {self.success_url}')
-        return super().get(request, *args, **kwargs)
+        return super().post(request, *args, **kwargs)
 
 
 class AddObjectView(CreateView):
     # todo split into predefined_models for staff and for normal user
-    predefined_models = [
-        'Company',
-        'Industry'
-    ]
     template_name = 'default_form.html'
-    # todo decide what to do with success_url
-    success_url = '/'
 
     @assign_form(create=True)
     def get(self, request, *args, **kwargs):
@@ -150,4 +135,4 @@ class AddObjectView(CreateView):
 
     @assign_form(create=True)
     def post(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+        return super().post(request, *args, **kwargs)
