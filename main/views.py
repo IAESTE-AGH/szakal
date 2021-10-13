@@ -162,15 +162,32 @@ class DeleteObjectView(DeleteView):
         return super().post(request, *args, **kwargs)
 
 
-def assign_user_view(request, object, pk):
-    if object.capitalize() in PREDEFINED_MODELS_USER_MANAGED:
-        model = eval(object.capitalize())
-        object_ = model.objects.filter(id=pk).first()
-        if object_.user:
-            raise PermissionError('already taken')
+def assigning_decorator(func):
+    def wrap(request, object, pk, *args, **kwargs):
+        if object.capitalize() in PREDEFINED_MODELS_USER_MANAGED:
+            model = eval(object.capitalize())
+            object_ = model.objects.filter(id=pk).first()
         else:
-            object_.user = request.user
-            object_.save()
+            raise ValueError
+        func(request, object_, pk, *args, **kwargs)
+        return HttpResponseRedirect(f'/{object}')
+
+    return wrap
+
+
+@assigning_decorator
+def assign_user_view(request, object, pk):
+    if object.user:
+        raise PermissionError('already taken')
     else:
-        raise ValueError
-    return HttpResponseRedirect(f'/{object}')
+        object.user = request.user
+        object.save()
+
+
+@assigning_decorator
+def unassign_user_view(request, object, pk):
+    if object.user == request.user:
+        object.user = None
+        object.save()
+    else:
+        raise PermissionError('youre not assigned to it')
