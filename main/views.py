@@ -26,6 +26,8 @@ PREDEFINED_MODELS_USER_MANAGED = [
 PREDEFINED_MODELS_STAFF = [
     'Company',
     'Industry',
+    'Category',
+    'CategoryCompany',
     'Event'
 ]
 
@@ -33,6 +35,9 @@ PREDEFINED_MODELS = [
     'Assignment',
     'Company',
     'Contact',
+    'ContactPerson',
+    'Category',
+    'CategoryCompany',
     'Industry',
     'Event'
 ]
