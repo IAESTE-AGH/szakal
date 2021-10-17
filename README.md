@@ -8,7 +8,7 @@
 
 ### Pull latest mysql image
 
-`docker pull mysql/mysql-mysql-server:latest`
+`docker pull mysql/mysql-server:latest`
 
 ### To not use sudo all the time with docker command run this (or something similar xd)
 
