@@ -40,6 +40,8 @@ export DB_HOST=127.0.0.1
 
 export DB_PORT=3306
 
+export SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXX
+
 #### Esc ->  wq to escape vim
 
 `. ./env.sh`
