@@ -18,6 +18,10 @@
 
 `docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=<password> mysql/mysql-server -d mysql`
 
+### Create szakal database
+
+#### Run initial console commands from Console -> On first run, from below.
+
 ### Setup virtual environment and install requirements
 
 `python3 -m venv venv`
@@ -74,6 +78,20 @@ export SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXX
 `mysql-workbench-community`
 
 ### Console
+
+#### If commands don't work by default
+
+`sudo apt install mysql-shell`
+
+#### On first run:
+
+`mysql -u <name> -p -h 127.0.0.1`
+
+`create database szakal;`
+
+`\q`
+
+#### On every other:
 
 `mysql -u <name> -p -h 127.0.0.1 -n szakal`
 
