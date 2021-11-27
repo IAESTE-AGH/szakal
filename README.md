@@ -8,7 +8,7 @@
 
 ### Pull latest mysql image
 
-`docker pull mysql/mysql-mysql-server:latest`
+`docker pull mysql/mysql-server:latest`
 
 ### To not use sudo all the time with docker command run this (or something similar xd)
 
@@ -39,6 +39,8 @@ export DB_PASSWORD=XXXX
 export DB_HOST=127.0.0.1
 
 export DB_PORT=3306
+
+export SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXX
 
 #### Esc ->  wq to escape vim
 
