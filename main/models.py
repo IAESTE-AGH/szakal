@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class TimeStampMixin(models.Model):
@@ -8,6 +9,10 @@ class TimeStampMixin(models.Model):
 
     class Meta:
         abstract = True
+
+
+class User(AbstractUser):
+    phone_number = PhoneNumberField()
 
 
 class Assignment(TimeStampMixin):
@@ -67,6 +72,8 @@ class Company(TimeStampMixin):
     rating = models.FloatField(blank=True, null=True)
     number_of_ratings = models.IntegerField(blank=True, null=True)
 
+    next_contact_date = models.DateTimeField(blank=True, null=True)
+
     def __str__(self):
         return self.name
 
@@ -77,7 +84,7 @@ class Company(TimeStampMixin):
         db_table = 'szakal_companies'
 
 
-class ContactPerson(TimeStampMixin):
+class ContactPerson(TimeStampMixin):  # more than 1 per company
     company = models.ForeignKey('Company', models.DO_NOTHING)
     name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
@@ -94,7 +101,7 @@ class ContactPerson(TimeStampMixin):
 
 
 class Contact(TimeStampMixin):
-    contact_person = models.ForeignKey('ContactPerson', models.DO_NOTHING)
+    contact_person = models.ForeignKey('ContactPerson', models.DO_NOTHING)  # , blank=True, null=True)
     type = models.ForeignKey('ContactType', models.DO_NOTHING)
     event = models.ForeignKey('Event', models.DO_NOTHING)
     status = models.ForeignKey('Status', models.DO_NOTHING)
