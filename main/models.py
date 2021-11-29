@@ -12,7 +12,9 @@ class TimeStampMixin(models.Model):
 
 
 class User(AbstractUser):
-    phone_number = PhoneNumberField()
+    phone_number = PhoneNumberField(blank=True, null=True)
+    accepted = models.BooleanField(default=False)
+    logins = models.IntegerField(default=0)
 
 
 class Assignment(TimeStampMixin):
