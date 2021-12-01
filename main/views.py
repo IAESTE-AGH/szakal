@@ -68,17 +68,8 @@ def assign_form(create=False, update=False, delete=False):
 
 class RegisterView(CreateView):
     template_name = 'auth/user_form.html'
-    form_class = UserForm
-    success_url = reverse_lazy('home')
-
-    def form_valid(self, form):
-        form.save()
-        user = authenticate(
-            username=self.request.POST['username'],
-            password=self.request.POST['password']
-        )
-        login(self.request, user)
-        return HttpResponseRedirect(self.success_url)
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('login')
 
 
 class Home(LoginRequiredMixin, View):

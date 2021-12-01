@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
 
+from main.managers import CustomUserManager
+
 
 class TimeStampMixin(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -15,6 +17,8 @@ class User(AbstractUser):
     phone_number = PhoneNumberField(blank=True, null=True)
     accepted = models.BooleanField(default=False)
     logins = models.IntegerField(default=0)
+
+    objects = CustomUserManager()
 
 
 class Assignment(TimeStampMixin):
