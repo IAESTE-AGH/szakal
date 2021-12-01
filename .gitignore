@@ -6,5 +6,7 @@ __pychache__/
 *.py[cod]
 *$py.class
 
+*.sql
+
 # secrets
 backend/backend/settings_secret.py
