@@ -62,6 +62,10 @@ export SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXX
 
 `python3 manage.py migrate`
 
+### Create superuser
+
+`python3 manage.py createsuperuser root`
+
 ## On beginning of work
 
 `docker start mysql`
