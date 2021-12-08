@@ -22,6 +22,8 @@
 
 `docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=<password> mysql/mysql-server -d mysql`
 
+`docker start mysql`
+
 ### Create szakal database
 
 #### Run initial console commands from Console -> On first run, from below.
@@ -103,8 +105,12 @@ export SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXX
 
 `docker exec -it mysql bash`
 
-`mysql -u <name> -p -h 127.0.0.1`
+`mysql -u <name> -p`
 
-`mysql> flush privilages;`
+`CREATE USER 'username'@'%' IDENTIFIED BY 'password';`
+
+`GRANT ALL PRIVILEGES ON *.* TO 'username'@'%' WITH GRANT OPTION;`
+
+`FLUSH PRIVILEGES;`
 
 #### And now try again
