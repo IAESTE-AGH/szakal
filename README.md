@@ -4,7 +4,7 @@
 
 ### Install docker
 
-`apt install docker.io`
+```apt install docker.io```
 
 ### Pull latest mysql image
 
