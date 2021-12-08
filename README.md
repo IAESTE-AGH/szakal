@@ -64,7 +64,7 @@ export SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXX
 
 ### Create superuser
 
-`python3 manage.py createsuperuser root`
+`python3 manage.py createsuperuser`
 
 ## On beginning of work
 
