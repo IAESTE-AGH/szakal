@@ -4,15 +4,19 @@
 
 ### Install docker
 
-```apt install docker.io```
+'sudo apt install docker.io'
+
+### To not use sudo all the time with docker command run this (or something similar xd)
+
+`sudo groupadd docker`
+
+`sudo gpasswd -a $USER docker`
+
+`sudo service docker restart`
 
 ### Pull latest mysql image
 
 `docker pull mysql/mysql-server:latest`
-
-### To not use sudo all the time with docker command run this (or something similar xd)
-
-`usermod -aG docker $USER`
 
 ### Create and run docker container
 
@@ -81,7 +85,7 @@ export SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXX
 
 #### If commands don't work by default
 
-`sudo apt install mysql-shell`
+`sudo apt install mysql-client`
 
 #### On first run:
 
