@@ -4,7 +4,7 @@
 
 ### Install docker
 
-'sudo apt install docker.io'
+`sudo apt install docker.io`
 
 ### To not use sudo all the time with docker command run this (or something similar xd)
 
