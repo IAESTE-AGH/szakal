@@ -1,9 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Branże</h1>
+    <main>
+        <h1>Branze</h1>
 
-{% for industry in object_list %}
-    <p>{{ industry.id }} | {{ industry.name }}</p>
-{% endfor %}
-
+        <form action="/industries/add">
+            <input type="submit" value="Dodaj nowa branze">
+        </form>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for industry in object_list %}
+                    <tr>
+                        <td>{{ industry.id }}</td>
+                        <td>{{ industry.name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
 {% endblock %}
