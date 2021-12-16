@@ -1,9 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Eventy</h1>
+    <main>
+        <h1>Eventy</h1>
 
-{% for event in object_list %}
-    <p>{{ event.id }} | {{ event.name }}</p>
-{% endfor %}
+        <form action="/event/add">
+            <input type="submit" value="+Dodaj nowy event" />
+        </form>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for event in object_list %}
+                    <tr>
+                        <td>{{ event.id }}</td>
+                        <td>{{ event.name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
 
 {% endblock %}

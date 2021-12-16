@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+    <main>
+        <h1>Zadania</h1>
+
+        <form action="/assignment/add">
+            <input type="submit" value="+Dodaj nowe zadanie" />
+        </form>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Data utworzenia</th>
+                <th>Data aktualizacji</th>
+                <th>Aktywny</th>
+                <th>Id firmy</th>
+                <th>Id wydarzenia</th>
+                <th>Id użytkownika</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for assignment in object_list %}
+                    <tr>
+                        <td>{{ assignment.id }}</td>
+                        <td>{{ assignment.created_at }}</td>
+                        <td>{{ assignment.updated_at }}</td>
+                        <td>{{ assignment.active }}</td>
+                        <td>{{ assignment.company_id }}</td>
+                        <td>{{ assignment.event_id }}</td>
+                        <td>{{ assignment.user_id }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+
+{% endblock %}

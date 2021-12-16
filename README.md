@@ -4,7 +4,7 @@
 
 ### Install docker
 
-`sudo apt install docker.io`
+`sudo apt install docker.io python3.8 python3.8-dev gcc vim`
 
 ### To not use sudo all the time with docker command run this (or something similar xd)
 
@@ -61,6 +61,10 @@ export SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXX
 `python3 manage.py makemigrations`
 
 `python3 manage.py migrate`
+
+### Create superuser
+
+`python3 manage.py createsuperuser`
 
 ## On beginning of work
 

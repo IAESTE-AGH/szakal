@@ -1,7 +1,7 @@
 from django.forms import ModelForm, PasswordInput
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
-from main.models import User, Industry, Company, Category, Event, CategoryCompany
+from main.models import User, Industry, Company, Category, Event, CategoryCompany, Assignment
 
 
 class UserForm(ModelForm):
@@ -67,3 +67,9 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = User
         fields = ('email', 'username')
+
+
+class AssignmentCreateForm(DefaultForm):
+    class Meta(DefaultForm.Meta):
+        model = Assignment
+        exclude = ('update_date', 'created_at')
