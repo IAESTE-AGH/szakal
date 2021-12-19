@@ -1,4 +1,4 @@
-from django.forms import ModelForm, PasswordInput
+from django.forms import ModelForm, PasswordInput, MultipleChoiceField
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from main.models import User, Industry, Company, Category, Event, CategoryCompany, Assignment
@@ -25,13 +25,25 @@ class DefaultForm(ModelForm):
         fields = '__all__'
 
 
+class ExtendedForm(DefaultForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        choices = ((obj.id, obj.name) for obj in self.MODEL.objects.all())
+
+        self.fields[self.DISPLAY_NAME] = MultipleChoiceField(choices=choices)
+
+
 class IndustryCreateForm(DefaultForm):
     class Meta(DefaultForm.Meta):
         model = Industry
 
 
-class CompanyCreateForm(DefaultForm):
-    class Meta(DefaultForm.Meta):
+class CompanyCreateForm(ExtendedForm):
+    MODEL = Category
+    DISPLAY_NAME = 'categories'
+
+    class Meta(ExtendedForm.Meta):
         model = Company
         exclude = ('update_date', 'insert_date')
 
