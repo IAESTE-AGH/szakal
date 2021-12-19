@@ -1,9 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Kategorie</h1>
-
-{% for category in object_list %}
-    <p>{{ category.id }} | {{ category.name }}</p>
-{% endfor %}
+    <main>
+        <h1>Wybierz kategorię</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for category in object_list %}
+                    <tr>
+                        <td>{{ category.id }}</td>
+                        <td>{{ category.name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
 
 {% endblock %}
