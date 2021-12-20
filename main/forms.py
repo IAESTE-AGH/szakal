@@ -33,6 +33,12 @@ class ExtendedForm(DefaultForm):
 
         self.fields[self.RELATED_DISPLAY_NAME] = MultipleChoiceField(choices=choices)
 
+        params = {self.Meta.model.__name__.lower(): self.instance.id}
+        initial_ids = [getattr(obj, self.RELATED_MODEL.__name__.lower()).id for obj in
+                       self.MANY_TO_MANY_MODEL.objects.filter(**params).all()]
+
+        self.fields[self.RELATED_DISPLAY_NAME].initial = initial_ids
+
 
 class IndustryCreateForm(DefaultForm):
     class Meta(DefaultForm.Meta):
