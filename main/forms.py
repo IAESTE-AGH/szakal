@@ -52,7 +52,7 @@ class CompanyCreateForm(ExtendedForm):
 
     class Meta(ExtendedForm.Meta):
         model = Company
-        exclude = ('update_date', 'insert_date')
+        exclude = ('user', 'update_date', 'insert_date')
 
 
 class CompanyUpdateForm(ExtendedForm):
@@ -95,4 +95,4 @@ class CustomUserChangeForm(UserChangeForm):
 class AssignmentCreateForm(DefaultForm):
     class Meta(DefaultForm.Meta):
         model = Assignment
-        exclude = ('update_date', 'created_at')
+        exclude = ('user', 'update_date', 'created_at')

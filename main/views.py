@@ -52,7 +52,10 @@ def assign_form(create=False, update=False, delete=False):
                 self.model = eval(object_)
                 self.object = None
                 if update:
-                    self.form_class = eval(f'{object_}UpdateForm')
+                    if request.user.is_staff or eval(object_).objects.get(id=kwargs['pk']).user == request.user:
+                        self.form_class = eval(f'{object_}UpdateForm')
+                    else:
+                        return PermissionError
                 elif create:
                     self.form_class = eval(f'{object_}CreateForm')
                 elif delete:
@@ -74,7 +77,12 @@ def handle_extended_form(create=False, update=False):
                 form = self.form_class(request.POST)
                 if form.is_valid():
                     if create:
-                        instance = form.save()
+                        if self.kwargs['object'].capitalize() in PREDEFINED_MODELS_USER_MANAGED and not request.user.is_staff:
+                            instance = form.save(commit=False)
+                            instance.user = request.user
+                            instance.save()
+                        else:
+                            instance = form.save()
                     elif update:
                         instance = self.form_class.Meta.model.objects.get(id=kwargs['pk'])
                     else:
@@ -101,6 +109,7 @@ def handle_extended_form(create=False, update=False):
                 return func(self, request, *args, **kwargs)
 
         return wrap
+
     return decorator
 
 
