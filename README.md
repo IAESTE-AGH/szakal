@@ -4,7 +4,11 @@
 
 ### Install docker
 
-`sudo apt install docker.io python3.8 python3.8-dev python3.8-venv gcc vim`
+`sudo apt install docker.io python3.8 python3.8-dev python3.8-venv gcc vim libmysqlclient-dev`
+
+`pip3 install --upgrade pip`
+
+`pip3 install --upgrade setuptools`
 
 ### To not use sudo all the time with docker command run this (or something similar xd)
 
