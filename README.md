@@ -4,7 +4,7 @@
 
 ### Install docker
 
-`sudo apt install docker.io python3.8 python3.8-dev gcc vim`
+`sudo apt install docker.io python3.8 python3.8-dev python3.8-venv gcc vim`
 
 ### To not use sudo all the time with docker command run this (or something similar xd)
 
