@@ -2,7 +2,7 @@ import datetime
 
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -64,6 +64,32 @@ def assign_form(create=False, update=False, delete=False):
         return wrap
 
     return decorator
+
+
+# todo prevent duplicates
+def handle_extended_form(func):
+    def wrap(self, request, *args, **kwargs):
+        if issubclass(self.form_class, ExtendedForm):
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                instance = form.save()
+                b_id = instance.id
+
+                for a_id in form.cleaned_data[self.form_class.RELATED_DISPLAY_NAME]:
+                    a_name = self.form_class.RELATED_MODEL.__name__.lower()
+                    b_name = self.form_class.Meta.model.__name__.lower()
+                    parameters = {
+                        f'{a_name}_id': a_id,
+                        f'{b_name}_id': b_id
+                    }
+                    new = self.form_class.MANY_TO_MANY_MODEL(**parameters)
+                    print(new)
+                    new.save()
+                return HttpResponseRedirect(self.success_url, status=200)
+        else:
+            return func(self, request, *args, **kwargs)
+
+    return wrap
 
 
 class RegisterView(CreateView):
@@ -142,6 +168,7 @@ class AddObjectView(CreateView):
         return super().get(request, *args, **kwargs)
 
     @assign_form(create=True)
+    @handle_extended_form
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 

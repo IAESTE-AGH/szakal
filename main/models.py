@@ -53,7 +53,7 @@ class Category(models.Model):
 
 class CategoryCompany(models.Model):
     category = models.ForeignKey('Category', models.DO_NOTHING)
-    company = models.ForeignKey('Company', models.DO_NOTHING)
+    company = models.ForeignKey('Company', models.CASCADE)
 
     def __str__(self):
         return f'{self.category.name} - {self.company.name}'
@@ -157,7 +157,7 @@ class Industry(models.Model):
 
 class IndustryCompany(models.Model):
     industry = models.ForeignKey('Industry', models.DO_NOTHING)
-    company = models.ForeignKey('Company', models.DO_NOTHING)
+    company = models.ForeignKey('Company', models.CASCADE)
 
     def __str__(self):
         return f'{self.industry.name} - {self.company.name}'

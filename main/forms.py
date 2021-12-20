@@ -29,9 +29,9 @@ class ExtendedForm(DefaultForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        choices = ((obj.id, obj.name) for obj in self.MODEL.objects.all())
+        choices = ((obj.id, obj.name) for obj in self.RELATED_MODEL.objects.all())
 
-        self.fields[self.DISPLAY_NAME] = MultipleChoiceField(choices=choices)
+        self.fields[self.RELATED_DISPLAY_NAME] = MultipleChoiceField(choices=choices)
 
 
 class IndustryCreateForm(DefaultForm):
@@ -40,8 +40,9 @@ class IndustryCreateForm(DefaultForm):
 
 
 class CompanyCreateForm(ExtendedForm):
-    MODEL = Category
-    DISPLAY_NAME = 'categories'
+    RELATED_MODEL = Category
+    RELATED_DISPLAY_NAME = 'categories'
+    MANY_TO_MANY_MODEL = CategoryCompany
 
     class Meta(ExtendedForm.Meta):
         model = Company
