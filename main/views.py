@@ -37,7 +37,8 @@ PREDEFINED_MODELS = [
     'ContactPerson',
     'Category',
     'Industry',
-    'Event'
+    'Event',
+    'User'
 ]
 
 
@@ -128,6 +129,22 @@ class Home(LoginRequiredMixin, View):
             "companies_unmanaged": Company.objects.filter(user=None).count(),
             "user_count": User.objects.all().count(),
             "user_managed_companies": Company.objects.filter(user=request.user).all()
+        }
+        return render(request, self.template, context)
+
+
+class ProfileView(LoginRequiredMixin, View):
+    template = 'user.html'
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        context = {
+            "id": user.id,
+            "username": user.username,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "phone_number": user.phone_number
         }
         return render(request, self.template, context)
 

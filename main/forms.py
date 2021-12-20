@@ -96,3 +96,9 @@ class AssignmentCreateForm(DefaultForm):
     class Meta(DefaultForm.Meta):
         model = Assignment
         exclude = ('user', 'update_date', 'created_at')
+
+
+class UserUpdateForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'phone_number']
