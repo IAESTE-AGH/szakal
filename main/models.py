@@ -107,7 +107,7 @@ class ContactPerson(TimeStampMixin):  # more than 1 per company
 
 
 class Contact(TimeStampMixin):
-    contact_person = models.ForeignKey('ContactPerson', models.DO_NOTHING)  # , blank=True, null=True)
+    contact_person = models.ForeignKey('ContactPerson', models.CASCADE)  # will delete Contact on delete of ContactPerson
     type = models.ForeignKey('ContactType', models.DO_NOTHING)
     event = models.ForeignKey('Event', models.DO_NOTHING)
     status = models.ForeignKey('Status', models.DO_NOTHING)

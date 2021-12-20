@@ -23,12 +23,11 @@ PREDEFINED_MODELS_USER_MANAGED = [
     'Contact'
 ]
 
-PREDEFINED_MODELS_STAFF = [
+PREDEFINED_MODELS_USER = [
     'Company',
-    'Industry',
-    'Category',
-    'CategoryCompany',
-    'Event'
+    'Contact',
+    'ContactPerson',
+    'Assignment'
 ]
 
 PREDEFINED_MODELS = [
@@ -37,7 +36,6 @@ PREDEFINED_MODELS = [
     'Contact',
     'ContactPerson',
     'Category',
-    'CategoryCompany',
     'Industry',
     'Event'
 ]
@@ -48,6 +46,9 @@ def assign_form(create=False, update=False, delete=False):
         def wrap(self, request, *args, **kwargs):
             object_ = self.kwargs['object'].capitalize()
             if object_ in PREDEFINED_MODELS:
+                if not request.user.is_staff and object_ not in PREDEFINED_MODELS_USER:
+                    return PermissionError
+
                 self.model = eval(object_)
                 self.object = None
                 if update:
@@ -155,11 +156,8 @@ class ListObjectsView(LoginRequiredMixin, ListView):
             raise ValueError
 
 
-class UpdateObjectView(UpdateView):
-    # todo split into predefined_models for staff and for normal user
+class UpdateObjectView(LoginRequiredMixin, UpdateView):
     template_name = 'default_form.html'
-
-    # todo IMPORTANT: figure out permissions and who can modify what, maybe create more form types
 
     @assign_form(update=True)
     def get(self, request, *args, **kwargs):
@@ -171,8 +169,7 @@ class UpdateObjectView(UpdateView):
         return super().post(request, *args, **kwargs)
 
 
-class AddObjectView(CreateView):
-    # todo split into predefined_models for staff and for normal user
+class AddObjectView(LoginRequiredMixin, CreateView):
     template_name = 'default_form.html'
 
     @assign_form(create=True)
@@ -185,7 +182,7 @@ class AddObjectView(CreateView):
         return super().post(request, *args, **kwargs)
 
 
-class DeleteObjectView(DeleteView):
+class DeleteObjectView(LoginRequiredMixin, DeleteView):
     template_name = 'default_form.html'
 
     @assign_form(delete=True)
