@@ -49,8 +49,12 @@ class CompanyCreateForm(ExtendedForm):
         exclude = ('update_date', 'insert_date')
 
 
-class CompanyUpdateForm(DefaultForm):
-    class Meta(DefaultForm.Meta):
+class CompanyUpdateForm(ExtendedForm):
+    RELATED_MODEL = Category
+    RELATED_DISPLAY_NAME = 'categories'
+    MANY_TO_MANY_MODEL = CategoryCompany
+
+    class Meta(ExtendedForm.Meta):
         model = Company
         exclude = ('update_date', 'insert_date', 'deleted', 'delete_date', 'number_of_ratings', 'update_person_name')
 

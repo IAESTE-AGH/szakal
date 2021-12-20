@@ -66,30 +66,41 @@ def assign_form(create=False, update=False, delete=False):
     return decorator
 
 
-# todo prevent duplicates
-def handle_extended_form(func):
-    def wrap(self, request, *args, **kwargs):
-        if issubclass(self.form_class, ExtendedForm):
-            form = self.form_class(request.POST)
-            if form.is_valid():
-                instance = form.save()
-                b_id = instance.id
+def handle_extended_form(create=False, update=False):
+    def decorator(func):
+        def wrap(self, request, *args, **kwargs):
+            if issubclass(self.form_class, ExtendedForm):
+                form = self.form_class(request.POST)
+                if form.is_valid():
+                    if create:
+                        instance = form.save()
+                    elif update:
+                        instance = self.form_class.Meta.model.objects.get(id=kwargs['pk'])
+                    else:
+                        raise ValueError
 
-                for a_id in form.cleaned_data[self.form_class.RELATED_DISPLAY_NAME]:
+                    b_id = instance.id
                     a_name = self.form_class.RELATED_MODEL.__name__.lower()
                     b_name = self.form_class.Meta.model.__name__.lower()
-                    parameters = {
-                        f'{a_name}_id': a_id,
-                        f'{b_name}_id': b_id
-                    }
-                    new = self.form_class.MANY_TO_MANY_MODEL(**parameters)
-                    print(new)
-                    new.save()
-                return HttpResponseRedirect(self.success_url, status=200)
-        else:
-            return func(self, request, *args, **kwargs)
 
-    return wrap
+                    if update:
+                        filter_params = {f'{b_name}_id': b_id}
+                        self.form_class.MANY_TO_MANY_MODEL.objects.filter(**filter_params).delete()
+
+                    for a_id in form.cleaned_data[self.form_class.RELATED_DISPLAY_NAME]:
+                        parameters = {
+                            f'{a_name}_id': a_id,
+                            f'{b_name}_id': b_id
+                        }
+                        new = self.form_class.MANY_TO_MANY_MODEL(**parameters)
+                        new.save()
+
+                    return HttpResponseRedirect(self.success_url, status=200)
+            else:
+                return func(self, request, *args, **kwargs)
+
+        return wrap
+    return decorator
 
 
 class RegisterView(CreateView):
@@ -155,6 +166,7 @@ class UpdateObjectView(UpdateView):
         return super().get(request, *args, **kwargs)
 
     @assign_form(update=True)
+    @handle_extended_form(update=True)
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
@@ -168,7 +180,7 @@ class AddObjectView(CreateView):
         return super().get(request, *args, **kwargs)
 
     @assign_form(create=True)
-    @handle_extended_form
+    @handle_extended_form(create=True)
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
