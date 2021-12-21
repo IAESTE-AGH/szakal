@@ -7,6 +7,7 @@ urlpatterns = [
     path('accounts/register/', views.RegisterView.as_view(), name='register'),
     path('accounts/login/', LoginView.as_view(), name='login'),
     path('accounts/logout/', LogoutView.as_view(), name='logout'),
+    path('user/', views.ProfileView.as_view(), name='profile'),
     path('password_reset/', PasswordResetView.as_view(), name='password_reset'),  # todo test
 
     path('<str:object>/add/', views.AddObjectView.as_view(), name='add'),

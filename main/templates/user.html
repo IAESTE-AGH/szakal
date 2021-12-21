@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+    <main>
+        <h1>Profil</h1>
+
+        <table class="table">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td>Nazwa użytkownika</td>
+                    <td>{{ username }}</td>
+                </tr>
+                <tr>
+                    <td>Imię</td>
+                    <td>{{ first_name }}</td>
+                </tr>
+                <tr>
+                    <td>Nazwisko</td>
+                    <td>{{ last_name }}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{ email }}</td>
+                </tr>
+                <tr>
+                    <td>Numer telefonu</td>
+                    <td>{{ phone_number }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <form action="/user/{{ id }}">
+            <input type="submit" value="Edytuj" />
+        </form>
+    </main>
+
+{% endblock %}
