@@ -171,24 +171,26 @@ class ListObjectsView(LoginRequiredMixin, ListView):
         else:
             raise ValueError
 
+        sort_order = '-id' if not self.request.GET.get('order') == 'asc' else 'id'
+
         whos = self.kwargs.get('whos')
         if not whos:
             model = eval(model)
-            return model.objects.all()
+            return model.objects.all().order_by(sort_order)
         elif model == 'Event':
             model = eval(model)
             if whos == 'local':
-                return model.objects.filter(local=True)
+                return model.objects.filter(local=True).order_by(sort_order)
             elif whos == 'global':
-                return model.objects.filter(local=False)
+                return model.objects.filter(local=False).order_by(sort_order)
             else:
                 raise ValueError
         elif model in PREDEFINED_MODELS_USER_MANAGED:
             model = eval(model)
             if whos == 'my':
-                return model.objects.filter(user=self.request.user)
+                return model.objects.filter(user=self.request.user).order_by(sort_order)
             elif whos == 'taken':
-                return model.objects.filter(user__isnull=False)
+                return model.objects.filter(user__isnull=False).order_by(sort_order)
             else:
                 raise ValueError
         else:
