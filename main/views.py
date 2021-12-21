@@ -1,5 +1,6 @@
 import datetime
 
+from django.db.models import Count
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
@@ -125,12 +126,24 @@ class Home(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         context = {
-            "company_count": Company.objects.all().count(),
-            "companies_unmanaged": Company.objects.filter(user=None).count(),
-            "user_count": User.objects.all().count(),
-            "user_managed_companies": Company.objects.filter(user=request.user).all()
+            "stats": {
+                "company_count": Company.objects.all().count(),
+                "companies_unmanaged": Company.objects.filter(user=None).count(),
+                "user_count": User.objects.all().count(),
+                "user_managed_companies": Company.objects.filter(user=request.user).all()
+            },
+            "events": {
+                "allEvents": Event.objects.name,
+                "currentEvent": Event.objects.filter(active=True)[0]
+            },
+            "users": User.objects.annotate(companyCount=Count('company')).order_by('-companyCount')[:10]
         }
         return render(request, self.template, context)
+
+    @assign_form(update=True)
+    @handle_extended_form(update=True)
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
 
 
 class ProfileView(LoginRequiredMixin, View):

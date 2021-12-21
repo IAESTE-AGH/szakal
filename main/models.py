@@ -131,9 +131,21 @@ class Contact(TimeStampMixin):
 class Event(models.Model):
     name = models.CharField(max_length=20)
     local = models.BooleanField(default=True)
+    active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.active:
+            try:
+                temp = Event.objects.get(active=True)
+                if self != temp:
+                    temp.active = False
+                    temp.save()
+            except Event.DoesNotExist:
+                pass
+        super(Event, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Event'

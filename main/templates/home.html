@@ -1,20 +1,124 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>HOME PAGE</h1>
-<h2>{{ request.user.username }}</h2>
+    <h1>Baza firm - Pulpit</h1>
+    <br>
+    <main>
+        <table id="stats" class="table">
+            <thead>
+            <tr>
+                <th colspan="2">Statystyki</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Ilość firm w komitecie Lokalnym</td>
+                <td>{{ stats.company_count }}</td>
+            </tr>
+            <tr>
+                <td>Ilość wolnych firm w tym roku</td>
+                <td>{{ stats.companies_unmanaged }}</td>
+            </tr>
+            <tr>
+                <td>Ilość uczestników</td>
+                <td>{{ stats.user_count }}</td>
+            </tr>
+            <tr>
+                <td>Ilość ofert praktyk</td>
+                 <!-- TODO -->
+            </tr>
+            <tr>
+                <td>Koordynatorzy AZOP w komitecie Lokalnym:</td>
+                 <!-- TODO -->
+            </tr>
+            </tbody>
+        </table>
 
-<a href="{%url 'register'%}">Zarejestruj sie</a>
-<a href="{%url 'login'%}">Zaloguj sie</a>
-<a href="{%url 'logout'%}">Wyloguj sie</a>
-<a href="{%url 'profile' %}">Profil</a>
+        <br>
 
-<h3>Statystyki</h3>
-<p>Company count: {{ company_count }}</p>
-<p>Companies unmanaged: {{ companies_unmanaged }}</p>
-<p>User count: {{ user_count }}</p>
-<br>
-<p>My companies:</p>
-{% for company in user_managed_companies %}
-<li>{{ company }}</li>
-{% endfor %}
+        <table id="shortcuts" class="table">
+            <thead>
+            <tr>
+                <th>Skróty</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <a href="/company/">Moje firmy</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="/company/">Wszystkie firmy</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="/company/">Firmy zajęte</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <br>
+
+        <table id="currentAction" class="table">
+            <thead>
+            <tr>
+                <th>Bieżąca akcja</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    {{ events.currentEvent }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- TODO -->
+                    <a href=".">zmień</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <br>
+
+        <table id="top10" class="table">
+            <thead>
+            <tr>
+                <th colspan="3">TOP 10</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                    <td>{{ user.companyCount }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+
+        <table id="myCompaniesStates" class="table">
+            <tbody>
+            <tr>
+                <th>Statusy moich firm</th>
+            </tr>
+
+            </tbody>
+            <thead>
+            <tr>
+                <!-- TODO -->
+            </tr>
+            </thead>
+        </table>
+    </main>
+
 {% endblock %}
