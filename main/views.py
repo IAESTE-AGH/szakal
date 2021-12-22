@@ -129,17 +129,17 @@ class Home(LoginRequiredMixin, View):
                 "user_managed_companies": Company.objects.filter(user=request.user).all()
             },
             "events": {
-                "allEvents": Event.objects.name,
-                "currentEvent": Event.objects.filter(active=True)[0]
+                "currentEvents": Event.objects.filter(active=True)
             },
-            "users": User.objects.annotate(companyCount=Count('company')).order_by('-companyCount')[:10]
+            "users": User.objects.annotate(companyCount=Count('company')).order_by('-companyCount')[:10],
+            "myCompanies": Contact.objects.select_related('company', 'status').filter(user=request.user)
         }
         return render(request, self.template, context)
 
     @assign_form(update=True)
     @handle_extended_form(update=True)
     def post(self, request, *args, **kwargs):
-        return super().post(request, *args, **kwargs)
+        return super().post(request, *args, {**kwargs})
 
 
 class ProfileView(LoginRequiredMixin, View):
@@ -196,6 +196,19 @@ class ListObjectsView(LoginRequiredMixin, ListView):
                 raise PermissionDenied
         else:
             raise PermissionDenied
+
+
+class UpdateEventActiveView(LoginRequiredMixin, UpdateView):
+    template_name = 'eventSetActive.html'
+
+    @assign_form(update=True)
+    def get(self, request, *args, **kwargs):
+        return Event.objects.filter(active=False)
+
+    @assign_form(update=True)
+    @handle_extended_form(update=True)
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
 
 
 class UpdateObjectView(LoginRequiredMixin, UpdateView):
