@@ -134,6 +134,7 @@ class Home(LoginRequiredMixin, View):
             "users": User.objects.annotate(companyCount=Count('company')).order_by('-companyCount')[:10],
             "myCompanies": Contact.objects.select_related('company', 'status').filter(user=request.user)
         }
+
         return render(request, self.template, context)
 
     @assign_form(update=True)
