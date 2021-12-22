@@ -44,7 +44,7 @@
             <tbody>
             <tr>
                 <td>
-                    <a href="/company/">Moje firmy</a>
+                    <a href="/company/my">Moje firmy</a>
                 </td>
             </tr>
 
@@ -56,7 +56,7 @@
 
             <tr>
                 <td>
-                    <a href="/company/">Firmy zajęte</a>
+                    <a href="/company/taken">Firmy zajęte</a>
                 </td>
             </tr>
             </tbody>
@@ -67,19 +67,18 @@
         <table id="currentAction" class="table">
             <thead>
             <tr>
-                <th>Bieżąca akcja</th>
+                <th>Bieżące akcje</th>
             </tr>
             </thead>
             <tbody>
+            {% for event in events.currentEvents %}
+                <tr>
+                    <td>{{ event }}</td>
+                </tr>
+            {% endfor %}
             <tr>
                 <td>
-                    {{ events.currentEvent }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <!-- TODO -->
-                    <a href=".">zmień</a>
+                    <a href="/event/">zmień</a>
                 </td>
             </tr>
             </tbody>
@@ -107,17 +106,29 @@
         <br>
 
         <table id="myCompaniesStates" class="table">
-            <tbody>
-            <tr>
-                <th>Statusy moich firm</th>
-            </tr>
-
-            </tbody>
             <thead>
             <tr>
-                <!-- TODO -->
+                <th colspan="4">Statusy moich firm</th>
             </tr>
+
             </thead>
+            <tbody>
+            {% for company in myCompanies %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ company.company.name }}</td>
+                    <td>{{ company.event.name }}</td>
+                    <td>{{ company.status.name }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td>
+                        <h4>Nie masz żadnych firm</h4>
+                        <a href="/contact/add">Zmień to!</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
         </table>
     </main>
 

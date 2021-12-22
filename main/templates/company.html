@@ -4,7 +4,7 @@
 <h2>{{ request.user.username }}</h2>
 
 {% for company in object_list %}
-<p>{{ company.id }} | {{ company.name }} <- {{ company.user.username }}</p>
+<p>{{ forloop.counter }} | {{ company.name }} <- {{ company.user.username }}</p>
 <p>{{ company.created_at }} ||| {{ company.updated_at }}</p>
 {% endfor %}
 
