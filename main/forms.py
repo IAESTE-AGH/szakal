@@ -80,6 +80,12 @@ class EventCreateForm(DefaultForm):
         model = Event
 
 
+class EventUpdateForm(ModelForm):
+    class Meta:
+        model = Event
+        fields = ['active']
+
+
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
@@ -102,3 +108,14 @@ class UserUpdateForm(ModelForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'phone_number']
+
+
+# class ContactCreateForm(ExtendedForm):
+#     RELATED_MODEL = Category
+#     RELATED_DISPLAY_NAME = 'categories'
+#     MANY_TO_MANY_MODEL = CategoryCompany
+#
+#     class Meta(DefaultForm.Meta):
+#         model = Contact
+#         fields = ['accepted', 'date', 'comment', 'rating', 'company', 'contact_person', 'event', 'status',
+#                   'type']
