@@ -136,17 +136,6 @@ class Event(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        if self.active:
-            try:
-                temp = Event.objects.get(active=True)
-                if self != temp:
-                    temp.active = False
-                    temp.save()
-            except Event.DoesNotExist:
-                pass
-        super(Event, self).save(*args, **kwargs)
-
     class Meta:
         verbose_name = 'Event'
         verbose_name_plural = 'Events'
