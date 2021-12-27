@@ -10,3 +10,6 @@ __pychache__/
 
 # secrets
 backend/backend/settings_secret.py
+
+# JetBrains IDEs
+.idea/
