@@ -9,10 +9,16 @@ jobs:
 
       - name: Set up environment variables
         run: |
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
           echo "DB_NAME=${{ secrets.DB_NAME_PROD }}" >> $GITHUB_ENV
           echo "DB_USER=${{ secrets.DB_USER_PROD }}" >> $GITHUB_ENV
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD_PROD }}" >> $GITHUB_ENV
           echo "DB_HOST=${{ secrets.DB_HOST_PROD }}" >> $GITHUB_ENV
           echo "DB_PORT=${{ secrets.DB_PORT_PROD }}" >> $GITHUB_ENV
-          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+
+      - name: Dump env variables to
+
+      # todo: build the image and push it to a private registry
+      - name: Build and run the app
+        run: |
 

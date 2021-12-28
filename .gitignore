@@ -13,3 +13,6 @@ backend/backend/settings_secret.py
 
 # JetBrains IDEs
 .idea/
+
+# env variables file with
+.env
