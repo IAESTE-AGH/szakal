@@ -4,6 +4,9 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Clone the repository
+        uses: actions/checkout@v2
+
       - name: Set up environment variables
         run: |
           echo "DB_NAME=${{ secrets.DB_NAME_PROD }}" >> $GITHUB_ENV
