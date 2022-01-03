@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo DEBUG=0 >> .env
+echo DEBUG=0 > .env
 
 echo SECRET_KEY=$SECRET_KEY >> .env
 echo DB_NAME=$DB_NAME >> .env
