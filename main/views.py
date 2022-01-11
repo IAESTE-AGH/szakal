@@ -1,13 +1,17 @@
-from django import template
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
-from django.core.exceptions import PermissionDenied
+import datetime
+
 from django.db.models import Count
-from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django import template
 from django.views import View
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from main.forms import *
 from main.models import *
@@ -45,7 +49,7 @@ def assign_form(create=False, update=False, delete=False):
             object_ = self.kwargs['object'].capitalize()
             if object_ in PREDEFINED_MODELS:
                 if not request.user.is_staff and object_ not in PREDEFINED_MODELS_USER:
-                    raise PermissionDenied
+                    return PermissionError
 
                 self.model = eval(object_)
                 self.object = None
@@ -53,7 +57,7 @@ def assign_form(create=False, update=False, delete=False):
                     if request.user.is_staff or eval(object_).objects.get(id=kwargs['pk']).user == request.user:
                         self.form_class = eval(f'{object_}UpdateForm')
                     else:
-                        raise PermissionDenied
+                        return PermissionError
                 elif create:
                     self.form_class = eval(f'{object_}CreateForm')
                 elif delete:
@@ -61,7 +65,7 @@ def assign_form(create=False, update=False, delete=False):
 
                 self.success_url = f'/{object_.lower()}'
                 return func(self, request, *args, **kwargs)
-            return HttpResponse(status=204)
+            return ValueError
 
         return wrap
 
@@ -84,7 +88,7 @@ def handle_extended_form(create=False, update=False):
                     elif update:
                         instance = self.form_class.Meta.model.objects.get(id=kwargs['pk'])
                     else:
-                        return HttpResponse(status=203)
+                        raise ValueError
 
                     b_id = instance.id
                     a_name = self.form_class.RELATED_MODEL.__name__.lower()
@@ -160,18 +164,13 @@ class ProfileView(LoginRequiredMixin, View):
 
 
 class ListObjectsView(LoginRequiredMixin, ListView):
+    def get_queryset(self):
+        model = self.kwargs['object'].capitalize()
 
-    def get(self, request, *args, **kwargs):
-        model = kwargs['object'].capitalize()
         if model in PREDEFINED_MODELS:
             self.template_name = f'{model.lower()}.html'
         else:
-            return HttpResponse(status=204)
-
-        super().get(request, *args, **kwargs)
-
-    def get_queryset(self):
-        model = self.kwargs['object'].capitalize()
+            raise ValueError
 
         sort_order = '-id' if not self.request.GET.get('order') == 'asc' else 'id'
 
@@ -186,7 +185,7 @@ class ListObjectsView(LoginRequiredMixin, ListView):
             elif whos == 'global':
                 return model.objects.filter(local=False).order_by(sort_order)
             else:
-                raise PermissionDenied
+                raise ValueError
         elif model in PREDEFINED_MODELS_USER_MANAGED:
             model = eval(model)
             if whos == 'my':
@@ -194,9 +193,9 @@ class ListObjectsView(LoginRequiredMixin, ListView):
             elif whos == 'taken':
                 return model.objects.filter(user__isnull=False).order_by(sort_order)
             else:
-                raise PermissionDenied
+                raise ValueError
         else:
-            raise PermissionDenied
+            raise ValueError
 
 
 class UpdateEventActiveView(LoginRequiredMixin, UpdateView):
@@ -256,7 +255,7 @@ def assigning_decorator(func):
             model = eval(object.capitalize())
             object_ = model.objects.filter(id=pk).first()
         else:
-            raise PermissionDenied
+            raise ValueError
         func(request, object_, pk, *args, **kwargs)
         return HttpResponseRedirect(f'/{object}')
 
@@ -266,7 +265,7 @@ def assigning_decorator(func):
 @assigning_decorator
 def assign_user_view(request, object, pk):
     if object.user:
-        raise PermissionDenied('already taken')
+        raise PermissionError('already taken')
     else:
         object.user = request.user
         object.save()
@@ -278,4 +277,4 @@ def unassign_user_view(request, object, pk):
         object.user = None
         object.save()
     else:
-        raise PermissionDenied("you're not assigned to it")
+        raise PermissionError('youre not assigned to it')
