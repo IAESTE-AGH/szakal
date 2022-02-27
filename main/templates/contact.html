@@ -2,7 +2,7 @@
 {% block content %}
 <h1>Kontakty</h1>
 <h2>{{ request.user.username }}</h2>
-
+{% include 'components/sort.html' %}
 {% for contact in object_list %}
     <p>{{ contact.id }} | {{ contact.name }}</p>
 {% endfor %}

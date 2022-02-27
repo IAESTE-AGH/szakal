@@ -1,0 +1,35 @@
+<form method="get" action=".">
+    <label for="sort_by">Sortuj po:</label>
+    <select name="sort_by" id="sort_by">
+        {% for field in fields %}
+            <option value={{ field.name }}>{{ field.name }}</option>
+        {% endfor %}
+    </select>
+    <select name="order" id="order">
+        <option value="asc">rosnąco</option>
+        <option value="desc">malejąco</option>
+    </select>
+    <button>sortuj</button>
+</form>
+
+<script>
+    document.getElementById("sort_by").value = getQueryParameter("sort_by") ?? "id"
+    document.getElementById("order").value = getQueryParameter("order") ?? "malejąco"
+
+    function getQueryParameter(parameterName) {
+        var queryString = window.top.location.search.substring(1);
+        var parameterName = parameterName + "=";
+        if (queryString.length > 0) {
+            begin = queryString.indexOf(parameterName);
+            if (begin != -1) {
+                begin += parameterName.length;
+                end = queryString.indexOf("&", begin);
+                if (end == -1) {
+                    end = queryString.length
+                }
+                return unescape(queryString.substring(begin, end));
+            }
+        }
+        return;
+    }
+</script>

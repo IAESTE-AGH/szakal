@@ -6,6 +6,9 @@
         <form action="/industries/add">
             <input type="submit" value="Dodaj nowa branze">
         </form>
+
+        {% include 'components/sort.html' %}
+
         <table class="table">
             <thead>
             <tr>
@@ -14,12 +17,12 @@
             </tr>
             </thead>
             <tbody>
-                {% for industry in object_list %}
-                    <tr>
-                        <td>{{ industry.id }}</td>
-                        <td>{{ industry.name }}</td>
-                    </tr>
-                {% endfor %}
+            {% for industry in object_list %}
+                <tr>
+                    <td>{{ industry.id }}</td>
+                    <td>{{ industry.name }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </main>

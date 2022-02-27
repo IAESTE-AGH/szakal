@@ -4,6 +4,9 @@
         <h1>Eventy</h1>
 
         <a href="/event/add">+Dodaj nowy event</a>
+
+        {% include 'components/sort.html' %}
+
         <table class="table">
             <thead>
             <tr>
@@ -12,10 +15,9 @@
             </tr>
             </thead>
             <tbody>
+            {{ object }}
             {% for event in object_list %}
-
                 <tr>
-
                     <td>{{ forloop.counter }}</td>
                     <td>{{ event.name }}</td>
                     <td>{{ event.active }}</td>

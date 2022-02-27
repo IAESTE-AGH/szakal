@@ -164,6 +164,7 @@ class ProfileView(LoginRequiredMixin, View):
 
 
 class ListObjectsView(LoginRequiredMixin, ListView):
+
     def get_queryset(self):
         model = self.kwargs['object'].capitalize()
 
@@ -172,14 +173,17 @@ class ListObjectsView(LoginRequiredMixin, ListView):
         else:
             raise ValueError
 
-        sort_order = '-id' if not self.request.GET.get('order') == 'asc' else 'id'
+        sort_by = self.request.GET.get('sort_by', 'id')
+        sort_order = '-' + sort_by if not self.request.GET.get('order') == 'asc' else sort_by
 
         whos = self.kwargs.get('whos')
         if not whos:
             model = eval(model)
+            self.model = model
             return model.objects.all().order_by(sort_order)
         elif model == 'Event':
             model = eval(model)
+            self.model = model
             if whos == 'local':
                 return model.objects.filter(local=True).order_by(sort_order)
             elif whos == 'global':
@@ -188,6 +192,7 @@ class ListObjectsView(LoginRequiredMixin, ListView):
                 raise ValueError
         elif model in PREDEFINED_MODELS_USER_MANAGED:
             model = eval(model)
+            self.model = model
             if whos == 'my':
                 return model.objects.filter(user=self.request.user).order_by(sort_order)
             elif whos == 'taken':
@@ -196,6 +201,12 @@ class ListObjectsView(LoginRequiredMixin, ListView):
                 raise ValueError
         else:
             raise ValueError
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['fields'] = self.model._meta.get_fields()
+
+        return context
 
 
 class UpdateEventActiveView(LoginRequiredMixin, UpdateView):
