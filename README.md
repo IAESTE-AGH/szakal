@@ -2,123 +2,101 @@
 
 ## SETUP
 
-### Install docker
+### Download Docker Desktop for Windows
 
-`sudo apt install docker.io python3.8 python3.8-dev python3.8-venv gcc vim libmysqlclient-dev`
+[Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
-`pip3 install --upgrade pip`
+### Download MySQL Workbench
 
-`pip3 install --upgrade setuptools`
+[MySQL Workbench](https://dev.mysql.com/downloads/file/?id=509428)
 
-### To not use sudo all the time with docker command run this (or something similar xd)
+## PyCharm CONFIG
 
-`sudo groupadd docker`
+### Clone repo
 
-`sudo gpasswd -a $USER docker`
+Let PyCharm create venv using requirements.txt
 
-`sudo service docker restart`
+If it doesn't suggest it, do it manually, google how to. Later you can point Python Interpreter in run configuration to created venv.
 
-### Pull latest mysql image
+### Enable Docker access via PyCharm
 
-`docker pull mysql/mysql-server:latest`
+If PyCharm PRO -> it should be somewhere listed as services
+
+If PyCharm Community -> it can be downloaded in plugins tab
+
+NOTE: There should be a simple way to connet to previously downloaded docker desktop. Keep in mind that the docker desktop needs to be turned on the whole time.
+
+#### After setup it should be access this way
+
+![](https://github.com/IAESTE-AGH/szakal/blob/main/windows_setup/pycharm_services.PNG)
+
+### Pull latest mysql/mysql-server image
+
+Can be done from services tab, in images.
 
 ### Create and run docker container
 
-`docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=<password> mysql/mysql-server -d mysql`
+Right click on previously downloaded image and configure it like that:
 
-`docker start mysql`
+![](https://github.com/IAESTE-AGH/szakal/blob/main/windows_setup/pycharm_docker_sql.PNG)
 
-### Create szakal database
+### Create szakal database and solve connections issues
 
-#### Run initial console commands from Console -> On first run, from below.
+#### Connect to running container by right clicking the container and selecting "Create terminal"
 
-### Setup virtual environment and install requirements
+#### In terminal run following commands:
 
-`python3 -m venv venv`
+`mysql -u root -p -h 127.0.0.1` (password is root)
 
-`source venv/bin/activate`
+(In opened SQL terminal)
 
-`pip3 install -r requirements.txt`
+`CREATE USER 'root'@'%' IDENTIFIED BY 'root';`
 
-### Setup environmental variables
-
-`vim env.sh`
-
-export DB_NAME=szakal
-
-export DB_USER=XXXX
-
-export DB_PASSWORD=XXXX
-
-export DB_HOST=127.0.0.1
-
-export DB_PORT=3306
-
-export SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXX
-
-#### Esc ->  wq to escape vim
-
-`. ./env.sh`
-
-### Migrate stuff
-
-`python3 manage.py makemigrations`
-
-`python3 manage.py migrate`
-
-### Create superuser
-
-`python3 manage.py createsuperuser`
-
-## On beginning of work
-
-`docker start mysql`
-
-## On finish
-
-`docker stop mysql`
-
-## Accessing database
-
-### Mysql Workbench
-
-#### Install
-`sudo snap install mysql-workbench-community`
-
-`sudo snap connect mysql-workbench-community:password-manager-service :password-manager-service`
-
-#### Running
-
-`mysql-workbench-community`
-
-### Console
-
-#### If commands don't work by default
-
-`sudo apt install mysql-client`
-
-#### On first run:
-
-`mysql -u <name> -p -h 127.0.0.1`
-
-`create database szakal;`
-
-`\q`
-
-#### On every other:
-
-`mysql -u <name> -p -h 127.0.0.1 -n szakal`
-
-### If there is problem with access, follow these steps
-
-`docker exec -it mysql bash`
-
-`mysql -u <name> -p`
-
-`CREATE USER 'username'@'%' IDENTIFIED BY 'password';`
-
-`GRANT ALL PRIVILEGES ON *.* TO 'username'@'%' WITH GRANT OPTION;`
+`GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;`
 
 `FLUSH PRIVILEGES;`
 
-#### And now try again
+`create database szakal;`
+
+Now MySQL should be accessible from outside of the container.
+
+### Configure PyCharm run configs
+
+#### Server configuration
+
+![](https://github.com/IAESTE-AGH/szakal/blob/main/windows_setup/pycharm_django_server.PNG)
+
+Environmental variables (SECRET_KEY can be whatever, it doesnt matter in test env, just keep it long and random)
+
+![](https://github.com/IAESTE-AGH/szakal/blob/main/windows_setup/pycharm_django_envs.PNG)
+
+#### Makemigrations configuration
+
+You can Ctrl+C, Ctrl+V env variables from the previous config.
+
+![](https://github.com/IAESTE-AGH/szakal/blob/main/windows_setup/pycharm_makemigrations.PNG)
+
+#### Migrate configuration
+
+![](https://github.com/IAESTE-AGH/szakal/blob/main/windows_setup/pycharm_migrate.PNG)
+
+## RUN
+
+### Run Makemigrations configuration
+
+### Run Migrate configuration
+
+### Run Server configuration
+
+Server should be working fine right now.
+
+#### Additional steps
+
+Create superuser, can be done analogically to makemigrations and migrate
+or you can do it via terminal...
+
+You will need to use project venv:
+
+![](https://github.com/IAESTE-AGH/szakal/blob/main/windows_setup/venv_activate.PNG)
+
+Also remember to set environmental variables for your powershell terminal. Google how to do it, there should be some way. (or stick to the first method)
