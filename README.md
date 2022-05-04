@@ -46,7 +46,7 @@ Right click on previously downloaded image and configure it like that:
 
 #### In terminal run following commands:
 
-`mysql -u root -p -h 127.0.0.1` (password is root)
+`mysql -u root -p` (password is root)
 
 (In opened SQL terminal)
 
