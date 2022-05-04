@@ -66,6 +66,8 @@ Now MySQL should be accessible from outside of the container.
 
 ![](https://github.com/IAESTE-AGH/szakal/blob/main/windows_setup/pycharm_django_server.PNG)
 
+This step can also be configured as the next ones, if there is no django server available. Just pick Python and set ```runserver``` parameter.
+
 Environmental variables (SECRET_KEY can be whatever, it doesnt matter in test env, just keep it long and random)
 
 ![](https://github.com/IAESTE-AGH/szakal/blob/main/windows_setup/pycharm_django_envs.PNG)
@@ -80,11 +82,17 @@ You can Ctrl+C, Ctrl+V env variables from the previous config.
 
 ![](https://github.com/IAESTE-AGH/szakal/blob/main/windows_setup/pycharm_migrate.PNG)
 
+#### Superuser configuration
+
+Same as with makemigrations and migrate, create new configuration, but in this case use ```createsuperuser --username=admin --email=admin@admin.com --noinput``` parameters. You also need to add additional env variable: ```DJANGO_SUPERUSER_PASSWORD=admin```. This way, after creating superuser you will be able to log into this account with set credentials.
+
 ## RUN
 
 ### Run Makemigrations configuration
 
 ### Run Migrate configuration
+
+### Run Createsuperuser configuration
 
 ### Run Server configuration
 
