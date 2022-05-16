@@ -1,0 +1,77 @@
+.login-wrapper {
+  min-width: 400px;
+  width: 25%;
+  border-radius: 15px;
+  background-color: #0A3E5A;
+  margin: 50px auto;
+  color: white;
+}
+.login-wrapper .message {
+  text-align: center;
+  padding: 15px 0;
+}
+.login-wrapper h1 {
+  font-size: 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 30px 0;
+  text-align: center;
+}
+.login-wrapper .input-wrapper {
+  width: 70%;
+  margin: 20px auto;
+}
+.login-wrapper .input-wrapper:focus-within label {
+  color: #00BAB6;
+}
+.login-wrapper .input-wrapper .button {
+  width: calc(100% + 6px);
+  height: calc(2em + 4px);
+  background-color: #00a082;
+  border: none;
+  border-radius: 5px;
+  margin-top: 15px;
+  color: white;
+}
+.login-wrapper input[type=text], .login-wrapper input[type=password] {
+  color: black;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  height: 2em;
+  width: 100%;
+  margin-top: 10px;
+  padding: none;
+}
+.login-wrapper input[type=text]:focus-visible, .login-wrapper input[type=password]:focus-visible {
+  border: 1px solid #B5C5CD;
+  outline: none;
+}
+.login-wrapper .lost-password {
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  text-align: center;
+}
+.login-wrapper .lost-password a {
+  color: white;
+}
+
+.navbar-login {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0A3E5A;
+}
+.navbar-login .logo-wrapper {
+  width: 220px;
+  height: 80px;
+}
+.navbar-login .logo-wrapper img {
+  width: 100%;
+  height: 100%;
+  filter: invert(86%) sepia(100%) saturate(0%) hue-rotate(291deg) brightness(105%) contrast(102%);
+}
+
+/*# sourceMappingURL=styles.css.map */
