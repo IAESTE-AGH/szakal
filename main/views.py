@@ -170,13 +170,28 @@ class Filtered(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         model = self.kwargs['object'].capitalize()
         searched = request.POST.get("searched")
+        status = request.POST.get("company_status")
         print(request.POST)
 
         if model in PREDEFINED_MODELS:
             self.template = f'{model.lower()}.html'
-            context = {
-                "object_list": filter_by_word(searched, eval(model).objects.all())
-            }
+            if status == 'my':
+                context = {
+                    "object_list": filter_by_word(searched, eval(model).objects.filter(user=self.request.user))
+                }
+
+            elif status == 'taken':
+                context = {
+                    "object_list": filter_by_word(searched, eval(model).objects.filter(user__isnull=False))
+                }
+            elif status == 'not_taken':
+                context = {
+                    "object_list": filter_by_word(searched, eval(model).objects.filter(user__isnull=True))
+                }
+            else:
+                context = {
+                    "object_list": filter_by_word(searched, eval(model).objects.all())
+                }
             return render(request, self.template, context)
         else:
             return Exception
@@ -226,6 +241,21 @@ class ListObjectsView(LoginRequiredMixin, ListView):
         context['fields'] = self.model._meta.get_fields()
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        model = self.kwargs['object'].capitalize()
+        searched = request.POST.get("searched")
+        print(request.POST)
+
+        if model in PREDEFINED_MODELS:
+            self.template = f'{model.lower()}.html'
+            context["object_list"] = filter_by_word(searched, eval(model).objects.all())
+            return render(request, self.template, context)
+        else:
+            return Exception
+
 
 
 class UpdateEventActiveView(LoginRequiredMixin, UpdateView):

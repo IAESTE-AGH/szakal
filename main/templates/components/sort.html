@@ -1,3 +1,4 @@
+{%  if not "search" in  request.path %}
 <form method="get" action=".">
     <label for="sort_by">Sortuj po:</label>
     <select name="sort_by" id="sort_by">
@@ -11,7 +12,8 @@
     </select>
     <button>sortuj</button>
 </form>
-
+{% endif %}
+{%  if not "my" in  request.path and not "taken" in  request.path %}
 <form method="post" action={%  if "search" in  request.path %}
  " "
 {% else %}
@@ -20,13 +22,21 @@
     {% csrf_token %}
     <label for="search">Wyszukaj:</label>
     <input type="text" id="searched" name="searched">
+    <select name="company_status" id="company_status">
+        <option value="all">wszystkie</option>
+        <option value="my">moje</option>
+        <option value="not_taken">wolne</option>
+        <option value="taken">zajęte</option>
+    </select>
     <button>szukaj</button>
 </form>
+{% endif %}
 
 <script>
     document.getElementById("sort_by").value = getQueryParameter("sort_by") ?? "id"
     document.getElementById("order").value = getQueryParameter("order") ?? "malejąco"
     document.getElementById("searched").value = getQueryParameter("searched") ?? ""
+    document.getElementById("company_status").value = getQueryParameter("company_status") ?? ""
     function getQueryParameter(parameterName) {
         var queryString = window.top.location.search.substring(1);
         var parameterName = parameterName + "=";
