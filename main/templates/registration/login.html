@@ -1,7 +1,8 @@
-{% extends "base.html" %}
+{% extends "base-login.html" %}
 {% block content %}
-<div class="item">
+<div class="login-wrapper">
 
+    <div class="message">
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
@@ -14,24 +15,31 @@
     <p>Please login to see this page.</p>
     {% endif %}
 {% endif %}
+        </div>
+
+<h1>ZALOGUJ</h1>
 
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
-<table>
-    <h1>ZALOGUJ</h1><br>
-    {{ form.username.label_tag }}<br>
-    {{ form.username }}<br><br>
-    {{ form.password.label_tag }}<br>
-    {{ form.password }}<br><br>
 
-</table>
+    <div class="input-wrapper">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+    </div>
+    <div class="input-wrapper">
+        {{ form.password.label_tag }}
+        {{ form.password }}
+    </div>
 
-<input class="button" type="submit" value="ZALOGUJ SIĘ">
+    <div class="input-wrapper">
+        <input class="button" type="submit" value="ZALOGUJ SIĘ">
+    </div>
+
 <input type="hidden" name="next" value="{{ next }}">
 </form>
 
 {# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+<p class="lost-password"><a href="{% url 'password_reset' %}">Lost password?</a></p>
 
 </div>
 {% endblock %}
