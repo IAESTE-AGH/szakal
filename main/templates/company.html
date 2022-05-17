@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Firmy</h1>
-<h2>{{ request.user.username }}</h2>
+    <h1>Firmy</h1>
+    <h2>{{ request.user.username }}</h2>
 
-{% include 'components/sort.html' %}
+    {% include 'components/sort.html' %}
 
-{% for company in object_list %}
-<p>{{ forloop.counter }} | {{ company.name }} <- {{ company.user.username }}</p>
-<p>{{ company.created_at }} ||| {{ company.updated_at }}</p>
-{% endfor %}
+    {% for company in object_list %}
+        <p>{{ forloop.counter }} | {{ company.name }} <- {{ company.user.username }}</p>
+        <p>{{ company.created_at }} ||| {{ company.updated_at }}</p>
+    {% endfor %}
+
 
 {% endblock %}

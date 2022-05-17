@@ -14,6 +14,7 @@ from django import template
 from django.views import View
 
 from main.forms import *
+from main.helpers.filtering_algorithm import filter_by_word
 from main.models import *
 
 register = template.Library()
@@ -161,6 +162,24 @@ class ProfileView(LoginRequiredMixin, View):
             "phone_number": user.phone_number
         }
         return render(request, self.template, context)
+
+
+class Filtered(LoginRequiredMixin, View):
+    # template = 'company.html'
+
+    def post(self, request, *args, **kwargs):
+        model = self.kwargs['object'].capitalize()
+        searched = request.POST.get("searched")
+        print(request.POST)
+
+        if model in PREDEFINED_MODELS:
+            self.template = f'{model.lower()}.html'
+            context = {
+                "object_list": filter_by_word(searched, eval(model).objects.all())
+            }
+            return render(request, self.template, context)
+        else:
+            return Exception
 
 
 class ListObjectsView(LoginRequiredMixin, ListView):

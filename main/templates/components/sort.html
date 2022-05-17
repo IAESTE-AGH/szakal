@@ -12,10 +12,21 @@
     <button>sortuj</button>
 </form>
 
+<form method="post" action={%  if "search" in  request.path %}
+ " "
+{% else %}
+"search/"
+{% endif %}>
+    {% csrf_token %}
+    <label for="search">Wyszukaj:</label>
+    <input type="text" id="searched" name="searched">
+    <button>szukaj</button>
+</form>
+
 <script>
     document.getElementById("sort_by").value = getQueryParameter("sort_by") ?? "id"
     document.getElementById("order").value = getQueryParameter("order") ?? "malejąco"
-
+    document.getElementById("searched").value = getQueryParameter("searched") ?? ""
     function getQueryParameter(parameterName) {
         var queryString = window.top.location.search.substring(1);
         var parameterName = parameterName + "=";
@@ -27,6 +38,7 @@
                 if (end == -1) {
                     end = queryString.length
                 }
+                console.log(queryString.substring(begin, end))
                 return unescape(queryString.substring(begin, end));
             }
         }
