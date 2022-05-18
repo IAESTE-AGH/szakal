@@ -29,7 +29,11 @@ def filter_by_word(name, A):
     for row in A:
         best = 9
         for word in row.name.split():
-            best = min(levenschtein_distance(name, word.lower()), best)
+            best = min(levenschtein_distance(name.lower(), word.lower()), best)
+
+        # for word in row.user:
+        #     best = min(levenschtein_distance(name.lower(), word.lower()), best)
+
         res[best].append(row)
     result = []
     for i in range(len(res)):
