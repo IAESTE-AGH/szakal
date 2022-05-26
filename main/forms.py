@@ -1,7 +1,7 @@
 from django.forms import ModelForm, PasswordInput, MultipleChoiceField
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
-from main.models import User, Industry, Company, Category, Event, CategoryCompany, Assignment
+from main.models import User, Industry, Company, Category, Event, CategoryCompany, Assignment, Contact
 
 
 class UserForm(ModelForm):
@@ -108,6 +108,12 @@ class UserUpdateForm(ModelForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'phone_number']
+
+
+class ContactUpdateForm(ModelForm):
+    class Meta:
+        model = Contact
+        fields = ['accepted', 'date', 'comment', 'rating', 'company', 'contact_person', 'event', 'status', 'type']
 
 
 # class ContactCreateForm(ExtendedForm):
