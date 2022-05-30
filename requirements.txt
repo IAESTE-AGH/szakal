@@ -1,5 +1,5 @@
 Django
-mysqlclient==2.0.3
-django-phonenumber-field==6.0.0
-phonenumbers==8.12.38
-django-phonenumber-field==6.0.0
+mysqlclient
+django-phonenumber-field
+phonenumbers
+django-phonenumber-field

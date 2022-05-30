@@ -1,7 +1,7 @@
 from django.forms import ModelForm, PasswordInput, MultipleChoiceField
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
-from main.models import User, Industry, Company, Category, Event, CategoryCompany, Assignment, Contact
+from main.models import User, Industry, Company, Category, Event, CategoryCompany, Assignment, Contact, CategoryContact
 
 
 class UserForm(ModelForm):
@@ -125,3 +125,34 @@ class ContactUpdateForm(ModelForm):
 #         model = Contact
 #         fields = ['accepted', 'date', 'comment', 'rating', 'company', 'contact_person', 'event', 'status',
 #                   'type']
+
+
+class Meta(ExtendedForm.Meta):
+    model = Contact
+    exclude = ('user', 'update_date', 'insert_date')
+
+
+class ContactUpdateForm(ExtendedForm):
+    RELATED_MODEL = Category
+    RELATED_DISPLAY_NAME = 'categories'
+    MANY_TO_MANY_MODEL = CategoryContact
+
+    class Meta(ExtendedForm.Meta):
+        model = Contact
+        exclude = ('update_date', 'insert_date', 'deleted', 'delete_date', 'number_of_ratings', 'update_person_name')
+
+class ContactCreateForm(DefaultForm):
+    RELATED_MODEL = Category
+    RELATED_DISPLAY_NAME = 'categories'
+    MANY_TO_MANY_MODEL = CategoryContact
+
+    class Meta(ExtendedForm.Meta):
+        model = Contact
+        exclude = ('user', 'update_date', 'insert_date')
+
+
+
+
+class CategoryContactCreateForm(DefaultForm):
+    class Meta(DefaultForm.Meta):
+        model = CategoryContact

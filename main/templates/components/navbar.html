@@ -1,4 +1,16 @@
-<nav class="center">
+<head>
+    <meta charset="UTF-8">
+    <title>Szakal</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'reset.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+</head>
+
+
+
+<nav class="center" name="pot" >
     {% if request.user.username == "" %}
         <a href="{% url 'register' %}">Zarejestruj sie</a>
         <a href="{% url 'login' %}">Zaloguj sie</a>

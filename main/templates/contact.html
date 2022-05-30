@@ -1,48 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Kontakty</h1>
-<h2>{{ request.user.username }}</h2>
-{% include 'components/sort.html' %}
-     <table class="table">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Is accepted</th>
-                <th>Date</th>
-                <th>Comment</th>
-                <th>Rating</th>
-                <th>Status</th>
-                <th>Company</th>
-                <th>Contact Person</th>
-                <th>Event</th>
-                <th>Type</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for contact in object_list %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>
-                        {%  if contact.accepted == True %}
-                            YES
-                        {%  else  %}
-                            NO
-                        {% endif %}
-                    </td>
-                    <td>{{ contact.date }}</td>
-                    <td>{{ contact.comment }}</td>
-                    <td>{{ contact.rating }}</td>
-                    <td>{{ contact.status.name }}</td>
-                    <td>{{ contact.company.name }}</td>
-                    <td>{{ contact.contact_person.name }}</td>
-                    <td>{{ contact.event.name }}</td>
-                    <td>{{ contact.type.name }}</td>
-                    <td><a href="/contact/{{ contact.id }}">edit</a></td>
-                </tr>
+    <h1>Kontakty</h1>
+    <h2>{{ request.user.username }}</h2>
+<tr>
+    <td>
+        <a href="/contact/add"><input type="submit" value="Dodaj Nowy Kontakt"></a>
+    </td>
+</tr>
 
-            {% endfor %}
-            </tbody>
-        </table>
+    {% include 'components/sort.html' %}
+
+    {% for company in object_list %}
+        <p>{{ forloop.counter }} | {{ company.name }} <- {{ company.user.username }}</p>
+        <p>{{ company.created_at }} ||| {{ company.updated_at }}</p>
+    {% endfor %}
 
 
 {% endblock %}
