@@ -195,3 +195,8 @@ class ContactType(models.Model):
         verbose_name_plural = 'Contact Types'
         managed = True
         db_table = 'szakal_types'
+
+
+class CategoryContact(models.Model):
+    category = models.ForeignKey('Category', models.DO_NOTHING)
+    company = models.ForeignKey('Contact', models.CASCADE)

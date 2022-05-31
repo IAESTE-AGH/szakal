@@ -1,153 +1,189 @@
 {% extends "base.html" %}
+
+
 {% block content %}
-    <h1>Baza firm - Pulpit</h1>
-    <br>
-    <main>
-        <table id="stats" class="table">
-            <thead>
-            <tr>
-                <th colspan="2">Statystyki</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Ilość firm w komitecie Lokalnym</td>
-                <td>{{ stats.company_count }}</td>
-            </tr>
-            <tr>
-                <td>Ilość wolnych firm w tym roku</td>
-                <td>{{ stats.companies_unmanaged }}</td>
-            </tr>
-            <tr>
-                <td>Ilość uczestników</td>
-                <td>{{ stats.user_count }}</td>
-            </tr>
-            <tr>
-                <td>Ilość ofert praktyk</td>
-                 <!-- TODO -->
-            </tr>
-            <tr>
-                <td>Koordynatorzy AZOP w komitecie Lokalnym:</td>
-                 <!-- TODO -->
-            </tr>
-            </tbody>
-        </table>
+    <div class="container-fluid" id="ramka">
+        <h1>Baza firm - Pulpit</h1>
+                    <br>
+                    <main>
+                            <div class="homeSlice">
+                                                <table id="stats" class="table">
+                                                    <thead class="homeBanner">
+                                                    <tr id="np1">
+                                                        <th colspan="2">Statystyki</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="homeBody">
+                                                    <tr>
+                                                        <td>Ilość firm w komitecie Lokalnym</td>
+                                                        <td>{{ stats.company_count }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ilość wolnych firm w tym roku</td>
+                                                        <td>{{ stats.companies_unmanaged }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ilość uczestników</td>
+                                                        <td>{{ stats.user_count }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ilość ofert praktyk</td>
+                                                         <!-- TODO -->
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Koordynatorzy AZOP w komitecie Lokalnym:</td>
+                                                         <!-- TODO -->
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
 
-        <br>
 
-        <table id="shortcuts" class="table">
-            <thead>
-            <tr>
-                <th>Skróty</th>
-            </tr>
-            </thead>
-            <tbody>
-{#            <tr>#}
-{#                <td>#}
-{#                    <a href="/company/my">Moje firmy</a>#}
-{#                </td>#}
-{#            </tr>#}
 
-            <tr>
-                <td>
-                    <a href="/company/">Wszystkie firmy</a>
-                </td>
-            </tr>
 
-            <tr>
-                <td>
-                    <a href="/contact/">Kontakty z firmami</a>
-                </td>
-            </tr>
 
-            <tr>
-                <td>
-                    <a href="/event/">akcje</a>
-                </td>
-            </tr>
-{#            <tr>#}
-{#                <td>#}
-{#                    <a href="/company/taken">Firmy zajęte</a>#}
-{#                </td>#}
-{#            </tr>#}
+                                                <table id="shortcuts" class="table">
+                                                    <thead class="homeBanner">
+                                                    <tr>
+                                                        <th>Skróty</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="homeBody">
+                                        {#            <tr>#}
+                                        {#                <td>#}
+                                        {#                    <a href="/company/my">Moje firmy</a>#}
+                                        {#                </td>#}
+                                        {#            </tr>#}
 
-            <tr>
-                <td>
-                    <a href="/company/add"><input type="submit" value="Dodaj Firmę"></a>
-                </td>
-            </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="/company/">Wszystkie firmy</a>
+                                                        </td>
+                                                    </tr>
 
-            </tbody>
-        </table>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="/contact/">Kontakty z firmami</a>
+                                                        </td>
+                                                    </tr>
 
-        <br>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="/event/">akcje</a>
+                                                        </td>
+                                                    </tr>
+                                        {#            <tr>#}
+                                        {#                <td>#}
+                                        {#                    <a href="/company/taken">Firmy zajęte</a>#}
+                                        {#                </td>#}
+                                        {#            </tr>#}
 
-        <table id="currentAction" class="table">
-            <thead>
-            <tr>
-                <th>Bieżące akcje</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for event in events.currentEvents %}
-                <tr>
-                    <td>{{ event }}</td>
-                </tr>
-            {% endfor %}
-            <tr>
-                <td>
-                    <a href="/event/">zmień</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="/company/add"><input type="submit" value="Dodaj Firmę"></a>
+                                                        </td>
+                                                    </tr>
 
-        <br>
+                                                    </tbody>
 
-        <table id="top10" class="table">
-            <thead>
-            <tr>
-                <th colspan="3">TOP 10</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ user.first_name }} {{ user.last_name }}</td>
-                    <td>{{ user.companyCount }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
 
-        <br>
+                                                </table>
 
-        <table id="myCompaniesStates" class="table">
-            <thead>
-            <tr>
-                <th colspan="4">Statusy moich firm</th>
-            </tr>
+                                      </div>
 
-            </thead>
-            <tbody>
-            {% for company in myCompanies %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ company.company.name }}</td>
-                    <td>{{ company.event.name }}</td>
-                    <td>{{ company.status.name }}</td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td>
-                        <h4>Nie masz żadnych firm</h4>
-                        <a href="/contact/add">Zmień to!</a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </main>
 
+
+                                    <div class="homeSlice">
+                                                <table id="currentAction" class="table">
+                                                    <thead class="homeBanner">
+                                                    <tr>
+                                                        <th>Bieżące akcje</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="homeBody">
+                                                    {% for event in events.currentEvents %}
+                                                        <tr>
+                                                            <td>{{ event }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    <tr>
+                                                        <td>
+                                                            <a href="/event/">zmień</a>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+
+
+
+
+
+
+
+                                                <table id="top10" class="table">
+                                                    <thead class="homeBanner">
+                                                    <tr>
+                                                        <th colspan="3">TOP 10</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="homeBody">
+                                                    {% for user in users %}
+                                                        <tr>
+                                                            <td>{{ forloop.counter }}</td>
+                                                            <td>{{ user.first_name }} {{ user.last_name }}</td>
+                                                            <td>{{ user.companyCount }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+
+                                                      <tr>
+                                                        <th>Alojzy Woźniak</th>
+                                                    </tr>
+                                                     <tr>
+                                                        <th>Eugeniusz Kaczmarczyk</th>
+                                                    </tr>
+                                                     <tr>
+                                                        <th>Miron Włodarczyk</th>
+                                                    </tr>
+                                                     <tr>
+                                                        <th>Konstanty Kalinowski</th>
+                                                    </tr>
+                                                     <tr>
+                                                        <th>Aleksander Jakubowski</th>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+
+
+                                    </div>
+
+
+                                    <div class="homeSlice">
+
+                                                <table  class="table">
+                                                    <thead class="homeBanner">
+                                                    <tr>
+                                                        <th colspan="4">Statusy moich firm</th>
+                                                    </tr>
+
+                                                    </thead>
+                                                    <tbody class="homeBody" id="myCompaniesStates">
+                                                    {% for company in myCompanies %}
+                                                        <tr>
+                                                            <td>{{ forloop.counter }}</td>
+                                                            <td>{{ company.company.name }}</td>
+                                                            <td>{{ company.event.name }}</td>
+                                                            <td>{{ company.status.name }}</td>
+                                                        </tr>
+                                                    {% empty %}
+                                                        <tr>
+                                                            <td>
+                                                                <h4>Nie masz żadnych firm</h4>
+                                                                <a href="/contact/add">Zmień to!</a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                    </div>
+                    </main>
+    </div>
 {% endblock %}
