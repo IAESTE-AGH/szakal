@@ -2,4 +2,4 @@ Django
 mysqlclient
 django-phonenumber-field
 phonenumbers
-django-phonenumber-field
+
