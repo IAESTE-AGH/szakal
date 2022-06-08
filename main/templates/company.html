@@ -1,19 +1,43 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Firmy</h1>
-    <h2>{{ request.user.username }}</h2>
-<tr>
-    <td>
-        <a href="/company/add"><input type="submit" value="Dodaj Firmę"></a>
-    </td>
-</tr>
+    <div>
 
-    {% include 'components/sort.html' %}
+        <h1>Firmy</h1>
+        <h2>{{ request.user.username }}</h2>
 
-    {% for company in object_list %}
-        <p>{{ forloop.counter }} | {{ company.name }} <- {{ company.user.username }}</p>
-        <p>{{ company.created_at }} ||| {{ company.updated_at }}</p>
-    {% endfor %}
+
+        <tr>
+            <td>
+                <a href="/company/add"><input type="submit" value="Dodaj Firmę"></a>
+            </td>
+        </tr>
+
+        {% include 'components/sort.html' %}
+
+    <div>
+        <table>
+            {% for company in object_list %}
+                <tr>
+                    <td>
+                        <a href="/contact/"><input type="submit" value={{ forloop.counter }}></a>
+                    </td>
+                    <td>{{ company.id }}</td>
+                    <td>{{ company.name }} <- {{ company.user.username }}</td>
+                    <td>{{ company.created_at }} ||| {{ company.updated_at }}</td>
+                    <td>
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    </div>
+
+
+
+
+
 
 
 {% endblock %}

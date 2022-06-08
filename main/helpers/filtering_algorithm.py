@@ -28,11 +28,13 @@ def filter_by_word(name, A):
         res.append([])
     for row in A:
         best = 9
-        for word in row.name.split():
-            best = min(levenschtein_distance(name.lower(), word[:len(name)].lower()), best)
+        if len(name.split())>1:
+            best = min(levenschtein_distance(name.lower(), row.name.lower()), best)
+        else:
+            for word in row.name.split():
+                best = min(levenschtein_distance(name.lower(), word[:len(name)].lower()), best)
 
-        # for word in row.user:
-        #     best = min(levenschtein_distance(name.lower(), word.lower()), best)
+
 
         res[best].append(row)
     result = []
