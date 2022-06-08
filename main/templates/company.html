@@ -21,9 +21,15 @@
                     <td>
                         <a href="/contact/"><input type="submit" value={{ forloop.counter }}></a>
                     </td>
-                    <td>{{ company.id }}</td>
                     <td>{{ company.name }} <- {{ company.user.username }}</td>
+                    <td>{% if company.user.username == request.user.username %}
+                        <a href="/company/{{ company.id }}/unassign"><input type="submit" value="Wypisz mnie"></a>
+                        {% elif company.user.username == null %}
+                        <a href="/company/{{ company.id }}/assign"><input type="submit" value="Przypisz mnie"></a>
+                        {% endif %}
+                    </td>
                     <td>{{ company.created_at }} ||| {{ company.updated_at }}</td>
+
                     <td>
 
                     </td>
