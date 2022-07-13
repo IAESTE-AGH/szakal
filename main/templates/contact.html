@@ -10,18 +10,16 @@
         </tr>
 
         {% include 'components/sort.html' %}
-        <div>
-           <table>
-                {% for company in object_list %}
-                    <tr>
-                        <td>{{ forloop.counter }} | {{ company.name }} <- {{ company.user.username }}</td>
-                        <td>{{ company.created_at }} ||| {{ company.updated_at }}</td>
-                    </tr>
 
-                {% endfor %}
-            </table>
-        </div>
+        <table>
+        <tr>
+            {% for company in object_list %}
+                <td>{{ forloop.counter }} | {{ company.name }} <- {{ company.user.username }}</td>
+                <td>{{ company.created_at }} ||| {{ company.updated_at }}</td>
+            {% endfor %}
+        </tr>
 
+        </table>
     </div>
 
 
