@@ -11,17 +11,20 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
 </head>
 <body>
-{% include 'components/navbar.html' %}
+
 <div class="page-main">
 
-{#<h2>Witaj, {{ request.user.username }}</h2>#}
+        {% include 'components/main-nav.html' %}
 
-<div class="page-content">
-    {% block content %}
-    {% endblock %}
-</div>
 
-{% include 'components/footer.html' %}
+    {#<h2>Witaj, {{ request.user.username }}</h2>#}
+
+    <div class="page-content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
 </div>
 </body>
 </html>
