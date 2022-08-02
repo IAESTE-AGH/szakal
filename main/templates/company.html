@@ -1,49 +1,56 @@
 {% extends "base.html" %}
 {% block content %}
-    <div>
+<div class="title">
+    <h1>Firmy</h1>
+</div>
+<main>
+            <div class="tabele">
+                <p style="text-align: left">{% include 'components/sort.html' %}
+                </p>
+                <p style="text-align: right"><a href="/company/add"><input type="submit" value="Dodaj Firmę"></a>
+                </p>
+                <div class="content-table"></div>
+              <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Telefon</th>
+                        <th>Address</th>
+                        <th>WWW</th>
+                        <th>Deleted</th>
+                        <th>Deleted date</th>
+                        <th>Rating</th>
+                        <th>Number of ratings</th>
+                        <th>Next contact date</th>
+                        <th>Date created</th>
+                        <th>Date updated</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for company in object_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ company.name }}</td>
+                        <td>{{ company.phone }}</td>
+                        <td>{{ company.address }}</td>
+                        <td>{{ company.www }}</td>
+                        <td>{{ company.deleted }}</td>
+                        <td>{{ company.delete_date }}</td>
+                        <td>{{ company.rating }}</td>
+                        <td>{{ company.number_of_ratings }}</td>
+                        <td>{{ company.next_contact_date }}</td>
+                        <td>{{ company.created_at }}</td>
+                        <td>{{ company.updated_at }}</td>
+                    </tr>
+                    <tr>
+                        {% endfor %}
+                    </tr>
+                    </tbody>
+              </table>
+            </div>
+</main>
 
-        <h1>Firmy</h1>
-        <h2>{{ request.user.username }}</h2>
-
-
-        <tr>
-            <td>
-                <a href="/company/add"><input type="submit" value="Dodaj Firmę"></a>
-            </td>
-        </tr>
-
-        {% include 'components/sort.html' %}
-
-    <div>
-        <table>
-            {% for company in object_list %}
-                <tr>
-                    <td>
-                        <a href="/contact/"><input type="submit" value={{ forloop.counter }}></a>
-                    </td>
-                    <td>{{ company.name }} <- {{ company.user.username }}</td>
-                    <td>{% if company.user.username == request.user.username %}
-                        <a href="/company/{{ company.id }}/unassign"><input type="submit" value="Wypisz mnie"></a>
-                        {% elif company.user.username == null %}
-                        <a href="/company/{{ company.id }}/assign"><input type="submit" value="Przypisz mnie"></a>
-                        {% endif %}
-                    </td>
-                    <td>{{ company.created_at }} ||| {{ company.updated_at }}</td>
-
-                    <td>
-
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
-
-    </div>
-
-
-
-
-
-
+<h2>{{ request.user.username }}</h2>
 
 {% endblock %}

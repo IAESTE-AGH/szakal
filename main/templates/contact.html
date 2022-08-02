@@ -1,26 +1,59 @@
 {% extends "base.html" %}
 {% block content %}
-    <div>
+<div class="title">
         <h1>Kontakty</h1>
-        <h2>{{ request.user.username }}</h2>
-        <tr>
-            <td>
-                <a href="/contact/add"><input type="submit" value="Dodaj Nowy Kontakt"></a>
-            </td>
-        </tr>
+</div>
+<main>
+            <div class="tabele">
+                {% include 'components/sort.html' %}
+                <tr>
+                    <td>
+                        <p style="text-align: right"><a href="/contact/add"><input type="submit" value="Dodaj Nowy Kontakt"></a>
+                        </p>
+                    </td>
+                </tr>
+                         <div class="content-table"></div>
+                      <table>
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Contact person</th>
+                                <th>Type</th>
+                                <th>Event</th>
+                                <th>Status</th>
+                                <th>Company</th>
+                                <th>Accepted</th>
+                                <th>Date</th>
+                                <th>Comment</th>
+                                <th>Rating</th>
+                                <th>Date created</th>
+                                <th>Date updated</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for company in object_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ contact.contact_person }}</td>
+                                <td>{{ contact.type }}</td>
+                                <td>{{ contact.event }}</td>
+                                <td>{{ contact.status }}</td>
+                                <td>{{ contact.company }}</td>
+                                <td>{{ contact.accepted }}</td>
+                                <td>{{ contact.date }}</td>
+                                <td>{{ contact.comment }}</td>
+                                <td>{{ contact.rating }}</td>
+                                <td>{{ company.created_at }}</td>
+                                <td>{{ company.updated_at }}</td>
+                            </tr>
+                            <tr>
+                                {% endfor %}
+                            </tr>
+                            </tbody>
+                      </table>
+            </div>
+</main>
 
-        {% include 'components/sort.html' %}
-
-        <table>
-        <tr>
-            {% for company in object_list %}
-                <td>{{ forloop.counter }} | {{ company.name }} <- {{ company.user.username }}</td>
-                <td>{{ company.created_at }} ||| {{ company.updated_at }}</td>
-            {% endfor %}
-        </tr>
-
-        </table>
-    </div>
-
+<h2>{{ request.user.username }}</h2>
 
 {% endblock %}
