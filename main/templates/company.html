@@ -17,7 +17,7 @@
                         <th>Name</th>
                         <th>Telefon</th>
                         <th>Address</th>
-                        <th>WWW</th>
+{#                        <th>WWW</th>#}
                         <th>Deleted</th>
                         <th>Deleted date</th>
                         <th>Rating</th>
@@ -31,10 +31,10 @@
                     {% for company in object_list %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{{ company.name }}</td>
+                        <td> <a href={{ company.www }}>{{ company.name }} </a></td>
                         <td>{{ company.phone }}</td>
                         <td>{{ company.address }}</td>
-                        <td>{{ company.www }}</td>
+{#                        <td>{{ company.www }}</td>#}
                         <td>{{ company.deleted }}</td>
                         <td>{{ company.delete_date }}</td>
                         <td>{{ company.rating }}</td>
