@@ -1,17 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
-    <main>
-        <h1>Eventy</h1>
-
-        <a href="/event/add">+Dodaj nowy event</a>
-
+<div class="title">
+    <h1>Eventy</h1>
+</div>
+<main>
+    <div class="tabele">
         {% include 'components/sort.html' %}
-
-        <table class="table">
+            <p style="text-align: right"><a href="/event/add"><input type="submit" value="Dodaj nowy event"></a>
+            </p>
+        <div class="content-table"></div>
+        <table>
             <thead>
             <tr>
-                <th>Id</th>
+                <th>ID</th>
                 <th>Name</th>
+                <th>Active</th>
+                <th>Local</th>
             </tr>
             </thead>
             <tbody>
@@ -21,12 +25,12 @@
                     <td>{{ forloop.counter }}</td>
                     <td>{{ event.name }}</td>
                     <td>{{ event.active }}</td>
-                    <td><a href="/event/{{ event.id }}">edit</td>
+                    <td>{{ event.local }}</td>
+                    <td><a href="/event/{{ event.id }}">edit</a></td>
                 </tr>
-
             {% endfor %}
             </tbody>
         </table>
-    </main>
-
+    </div>
+</main>
 {% endblock %}
