@@ -18,6 +18,8 @@ urlpatterns = [
     path('<str:object>/<int:pk>/unassign/', views.unassign_user_view, name='unassign'),
     path('<str:object>/<int:pk>/', views.UpdateObjectView.as_view(), name='update'),
 
+    path('<str:object>/<int:pk>/company_details/', views.company_details, name='company_details'),
+
     path('<str:object>/<str:whos>/', views.ListObjectsView.as_view(), name='list'),
     path('<str:object>/', views.ListObjectsView.as_view(), name='list_all'),
 
