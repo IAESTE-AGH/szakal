@@ -25,5 +25,31 @@
   position: fixed;
   bottom: 0px;
 }
-
-
+.tabele{
+    width: auto;
+	margin: 20px;
+	border: 2px solid #E2E2E4;
+	border-spacing: 20px;
+	text-align: center;
+	padding: 10px 10px;
+}
+.content-table{
+    border-bottom: 2px solid #E2E2E4;
+}
+.tabele table{
+	width: 100%;
+	margin: 1px auto;
+}
+.tabele tr{
+	border-bottom: 2px solid #E2E2E4;
+}
+.tabele th{
+	width: min-content;
+}
+.tabele td{
+	width: min-content;
+}
+.title{
+  font-weight: 900;
+  font-size: 25px;
+}

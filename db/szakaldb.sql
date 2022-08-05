@@ -116,7 +116,7 @@ CREATE TABLE contacts (
     last_update TIMESTAMP,
     date TIMESTAMP,
     comment TEXT,
-    rating INT CHECK ( rating>=0 and rating<=10),
+    rating INT,
     PRIMARY KEY (contact_id),
     FOREIGN KEY (contact_person_id) REFERENCES contact_persons (contact_person_id),
     FOREIGN KEY (type_id) REFERENCES types (type_id),
