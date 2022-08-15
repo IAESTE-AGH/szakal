@@ -78,6 +78,16 @@
 .page-main {
   display: flex;
 }
+.page-main .page-content {
+  display: flex;
+  justify-content: center;
+  width: 80vw;
+}
+@media (min-width: 992px) {
+  .page-main .page-content {
+    margin-left: 20vw;
+  }
+}
 
 .main-nav {
   background-color: #0A3E5A;
@@ -198,17 +208,6 @@
   text-align: center;
   padding: 15px;
   border-top: 2px solid #436374;
-}
-
-.page-content {
-  display: flex;
-  justify-content: center;
-  width: 80vw;
-}
-@media (min-width: 992px) {
-  .page-content {
-    margin-left: 20vw;
-  }
 }
 
 .container-fluid {

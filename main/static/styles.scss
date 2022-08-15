@@ -96,6 +96,15 @@ $color-nav-hover: #436374;
 
 .page-main {
     display: flex;
+    .page-content
+    {
+      display: flex;
+      justify-content: center;
+      width: 80vw;
+      @media (min-width: 992px) {
+        margin-left: 20vw;
+      }
+    }
 }
 
 
@@ -223,18 +232,6 @@ $color-nav-hover: #436374;
         border-top: 2px solid $color-nav-hover;
     }
 }
-
-
-.page-content
-{
-  display: flex;
-  justify-content: center;
-  width: 80vw;
-  @media (min-width: 992px) {
-    margin-left: 20vw;
-  }
-}
-
 
 .container-fluid
 {
