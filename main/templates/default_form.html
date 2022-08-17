@@ -1,8 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-<form action="." method="POST">
+
+<form action="." method="POST" id="mainForm" onsubmit="myFunc()">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">SUBMIT</button>
 </form>
+
+<script>
+    myfunc() {
+        location.href= document.URL.substr(0,30) + "list/"
+    }
+    /*let form = document.getElementById("mainForm")
+
+
+    if (!document.referrer) {
+        form.action = document.URL.substr(0,30) + "list/"
+
+    }
+    else {
+        form.action = document.referrer
+    }*/
+</script>
 {% endblock %}

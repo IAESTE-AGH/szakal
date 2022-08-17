@@ -201,7 +201,7 @@ class ListObjectsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         model = self.kwargs['object'].capitalize()
-
+        print(model)
         if model in PREDEFINED_MODELS:
             self.template_name = f'{model.lower()}.html'
         else:
@@ -211,6 +211,7 @@ class ListObjectsView(LoginRequiredMixin, ListView):
         sort_order = '-' + sort_by if not self.request.GET.get('order') == 'asc' else sort_by
 
         whos = self.kwargs.get('whos')
+        print("whos", whos)
         if not whos:
             model = eval(model)
             self.model = model
@@ -243,6 +244,7 @@ class ListObjectsView(LoginRequiredMixin, ListView):
         return context
 
     def post(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
         context = super().get_context_data(**kwargs)
 
         model = self.kwargs['object'].capitalize()
