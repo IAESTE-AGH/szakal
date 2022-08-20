@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-{#{% extends "base.html" %}#}
+{% extends "base-login.html" %}
+{% block content %}
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,12 +9,9 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-<div class="header">
-    <img src="/static/logo.png" height="100" width="266" >
-</div>
-{% include 'components/navbar.html' %}
+{#{% include 'components/navbar-login.html' %}#}
 <div class="item">
-    <h1>register here</h1>
+    <h1>Zarejestruj się</h1>
     <form action="." method="POST">
 
     {% csrf_token %}
@@ -32,3 +30,4 @@
 {% include 'components/footer.html' %}
 </body>
 </html>
+{% endblock %}

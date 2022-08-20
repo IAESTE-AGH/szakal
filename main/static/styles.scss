@@ -54,7 +54,6 @@ $color-nav-hover: #436374;
         height: 2em;
         width: 100%;
         margin-top: 10px;
-        padding: none;
         &:focus-visible {
             border: 1px solid $color-cyan;
             outline: none;
@@ -235,8 +234,6 @@ $color-nav-hover: #436374;
 
 .container-fluid
 {
-  border: 1px solid lightgray;
-
   padding: 30px ;
   width: 80%;
   background-color: #fffffc;
@@ -290,16 +287,12 @@ $color-nav-hover: #436374;
   font-size: 12px;
 
 }
-
-
 .homeSlice
 {
   display: inline-block;
-  border: 1px dotted black;
   width: 300px;
   height: 500px;
   position: static;
-
 }
 
 #myCompaniesStates
