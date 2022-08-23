@@ -254,7 +254,6 @@
 
 .homeSlice {
   display: inline-block;
-  border: 1px dotted black;
   width: 300px;
   height: 500px;
   position: static;

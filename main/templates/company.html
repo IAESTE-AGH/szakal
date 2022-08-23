@@ -15,9 +15,9 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th></th>
                         <th>Telefon</th>
                         <th>Address</th>
-{#                        <th>WWW</th>#}
                         <th>Deleted</th>
                         <th>Deleted date</th>
                         <th>Rating</th>
@@ -32,9 +32,15 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td> <a href={{ company.www }}>{{ company.name }} </a></td>
+                        <td>
+                            {% if company.user.username == request.user.username %}
+                                <a href="/company/{{ company.id }}/unassign"><input type="submit" value="Wypisz mnie"></a>
+                            {% elif company.user.username == null %}
+                                <a href="/company/{{ company.id }}/assign"><input type="submit" value="Przypisz mnie"></a>
+                        {% endif %}
+                        </td>
                         <td>{{ company.phone }}</td>
                         <td>{{ company.address }}</td>
-{#                        <td>{{ company.www }}</td>#}
                         <td>{{ company.deleted }}</td>
                         <td>{{ company.delete_date }}</td>
                         <td>{{ company.rating }}</td>

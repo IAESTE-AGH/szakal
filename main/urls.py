@@ -11,7 +11,7 @@ urlpatterns = [
     path('password_reset/', PasswordResetView.as_view(), name='password_reset'),  # todo test
 
     path('<str:object>/add/', views.AddObjectView.as_view(), name='add'),
-    path('<str:object>/search/', views.Filtered.as_view(), name='filtered'),
+    path('<str:object>/list/search/', views.Filtered.as_view(), name='filtered'),
 
     path('<str:object>/list/', views.ListObjectsView.as_view(), name='list_all'),
     path('<str:object>/<int:pk>/delete/', staff_member_required(views.DeleteObjectView.as_view()), name='delete'),
