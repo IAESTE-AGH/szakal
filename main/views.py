@@ -170,7 +170,9 @@ class Filtered(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         model = self.kwargs['object'].capitalize()
         searched = request.POST.get("searched")
-        status = request.POST.get("company_status")
+        # status = request.POST.get("company_status")
+        status = request.POST.get("search_status")
+
         print(request.POST)
 
         if model in PREDEFINED_MODELS:
@@ -187,6 +189,14 @@ class Filtered(LoginRequiredMixin, View):
             elif status == 'not_taken':
                 context = {
                     "object_list": filter_by_word(searched, eval(model).objects.filter(user__isnull=True))
+                }
+            elif status == 'active':
+                context = {
+                    "object_list": filter_by_word(searched, eval(model).objects.filter(active=True))
+                }
+            elif status == 'not_active':
+                context = {
+                    "object_list": filter_by_word(searched, eval(model).objects.filter(active=False))
                 }
             else:
                 context = {
@@ -319,7 +329,7 @@ def assigning_decorator(func):
         else:
             raise ValueError
         func(request, object_, pk, *args, **kwargs)
-        return HttpResponseRedirect(f'/{object}')
+        return HttpResponseRedirect(f'/{object}/list')
 
     return wrap
 

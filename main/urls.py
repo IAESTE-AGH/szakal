@@ -15,8 +15,8 @@ urlpatterns = [
 
     path('<str:object>/list/', views.ListObjectsView.as_view(), name='list_all'),
     path('<str:object>/<int:pk>/delete/', staff_member_required(views.DeleteObjectView.as_view()), name='delete'),
-    path('<str:object>/<int:pk>/assign/', views.assign_user_view, name='assign'),
-    path('<str:object>/<int:pk>/unassign/', views.unassign_user_view, name='unassign'),
+    path('<str:object>/list/<int:pk>/assign/', views.assign_user_view, name='assign'),
+    path('<str:object>/list/<int:pk>/unassign/', views.unassign_user_view, name='unassign'),
     path('<str:object>/<int:pk>/', views.UpdateObjectView.as_view(), name='update'),
 
     path('<str:object>/<str:whos>/', views.ListObjectsView.as_view(), name='list'),

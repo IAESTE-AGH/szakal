@@ -34,9 +34,9 @@
                         <td> <a href={{ company.www }}>{{ company.name }} </a></td>
                         <td>
                             {% if company.user.username == request.user.username %}
-                                <a href="/company/{{ company.id }}/unassign"><input type="submit" value="Wypisz mnie"></a>
+                                <a href="/company/list/{{ company.id }}/unassign"><input type="submit" value="Wypisz mnie"></a>
                             {% elif company.user.username == null %}
-                                <a href="/company/{{ company.id }}/assign"><input type="submit" value="Przypisz mnie"></a>
+                                <a href="/company/list/{{ company.id }}/assign"><input type="submit" value="Przypisz mnie"></a>
                         {% endif %}
                         </td>
                         <td>{{ company.phone }}</td>
