@@ -340,15 +340,10 @@ def unassign_user_view(request, object, pk):
         raise PermissionError('youre not assigned to it')
 
 
-#def company_details(request, object, pk):
-#    company = get_object_or_404(Company, pk=pk)
-#
-#    return render(request, 'company_details.html', {'company': company})
-
 def company_details(request, object, pk):
     context = {
             "company": get_object_or_404(Company, pk=pk),
-            "contact1": Contact.objects.filter(company=pk),
+            "contacts": Contact.objects.filter(company=pk),
         }
 
     return render(request, 'company_details.html', context)

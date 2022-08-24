@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
+
+<main>
+    <br>
 <div class="title">
     <h1>Informacje o firmie: </h1>
 </div>
-<main>
     <div class="tabele">
-
         <table>
             <tbody>
             <tr>
@@ -22,7 +23,7 @@
             </tr>
             <tr>
                 <td>WWW: </td>
-                <td><a href={{ company.www }}>{{company.www}}</a></td>
+                <td><a href={{company.www}}>{{company.www}}</a></td>
             </tr>
               <tr>
                 <td>Deleted:: </td>
@@ -54,48 +55,40 @@
             </tr>
             </tbody>
         </table>
+    </div>
+    <div class="title">
+    <h1>Kontakty z firmą: </h1>
+    </div>
+    <div class="tabele">
         <table>
-{% for contact in contact1 %}
             <tr>
+                <td>Nr.</td>
                 <td>Contact person: </td>
-                <td>{{contact.person}}</td>
-            </tr>
-             <tr>
                 <td>Type: </td>
-                <td>{{contact.type}}</td>
-            </tr>
-             <tr>
                 <td>Event: </td>
-                <td>{{contact.event}}</td>
-            </tr>
-             <tr>
                 <td>Status: </td>
-                <td>{{contact.status}}</td>
-            </tr>
-            <tr>
                 <td>Company: </td>
-                <td>{{contact.company}}</td>
-            </tr>
-            <tr>
                 <td>User: </td>
-                <td>{{contact.user}}</td>
-            </tr>
-            <tr>
                 <td>Accepted: </td>
-                <td>{{contact.accepted}}</td>
-            </tr>
-            <tr>
                 <td>Date: </td>
-                <td>{{contact.date}}</td>
-            </tr>
-            <tr>
                 <td>Comment: </td>
-                <td>{{contact.comment}}</td>
-            </tr>
-            <tr>
                 <td>Rating: </td>
-                <td>{{contact.rating}}</td>
             </tr>
+            {% for contact in contacts %}
+             <tr>
+                 <td>{{ forloop.counter }}.</td>
+                 <td>{{contact.contact_person}}</td>
+                 <td>{{contact.type}}</td>
+                 <td>{{contact.event}}</td>
+                 <td>{{contact.status}}</td>
+                 <td>{{contact.company}}</td>
+                 <td>{{contact.user}}</td>
+                 <td>{{contact.accepted}}</td>
+                 <td>{{contact.date}}</td>
+                 <td>{{contact.comment}}</td>
+                 <td>{{contact.rating}}</td>
+            </tr>
+
     {% endfor %}
         </table>
     </div>
