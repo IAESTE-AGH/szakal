@@ -58,6 +58,7 @@ class CompanyCreateForm(ExtendedForm):
         exclude = ('user', 'update_date', 'insert_date')
         widgets = {
             'delete_date': DateWidget(),
+            'next_contact_date': DateWidget(),
         }
 
 
@@ -69,6 +70,9 @@ class CompanyUpdateForm(ExtendedForm):
     class Meta(ExtendedForm.Meta):
         model = Company
         exclude = ('update_date', 'insert_date', 'deleted', 'delete_date', 'number_of_ratings', 'update_person_name')
+        widgets = {
+            'next_contact_date': DateWidget(),
+        }
 
 
 class CategoryCreateForm(DefaultForm):
@@ -120,6 +124,9 @@ class ContactUpdateForm(ModelForm):
     class Meta:
         model = Contact
         fields = ['accepted', 'date', 'comment', 'rating', 'company', 'contact_person', 'event', 'status', 'type']
+        widgets = {
+            'date': DateWidget(),
+        }
 
 
 # class ContactCreateForm(ExtendedForm):
@@ -146,6 +153,9 @@ class ContactUpdateForm(ExtendedForm):
     class Meta(ExtendedForm.Meta):
         model = Contact
         exclude = ('update_date', 'insert_date', 'deleted', 'delete_date', 'number_of_ratings', 'update_person_name')
+        widgets = {
+            'date': DateWidget(),
+        }
 
 class ContactCreateForm(DefaultForm):
     RELATED_MODEL = Category
@@ -155,6 +165,9 @@ class ContactCreateForm(DefaultForm):
     class Meta(ExtendedForm.Meta):
         model = Contact
         exclude = ('user', 'update_date', 'insert_date')
+        widgets = {
+            'date': DateWidget(),
+        }
 
 
 
