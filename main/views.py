@@ -343,7 +343,7 @@ def unassign_user_view(request, object, pk):
 def company_details(request, object, pk):
     context = {
             "company": get_object_or_404(Company, pk=pk),
-            "contacts": Contact.objects.filter(company=pk).order_by('date'),
+            "contacts": Contact.objects.filter(company=pk).order_by('-date'),
         }
 
     return render(request, 'company_details.html', context)
