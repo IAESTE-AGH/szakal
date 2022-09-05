@@ -16,7 +16,7 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th></th>
-                        <th>Telefon</th>
+                        <th>Phone</th>
                         <th>Address</th>
                         <th>Deleted</th>
                         <th>Deleted date</th>
@@ -30,7 +30,7 @@
                     <tbody>
                     {% for company in object_list %}
                     <tr>
-                        <td>{{ forloop.counter }}</td>
+                        <td><a href="/company/{{ company.id }}/company_details">{{ forloop.counter }}</a></td>
                         <td> <a href={{ company.www }}>{{ company.name }} </a></td>
                         <td>
                             {% if company.user.username == request.user.username %}
