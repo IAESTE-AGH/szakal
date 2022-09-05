@@ -2,7 +2,7 @@ import datetime
 
 from django.db.models import Count
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -80,8 +80,7 @@ def handle_extended_form(create=False, update=False):
                 form = self.form_class(request.POST)
                 if form.is_valid():
                     if create:
-                        if self.kwargs[
-                            'object'].capitalize() in PREDEFINED_MODELS_USER_MANAGED and not request.user.is_staff:
+                        if self.kwargs['object'].capitalize() in PREDEFINED_MODELS_USER_MANAGED and not request.user.is_staff:
                             instance = form.save(commit=False)
                             instance.user = request.user
                             instance.save()
@@ -270,6 +269,7 @@ class ListObjectsView(LoginRequiredMixin, ListView):
             return Exception
 
 
+
 class UpdateEventActiveView(LoginRequiredMixin, UpdateView):
     template_name = 'eventSetActive.html'
 
@@ -350,15 +350,3 @@ def unassign_user_view(request, object, pk):
         object.save()
     else:
         raise PermissionError('youre not assigned to it')
-
-
-def company_details(request, object, pk):
-    context = {
-            "company": get_object_or_404(Company, pk=pk),
-            "contacts": Contact.objects.filter(company=pk).order_by('-date'),
-        }
-
-    return render(request, 'company_details.html', context)
-
-
-
