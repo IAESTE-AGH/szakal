@@ -171,7 +171,9 @@ class Filtered(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         model = self.kwargs['object'].capitalize()
         searched = request.POST.get("searched")
-        status = request.POST.get("company_status")
+        # status = request.POST.get("company_status")
+        status = request.POST.get("search_status")
+
         print(request.POST)
 
         if model in PREDEFINED_MODELS:
@@ -189,6 +191,14 @@ class Filtered(LoginRequiredMixin, View):
                 context = {
                     "object_list": filter_by_word(searched, eval(model).objects.filter(user__isnull=True))
                 }
+            elif status == 'active':
+                context = {
+                    "object_list": filter_by_word(searched, eval(model).objects.filter(active=True))
+                }
+            elif status == 'not_active':
+                context = {
+                    "object_list": filter_by_word(searched, eval(model).objects.filter(active=False))
+                }
             else:
                 context = {
                     "object_list": filter_by_word(searched, eval(model).objects.all())
@@ -202,7 +212,7 @@ class ListObjectsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         model = self.kwargs['object'].capitalize()
-
+        print(model)
         if model in PREDEFINED_MODELS:
             self.template_name = f'{model.lower()}.html'
         else:
@@ -212,6 +222,7 @@ class ListObjectsView(LoginRequiredMixin, ListView):
         sort_order = '-' + sort_by if not self.request.GET.get('order') == 'asc' else sort_by
 
         whos = self.kwargs.get('whos')
+        print("whos", whos)
         if not whos:
             model = eval(model)
             self.model = model
@@ -244,6 +255,7 @@ class ListObjectsView(LoginRequiredMixin, ListView):
         return context
 
     def post(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
         context = super().get_context_data(**kwargs)
 
         model = self.kwargs['object'].capitalize()
@@ -317,7 +329,7 @@ def assigning_decorator(func):
         else:
             raise ValueError
         func(request, object_, pk, *args, **kwargs)
-        return HttpResponseRedirect(f'/{object}')
+        return HttpResponseRedirect(f'/{object}/list')
 
     return wrap
 

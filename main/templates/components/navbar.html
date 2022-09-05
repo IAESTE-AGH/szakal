@@ -10,12 +10,11 @@
 
 
 
-<nav class="center" name="pot" >
+<nav class="top" name="pot" >
     {% if request.user.username == "" %}
         <a href="{% url 'register' %}">Zarejestruj sie</a>
         <a href="{% url 'login' %}">Zaloguj sie</a>
     {%  else %}
-        <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'profile' %}">Profil</a>
         <a href="{% url 'logout' %}">Wyloguj sie</a>
     {% endif %}

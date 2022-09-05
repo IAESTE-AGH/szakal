@@ -1,0 +1,113 @@
+<div class="main-nav">
+  <div class="main-nav-wrapper">
+    <div class="logo">
+      Logo
+    </div>
+    <div class="menu-title">
+      MENU GŁÓWNE
+    </div>
+    <div class="dropdowns">
+      <div class="dropdown">
+        <a href="/">
+          <div class="dropdown-button">
+          <div class="dropdown-logo"><img width="30" height="30" src="/static/main-nav-logos/home.svg"></div> <div class="dropdown-text">Pulpit</div>
+        </div>
+        </a>
+      </div>
+      <div class="dropdown">
+
+            <div class="dropdown-button">
+              <div class="dropdown-logo"><img width="30" height="30" src="/static/main-nav-logos/pointer.svg"></div> <div class="dropdown-text">Firmy</div><div class="arrow up"></div>
+            </div>
+
+        <div class="dropdown-content">
+          <div><div class="dropdown-logo"><img width="30" height="30" src="/static/main-nav-logos/pointer.svg"></div> <div class="dropdown-text">Moje firmy</div></div>
+            <div><a href="/company/list/"><div class="dropdown-logo"><img width="30" height="30" src="/static/main-nav-logos/burger.svg"></div> <div class="dropdown-text">Wszystkie firmy</div></a></div>
+          <div><div class="dropdown-logo"><img width="30" height="30" src="/static/main-nav-logos/calendar-crossed.svg"></div> <div class="dropdown-text">Firmy zajęte</div></div>
+        </div>
+      </div>
+      <div class="dropdown">
+          <a href="/industry/list/">
+        <div class="dropdown-button">
+          <div class="dropdown-logo"><img width="30" height="30" src="/static/main-nav-logos/factory.svg"></div> <div class="dropdown-text">Branże</div>
+{#            <div class="arrow up"></div>#}
+        </div>
+{#        <div class="dropdown-content">#}
+{#          <div><div class="dropdown-logo"><img width="30" height="30" src="/static/main-nav-logos/burger.svg"></div> <div class="dropdown-text">Lista</div></div>#}
+{#        </div>#}
+          </a>
+      </div>
+      <div class="dropdown">
+          <a href="/event/list/">
+        <div class="dropdown-button">
+          <div class="dropdown-logo"><img width="30" height="30" src="/static/main-nav-logos/calendar.svg"></div> <div class="dropdown-text">Eventy</div>
+{#            <div class="arrow up"></div>#}
+        </div>
+{#        <div class="dropdown-content">#}
+{#          <div><div class="dropdown-logo"><img width="30" height="30" src="/static/main-nav-logos/burger.svg"></div> <div class="dropdown-text">Lokalne</div></div>#}
+{#          <div><div class="dropdown-logo"><img id="poland" width="30" height="30" src="/static/main-nav-logos/poland.svg"></div> <div class="dropdown-text">Ogólnopolskie</div></div>#}
+{#        </div>#}
+          </a>
+      </div>
+      <div class="dropdown">
+          <a href="/user/list/">
+        <div class="dropdown-button">
+          <div class="dropdown-logo"><img width="30" height="30" src="/static/main-nav-logos/user.svg"></div> <div class="dropdown-text">Użytkownicy</div>
+        </div>
+          </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-footer">Baza firm</div>
+  </div>
+
+<script>
+  function navClick(e) {
+  console.log(e.target);
+    let arrow;
+    let navel;
+    if (e.target.classList.contains("arrow")) {
+      arrow = e.target;
+      navel = e.target.parentElement.parentElement.querySelectorAll(":scope > .dropdown-content")[0];
+    }
+    else {
+      arrow = e.target.parentElement.querySelectorAll(".arrow")[0];
+      navel = e.target.parentElement.querySelectorAll(":scope > .dropdown-content")[0];
+    }
+
+    if (arrow) {
+      if (arrow.classList.contains("up")) {
+        arrow.classList.remove("up");
+        arrow.classList.add("down");
+      }
+      else {
+        arrow.classList.remove("down");
+        arrow.classList.add("up");
+      }
+    }
+
+    if (navel) {
+      if (navel.classList.contains("active")) {
+      navel.classList.remove("active");
+    }
+    else {
+      navel.classList.add("active");
+    }
+    }
+    e.stopPropagation();
+  }
+  navButtons = document.getElementsByClassName("dropdown-button");
+  arrows = document.getElementsByClassName("arrow");
+  for (i of navButtons) {
+    i.addEventListener("click", navClick)
+  }
+  for (i of arrows) {
+    i.addEventListener("click", navClick)
+  }
+</script>
+
+
+
+
+
