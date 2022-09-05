@@ -7,7 +7,7 @@
             <div class="tabele">
                 <p style="text-align: left">{% include 'components/sort.html' %}
                 </p>
-                <p style="text-align: right"><a href="/company/add"><input type="submit" value="Dodaj Firmę"></a>
+                <p style="text-align: right"><a href="/company/list/add"><input type="submit" value="Dodaj Firmę"></a>
                 </p>
                 <div class="content-table"></div>
               <table>
@@ -15,9 +15,9 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th></th>
                         <th>Phone</th>
                         <th>Address</th>
-{#                        <th>WWW</th>#}
                         <th>Deleted</th>
                         <th>Deleted date</th>
                         <th>Rating</th>
@@ -32,9 +32,15 @@
                     <tr>
                         <td><a href="/company/{{ company.id }}/company_details">{{ forloop.counter }}</a></td>
                         <td> <a href={{ company.www }}>{{ company.name }} </a></td>
+                        <td>
+                            {% if company.user.username == request.user.username %}
+                                <a href="/company/list/{{ company.id }}/unassign"><input type="submit" value="Wypisz mnie"></a>
+                            {% elif company.user.username == null %}
+                                <a href="/company/list/{{ company.id }}/assign"><input type="submit" value="Przypisz mnie"></a>
+                        {% endif %}
+                        </td>
                         <td>{{ company.phone }}</td>
                         <td>{{ company.address }}</td>
-{#                        <td>{{ company.www }}</td>#}
                         <td>{{ company.deleted }}</td>
                         <td>{{ company.delete_date }}</td>
                         <td>{{ company.rating }}</td>
