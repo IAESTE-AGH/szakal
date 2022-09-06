@@ -5,13 +5,12 @@
 </div>
 <main>
             <div class="tabele">
-                {% include 'components/sort.html' %}
-                <tr>
-                    <td>
-                        <p style="text-align: right"><a href="/contact/add"><input type="submit" value="Dodaj Nowy Kontakt"></a>
-                        </p>
-                    </td>
-                </tr>
+                <p style="text-align: left">{% include 'components/sort.html' %}
+                </p>
+
+                <p style="text-align: right"><a href="/contact/list/add"><input type="submit" value="Dodaj Nowy Kontakt"></a>
+                </p>
+
                          <div class="content-table"></div>
                       <table>
                             <thead>

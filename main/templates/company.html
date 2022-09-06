@@ -7,7 +7,7 @@
             <div class="tabele">
                 <p style="text-align: left">{% include 'components/sort.html' %}
                 </p>
-                <p style="text-align: right"><a href="/company/list/add"><input type="submit" value="Dodaj Firmę"></a>
+                <p style="text-align: right"><a href="/company/list/add"><input class="button" type="submit" value="Dodaj Firmę"></a>
                 </p>
                 <div class="content-table"></div>
               <table>
@@ -34,9 +34,9 @@
                         <td> <a href={{ company.www }}>{{ company.name }} </a></td>
                         <td>
                             {% if company.user.username == request.user.username %}
-                                <a href="/company/list/{{ company.id }}/unassign"><input type="submit" value="Wypisz mnie"></a>
+                                <a href="/company/list/{{ company.id }}/unassign"><input class="widebutton" type="submit" value="Wypisz mnie"></a>
                             {% elif company.user.username == null %}
-                                <a href="/company/list/{{ company.id }}/assign"><input type="submit" value="Przypisz mnie"></a>
+                                <a href="/company/list/{{ company.id }}/assign"><input class="widebutton" type="submit" value="Przypisz mnie"></a>
                         {% endif %}
                         </td>
                         <td>{{ company.phone }}</td>

@@ -10,7 +10,7 @@
         <option value="asc">rosnąco</option>
         <option value="desc">malejąco</option>
     </select>
-    <button>sortuj</button>
+    <button class="button">sortuj</button>
 </form>
 {% endif %}
 {%  if not "my" in  request.path and not "taken" in  request.path %}
@@ -37,7 +37,7 @@
             <option value="not_active">nieaktywne</option>
         </select>
     {% endif %}
-    <button>szukaj</button>
+    <button class="button">szukaj</button>
     </form>
     {% endif %}
 {% endif %}
