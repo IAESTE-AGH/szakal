@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="container-fluid" id="ramka">
-        <h1 class="center2">Baza firm - Pulpit</h1>
+        <h1 class="title">Baza firm - Pulpit</h1>
                     <br>
                     <main>
                             <div class="homeSlice">
@@ -15,23 +15,23 @@
                                                     </thead>
                                                     <tbody class="homeBody">
                                                     <tr>
-                                                        <td>Ilość firm w komitecie Lokalnym</td>
-                                                        <td>{{ stats.company_count }}</td>
+                                                        <td> Ilość firm w komitecie Lokalnym: </td>
+                                                        <td class="bold-text"> {{ stats.company_count }} </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Ilość wolnych firm w tym roku</td>
-                                                        <td>{{ stats.companies_unmanaged }}</td>
+                                                        <td> Ilość wolnych firm w tym roku: </td>
+                                                        <td class="bold-text"> {{ stats.companies_unmanaged }} </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Ilość uczestników</td>
-                                                        <td>{{ stats.user_count }}</td>
+                                                        <td> Ilość uczestników: </td>
+                                                        <td class="bold-text"> {{ stats.user_count }} </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Ilość ofert praktyk</td>
+                                                        <td> Ilość ofert praktyk: </td>
                                                          <!-- TODO -->
                                                     </tr>
                                                     <tr>
-                                                        <td>Koordynatorzy AZOP w komitecie Lokalnym:</td>
+                                                        <td> Koordynatorzy AZOP w komitecie Lokalnym: </td>
                                                          <!-- TODO -->
                                                     </tr>
                                                     </tbody>
@@ -176,7 +176,7 @@
                                                     {% empty %}
                                                         <tr>
                                                             <td>
-                                                                <h4>Nie masz żadnych firm</h4>
+                                                                <h4>Nie masz żadnych firm!</h4>
                                                                 <a href="/contact/add">Zmień to!</a>
                                                             </td>
                                                         </tr>
