@@ -64,7 +64,7 @@ def assign_form(create=False, update=False, delete=False):
                 elif delete:
                     pass
 
-                self.success_url = f'/{object_.lower()}'
+                self.success_url = f'/{object_.lower()}/list'
                 return func(self, request, *args, **kwargs)
             return ValueError
 

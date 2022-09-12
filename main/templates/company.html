@@ -15,6 +15,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Strona firmy</th>
                         <th></th>
                         <th>Phone</th>
                         <th>Address</th>
@@ -31,7 +32,15 @@
                     {% for company in object_list %}
                     <tr>
                         <td><a href="/company/{{ company.id }}/company_details">{{ forloop.counter }}</a></td>
-                        <td> <a href={{ company.www }}>{{ company.name }} </a></td>
+                        <td>{{ company.name }}</td>
+                    {% if 'http://' in company.www or 'https://' in company.www %}
+                        <td> <a href={{ company.www }}><input class="button" type="submit" value="Strona"> </a></td>
+                    {% else %}
+                        <td> <a href="//{{ company.www }}"><input class="button" type="submit" value="Strona"> </a></td>
+                    {% endif %}
+
+
+
                         <td>
                             {% if company.user.username == request.user.username %}
                                 <a href="/company/list/{{ company.id }}/unassign"><input class="widebutton" type="submit" value="Wypisz mnie"></a>
