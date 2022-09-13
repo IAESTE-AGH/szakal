@@ -38,11 +38,12 @@
 }
 .tabele{
     width: auto;
-	margin: 20px;
+	margin: 30px;
 	border: 2px solid #E2E2E4;
 	border-spacing: 20px;
 	text-align: center;
-	padding: 10px 10px;
+	padding: 3%;
+	border-radius: 20px;
 }
 .content-table{
     border-bottom: 2px solid #E2E2E4;
