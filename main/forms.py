@@ -1,7 +1,9 @@
-from django.forms import ModelForm, PasswordInput, MultipleChoiceField, DateInput
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.forms import ModelForm, PasswordInput, MultipleChoiceField, DateInput
+from django.forms.widgets import Input
 
 from main.models import User, Industry, Company, Category, Event, CategoryCompany, Assignment, Contact, CategoryContact
+
 
 class DateWidget(DateInput):
     input_type = 'date'
@@ -129,17 +131,6 @@ class ContactUpdateForm(ModelForm):
         }
 
 
-# class ContactCreateForm(ExtendedForm):
-#     RELATED_MODEL = Category
-#     RELATED_DISPLAY_NAME = 'categories'
-#     MANY_TO_MANY_MODEL = CategoryCompany
-#
-#     class Meta(DefaultForm.Meta):
-#         model = Contact
-#         fields = ['accepted', 'date', 'comment', 'rating', 'company', 'contact_person', 'event', 'status',
-#                   'type']
-
-
 class Meta(ExtendedForm.Meta):
     model = Contact
     exclude = ('user', 'update_date', 'insert_date')
@@ -157,6 +148,12 @@ class ContactUpdateForm(ExtendedForm):
             'date': DateWidget(),
         }
 
+
+class HiddenValueInput(Input):
+    input_type = 'hidden'
+    template_name = '../templates/hiddenValueInput.html'
+
+
 class ContactCreateForm(DefaultForm):
     RELATED_MODEL = Category
     RELATED_DISPLAY_NAME = 'categories'
@@ -167,9 +164,8 @@ class ContactCreateForm(DefaultForm):
         exclude = ('user', 'update_date', 'insert_date')
         widgets = {
             'date': DateWidget(),
+            'company': HiddenValueInput()
         }
-
-
 
 
 class CategoryContactCreateForm(DefaultForm):

@@ -1,0 +1,6 @@
+<input type="hidden" name="{{ widget.name }}" id="{{ widget.name }}">
+<script defer>
+    let url_{{ widget.name }} = new URL(window.location.href);
+    let {{ widget.name }} = url_{{ widget.name }}.searchParams.get("{{ widget.name }}");
+    document.getElementById("{{ widget.name }}").setAttribute("value", {{ widget.name }})
+</script>
