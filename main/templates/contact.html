@@ -1,55 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="title">
-        <h1>Kontakty</h1>
-</div>
 <main>
-            <div class="tabele">
+            <div class="tabele-company">
+                <h1 class="title">Kontakty</h1>
                 <p style="text-align: left">{% include 'components/sort.html' %}
                 </p>
+                <p style="text-align: right"><a href="/contact/list/add"><button class="button">Dodaj kontakt</button></a></p>
 
-                <p style="text-align: right"><a href="/contact/list/add"><input type="submit" value="Dodaj Nowy Kontakt"></a>
-                </p>
-
-                         <div class="content-table"></div>
-                      <table>
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Contact person</th>
-                                <th>Type</th>
-                                <th>Event</th>
-                                <th>Status</th>
-                                <th>Company</th>
-                                <th>Accepted</th>
-                                <th>Date</th>
-                                <th>Comment</th>
-                                <th>Rating</th>
-                                <th>Date created</th>
-                                <th>Date updated</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for company in object_list %}
-                            <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ contact.contact_person }}</td>
-                                <td>{{ contact.type }}</td>
-                                <td>{{ contact.event }}</td>
-                                <td>{{ contact.status }}</td>
-                                <td>{{ contact.company }}</td>
-                                <td>{{ contact.accepted }}</td>
-                                <td>{{ contact.date }}</td>
-                                <td>{{ contact.comment }}</td>
-                                <td>{{ contact.rating }}</td>
-                                <td>{{ company.created_at }}</td>
-                                <td>{{ company.updated_at }}</td>
-                            </tr>
-                            <tr>
-                                {% endfor %}
-                            </tr>
-                            </tbody>
-                      </table>
+                <div class="content-table"></div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th class="bold-tabele">ID</th>
+                        <th class="bold-tabele">Contact person</th>
+                        <th class="bold-tabele">Type</th>
+                        <th class="bold-tabele">Event</th>
+                        <th class="bold-tabele">Status</th>
+                        <th class="bold-tabele">Company</th>
+                        <th class="bold-tabele">Accepted</th>
+                        <th class="bold-tabele">Comment</th>
+                        <th class="bold-tabele">Rating</th>
+                        <th class="bold-tabele">Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for company in object_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ contact.contact_person }}</td>
+                        <td>{{ contact.type }}</td>
+                        <td>{{ contact.event }}</td>
+                        <td>{{ contact.status }}</td>
+                        <td><a>{{ contact.company }}</a></td>
+                        <td>{{ contact.accepted }}</td>
+                        <td>{{ contact.comment }}</td>
+                        <td>{{ contact.rating }}</td>
+                        <td><a>Date: </a>{{ contact.date }}
+                            <p><a>Created: </a>{{ company.created_at }}</p>
+                            <p><a>Update: </a>{{ company.updated_at }}</p></td>
+                    </tr>
+                    <tr>
+                        {% endfor %}
+                    </tr>
+                    </tbody>
+                </table>
             </div>
 </main>
 
