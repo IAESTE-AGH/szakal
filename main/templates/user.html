@@ -2,32 +2,34 @@
 {% block content %}
     <main>
         <h1 class="title">Profil</h1>
+        <div class="tabele-event">
 
-        <table class="tabele">
+        <table>
             <thead></thead>
             <tbody>
                 <tr>
-                    <td>Nazwa użytkownika</td>
+                    <td class="bold-tabele">Nazwa użytkownika</td>
                     <td>{{ username }}</td>
                 </tr>
                 <tr>
-                    <td>Imię</td>
+                    <td class="bold-tabele">Imię</td>
                     <td>{{ first_name }}</td>
                 </tr>
                 <tr>
-                    <td>Nazwisko</td>
+                    <td class="bold-tabele">Nazwisko</td>
                     <td>{{ last_name }}</td>
                 </tr>
                 <tr>
-                    <td>Email</td>
+                    <td class="bold-tabele">Email</td>
                     <td>{{ email }}</td>
                 </tr>
                 <tr>
-                    <td>Numer telefonu</td>
+                    <td class="bold-tabele">Numer telefonu</td>
                     <td>{{ phone_number }}</td>
                 </tr>
             </tbody>
         </table>
+        </div>
             <p style="text-align: center"><a href="/user/{{ id }}"><input class="button" type="submit" value="Edytuj"></a></p>
     </main>
 

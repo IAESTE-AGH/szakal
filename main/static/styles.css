@@ -264,7 +264,12 @@
 .bold-text {
   font-weight: 900;
   font-size: 130%;
-  text-indent: 200%;
+  padding: 5%;
+}
+
+.bold-tabele {
+  font-weight: 700;
+  font-size: 130%;
 }
 
 #myCompaniesStates {
@@ -273,7 +278,7 @@
 }
 
 a{
-	color: #00BAB6;
+    color: #00BAB6;
 	text-decoration: none;
 }
 /*# sourceMappingURL=styles.css.map */

@@ -36,34 +36,73 @@
   position: fixed;
   bottom: 0px;
 }
-.tabele{
-    width: auto;
-	margin: 30px;
+.tabele-event{
+    width: 260%;
+	margin: 20%;
 	border: 2px solid #E2E2E4;
 	border-spacing: 20px;
-	text-align: center;
-	padding: 3%;
+	text-align: left;
 	border-radius: 20px;
+    position: relative;
+    right: 100%;
+}
+.tabele-event table{
+	width: 100%;
+	margin: 10px auto;
+}
+.tabele-event tr{
+	border-bottom: 2px solid #E2E2E4;
+}
+.tabele-event th{
+	width: min-content;
+}
+.tabele-event td{
+	width: min-content;
+}
+
+.tabele-company{
+    width: 100%;
+	margin: 5%;
+	border: 2px solid #E2E2E4;
+	text-align: left;
+	border-radius: 20px;
+	position: relative;
+    right: 4%;
 }
 .content-table{
     border-bottom: 2px solid #E2E2E4;
 }
-.tabele table{
+.tabele-company table{
 	width: 100%;
 	margin: 10px auto;
 }
-.tabele tr{
+.tabele-company tr{
 	border-bottom: 2px solid #E2E2E4;
 }
-.tabele th{
-	width: min-content;
+.tabele-company th{
+	width: 5%;
 }
-.tabele td{
+.tabele-company td{
 	width: min-content;
+	word-break: break-word;
+    white-space: normal;
 }
 .title{
   font-weight: 900;
   font-size: 25px;
+}
+.side_panel{
+    background-color: #0A3E5A;
+    display: block;
+    position: absolute; left: 0px;
+    position: absolute; top: 0px;
+    width: 19%;
+    height: 100%;
+}
+.side_panel_text{
+    color: white;
+    text-align: center;
+    line-height: 200%;
 }
 .widebutton {
     width: calc(100% + 6px);

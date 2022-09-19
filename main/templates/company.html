@@ -1,38 +1,34 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="title">
-    <h1>Firmy</h1>
-</div>
 <main>
-            <div class="tabele">
+            <div class="tabele-company">
+                    <h1 class="title">Firmy</h1>
                 <p style="text-align: left">{% include 'components/sort.html' %}
                 </p>
-                <p style="text-align: right"><a href="/company/list/add"><input class="button" type="submit" value="Dodaj Firmę"></a>
-                </p>
+                <p style="text-align: right"><a href="/company/list/add"><button class="button">Dodaj Firmę</button></a></p>
+
                 <div class="content-table"></div>
               <table>
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Strona firmy</th>
-                        <th></th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Deleted</th>
-                        <th>Deleted date</th>
-                        <th>Rating</th>
-                        <th>Number of ratings</th>
-                        <th>Next contact date</th>
-                        <th>Date created</th>
-                        <th>Date updated</th>
+                        <th class="bold-tabele">ID</th>
+                        <th class="bold-tabele">Name</th>
+                        <th class="bold-tabele">Strona firmy</th>
+                        <th class="bold-tabele">Assign</th>
+                        <th class="bold-tabele">Update person name</th>
+                        <th class="bold-tabele">Deleted</th>
+                        <th class="bold-tabele">Rating</th>
+                        <th class="bold-tabele">Date</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for company in object_list %}
                     <tr>
-                        <td><a href="/company/{{ company.id }}/company_details">{{ forloop.counter }}</a></td>
-                        <td>{{ company.name }}</td>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a>{{ company.name }}</a>
+                        <p>{{ company.address }}</p>
+                        <p>{{ company.phone }}</p>
+                        </td>
                     {% if 'http://' in company.www or 'https://' in company.www %}
                         <td> <a href={{ company.www }}><input class="button" type="submit" value="Strona"> </a></td>
                     {% else %}
@@ -43,20 +39,18 @@
 
                         <td>
                             {% if company.user.username == request.user.username %}
-                                <a href="/company/list/{{ company.id }}/unassign"><input class="widebutton" type="submit" value="Wypisz mnie"></a>
+                                <a href="/company/list/{{ company.id }}/unassign"><input class="button" type="submit" value="Wypisz mnie"></a>
                             {% elif company.user.username == null %}
-                                <a href="/company/list/{{ company.id }}/assign"><input class="widebutton" type="submit" value="Przypisz mnie"></a>
+                                <a href="/company/list/{{ company.id }}/assign"><input class="button" type="submit" value="Przypisz mnie"></a>
                         {% endif %}
                         </td>
-                        <td>{{ company.phone }}</td>
-                        <td>{{ company.address }}</td>
+                        <td>{{ company.update_person_name }}</td>
                         <td>{{ company.deleted }}</td>
-                        <td>{{ company.delete_date }}</td>
                         <td>{{ company.rating }}</td>
-                        <td>{{ company.number_of_ratings }}</td>
-                        <td>{{ company.next_contact_date }}</td>
-                        <td>{{ company.created_at }}</td>
-                        <td>{{ company.updated_at }}</td>
+                        <td><a>Update: </a>{{ company.updated_at }}
+                        <p><a>Created: </a>{{ company.created_at }}</p>
+                        <p><a>Next contact date: </a>{{ company.next_contact_date }}</p>
+                        <p><a>Delete date: </a>{{ company.delete_date }}</p></td>
                     </tr>
                     <tr>
                         {% endfor %}

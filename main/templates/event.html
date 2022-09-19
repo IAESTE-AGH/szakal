@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="title">
-    <h1>Eventy</h1>
-</div>
 <main>
-    <div class="tabele">
+    <div class="tabele-event">
+        <h1 class="title">Eventy</h1>
         {% include 'components/sort.html' %}
             <p style="text-align: right"><a href="/event/list/add"><input class="button" type="submit" value="Dodaj nowy event"></a>
             </p>
@@ -12,10 +10,10 @@
         <table>
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Active</th>
-                <th>Local</th>
+                <th class="bold-tabele">ID</th>
+                <th class="bold-tabele">Name</th>
+                <th class="bold-tabele">Active</th>
+                <th class="bold-tabele">Local</th>
             </tr>
             </thead>
             <tbody>

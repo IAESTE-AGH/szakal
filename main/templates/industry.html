@@ -1,19 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-    <main>
-        <h1>Branze</h1>
-
-        <form action="/industries/list/add">
-            <input type="submit" value="Dodaj nowa branze">
-        </form>
-
+<main>
+    <div class="tabele-event">
+        <h1 class="title">Branże</h1>
         {% include 'components/sort.html' %}
-
-        <table class="table">
+            <p style="text-align: right"><a href="/industries/list/add"><input class="button" type="submit" value="Dodaj nowa branze"></a>
+            </p>
+        <div class="content-table"></div>
+        <table>
             <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
+                <th class="bold-tabele">ID</th>
+                <th class="bold-tabele">Name</th>
             </tr>
             </thead>
             <tbody>
@@ -25,5 +23,6 @@
             {% endfor %}
             </tbody>
         </table>
-    </main>
+    </div>
+</main>
 {% endblock %}
