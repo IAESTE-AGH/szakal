@@ -199,4 +199,10 @@ class ContactType(models.Model):
 
 class CategoryContact(models.Model):
     category = models.ForeignKey('Category', models.DO_NOTHING)
-    company = models.ForeignKey('Contact', models.CASCADE)
+    contact = models.ForeignKey('Contact', models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'Categories Contacts'
+        managed = True
+        db_table = 'szakal_categories_contacts'
+        unique_together = (('category', 'contact'),)

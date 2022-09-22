@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <form action="." method="POST" id="mainForm" onsubmit="myFunc()" style="padding: 2%; font-weight: 600">
+        {% csrf_token %}
+        <p>
+            <label for="id_company">Company:</label>
+            <input type="text" disabled value="{{ company.name }}">
+            <input type="text" hidden name="company" required id="id_company" value="{{ company.id }}">
+        </p>
+        <p>
+            <label for="id_contact_person">Contact person:</label>
+            <select name="contact_person" required id="id_contact_person">
+                {% for contact_person in contact_people %}
+                    <option value="{{ contact_person.id }}">{{ contact_person.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <label for="id_type">Type:</label>
+            <select name="type" required id="id_type">
+                {% for type in types %}
+                    <option value="{{ type.id }}">{{ type.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <label for="id_event">Event:</label>
+            <select name="event" required id="id_event">
+                {% for event in events %}
+                    <option value="{{ event.id }}">{{ event.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <label for="id_status">Status:</label>
+            <select name="status" required id="id_status">
+                {% for status in statuses %}
+                    <option value="{{ status.id }}">{{ status.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <label for="id_accepted">Accepted:</label>
+            <input type="checkbox" name="accepted" id="id_accepted">
+        </p>
+        <p>
+            <label for="id_date">Date:</label>
+            <input type="date" name="date" required id="id_date">
+        </p>
+        <p>
+            <label for="id_comment">Comment:</label>
+            <textarea name="comment" cols="40" rows="10" id="id_comment"></textarea>
+        </p>
+        <p>
+            <label for="id_rating">Rating:</label>
+            <input type="number" name="rating" id="id_rating">
+        </p>
+        <p>
+            <label for="id_categories">Categories:</label>
+            <select name="categories" required id="id_categories" multiple>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <button class="button">SUBMIT</button>
+    </form>
+{% endblock %}

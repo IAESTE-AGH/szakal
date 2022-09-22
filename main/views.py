@@ -44,27 +44,30 @@ PREDEFINED_MODELS = [
 ]
 
 
-def assign_form(create=False, update=False, delete=False):
+def assign_form(obj="", create=False, update=False, delete=False):
     def decorator(func):
         def wrap(self, request, *args, **kwargs):
-            object_ = self.kwargs['object'].capitalize()
-            if object_ in PREDEFINED_MODELS:
-                if not request.user.is_staff and object_ not in PREDEFINED_MODELS_USER:
+            if not obj:
+                object = self.kwargs['object'].capitalize()
+            else:
+                object = obj.capitalize()
+            if object in PREDEFINED_MODELS:
+                if not request.user.is_staff and object not in PREDEFINED_MODELS_USER:
                     return PermissionError
 
-                self.model = eval(object_)
+                self.model = eval(object)
                 self.object = None
                 if update:
-                    if request.user.is_staff or eval(object_).objects.get(id=kwargs['pk']).user == request.user:
-                        self.form_class = eval(f'{object_}UpdateForm')
+                    if request.user.is_staff or eval(object).objects.get(id=kwargs['pk']).user == request.user:
+                        self.form_class = eval(f'{object}UpdateForm')
                     else:
                         return PermissionError
                 elif create:
-                    self.form_class = eval(f'{object_}CreateForm')
+                    self.form_class = eval(f'{object}CreateForm')
                 elif delete:
                     pass
 
-                self.success_url = f'/{object_.lower()}/list'
+                self.success_url = f'/{object.lower()}/list'
                 return func(self, request, *args, **kwargs)
             return ValueError
 
@@ -73,15 +76,18 @@ def assign_form(create=False, update=False, delete=False):
     return decorator
 
 
-def handle_extended_form(create=False, update=False):
+def handle_extended_form(create=False, update=False, obj=""):
     def decorator(func):
         def wrap(self, request, *args, **kwargs):
+            if not obj:
+                object = self.kwargs['object'].capitalize()
+            else:
+                object = obj.capitalize()
             if issubclass(self.form_class, ExtendedForm):
                 form = self.form_class(request.POST)
                 if form.is_valid():
                     if create:
-                        if self.kwargs[
-                            'object'].capitalize() in PREDEFINED_MODELS_USER_MANAGED and not request.user.is_staff:
+                        if object in PREDEFINED_MODELS_USER_MANAGED:
                             instance = form.save(commit=False)
                             instance.user = request.user
                             instance.save()
@@ -354,11 +360,31 @@ def unassign_user_view(request, object, pk):
 
 def company_details(request, object, pk):
     context = {
-            "company": get_object_or_404(Company, pk=pk),
-            "contacts": Contact.objects.filter(company=pk).order_by('-date'),
-        }
+        "company": get_object_or_404(Company, pk=pk),
+        "contacts": Contact.objects.filter(company=pk).order_by('-date'),
+    }
 
     return render(request, 'company_details.html', context)
 
 
+class AddContactView(LoginRequiredMixin, CreateView):
+    template = 'contact_form.html'
 
+    def get(self, request, *args, **kwargs):
+        company_id = request.GET['company']
+        context = {
+            "request": company_id,
+            "company": Company.objects.get(id=company_id),
+            "contact_people": ContactPerson.objects.filter(company_id=company_id),
+            "types": ContactType.objects.all(),
+            "events": Event.objects.all(),
+            "statuses": Status.objects.all(),
+            "categories": Category.objects.all(),
+        }
+
+        return render(request, self.template, context)
+
+    @assign_form(create=True, obj='contact')
+    @handle_extended_form(create=True, obj='contact')
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, {**kwargs})

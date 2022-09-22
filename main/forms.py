@@ -129,17 +129,6 @@ class ContactUpdateForm(ModelForm):
         }
 
 
-# class ContactCreateForm(ExtendedForm):
-#     RELATED_MODEL = Category
-#     RELATED_DISPLAY_NAME = 'categories'
-#     MANY_TO_MANY_MODEL = CategoryCompany
-#
-#     class Meta(DefaultForm.Meta):
-#         model = Contact
-#         fields = ['accepted', 'date', 'comment', 'rating', 'company', 'contact_person', 'event', 'status',
-#                   'type']
-
-
 class Meta(ExtendedForm.Meta):
     model = Contact
     exclude = ('user', 'update_date', 'insert_date')
@@ -157,7 +146,7 @@ class ContactUpdateForm(ExtendedForm):
             'date': DateWidget(),
         }
 
-class ContactCreateForm(DefaultForm):
+class ContactCreateForm(ExtendedForm):
     RELATED_MODEL = Category
     RELATED_DISPLAY_NAME = 'categories'
     MANY_TO_MANY_MODEL = CategoryContact
@@ -170,8 +159,6 @@ class ContactCreateForm(DefaultForm):
         }
 
 
-
-
-class CategoryContactCreateForm(DefaultForm):
+class CategoryContactCreateForm(ExtendedForm):
     class Meta(DefaultForm.Meta):
         model = CategoryContact
