@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 
-<form action="." method="POST" id="mainForm" onsubmit="myFunc()" style="padding: 2%; font-weight: 600">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="button">SUBMIT</button>
-</form>
+<div class="forms">
+    <form action="." method="POST" id="mainForm" onsubmit="myFunc()">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="button">SUBMIT</button>
+    </form>
+</div>
 
 <script>
     myfunc(){

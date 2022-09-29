@@ -3,9 +3,10 @@
 <main>
     <div class="tabele-event">
         <h1 class="title">Eventy</h1>
-        {% include 'components/sort.html' %}
-            <p style="text-align: right"><a href="/event/list/add"><input class="button" type="submit" value="Dodaj nowy event"></a>
-            </p>
+        <p style="text-align: left">{% include 'components/sort.html' %}
+        </p>
+            <p style="text-align: right"><a href="/event/list/add"><input class="button" type="submit" value="Dodaj nowy event"></a></p>
+
         <div class="content-table"></div>
         <table>
             <thead>
@@ -31,4 +32,6 @@
         </table>
     </div>
 </main>
+
+
 {% endblock %}
