@@ -76,6 +76,7 @@
 .tabele-company table{
 	width: 100%;
 	margin: 10px auto;
+	table-layout: fixed;
 }
 .tabele-company tr{
 	border-bottom: 2px solid #E2E2E4;
