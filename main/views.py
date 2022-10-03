@@ -373,7 +373,6 @@ class AddContactView(LoginRequiredMixin, CreateView):
     def get(self, request, *args, **kwargs):
         company_id = request.GET['company']
         context = {
-            "request": company_id,
             "company": Company.objects.get(id=company_id),
             "contact_people": ContactPerson.objects.filter(company_id=company_id),
             "types": ContactType.objects.all(),
