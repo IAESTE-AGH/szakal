@@ -281,4 +281,10 @@ a{
     color: #00BAB6;
 	text-decoration: none;
 }
+.forms{
+    padding: 2%;
+    font-weight: 600;
+    text-align: left;
+    word-wrap: break-word;
+}
 /*# sourceMappingURL=styles.css.map */
