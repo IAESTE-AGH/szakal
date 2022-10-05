@@ -37,19 +37,18 @@
   bottom: 0px;
 }
 .tabele-event{
-    width: 95%;
-	margin: 5%;
+    width: 260%;
+	margin: 20%;
 	border: 2px solid #E2E2E4;
 	border-spacing: 20px;
 	text-align: left;
 	border-radius: 20px;
     position: relative;
-    right: 4%;
+    right: 100%;
 }
 .tabele-event table{
 	width: 100%;
 	margin: 10px auto;
-	table-layout: fixed;
 }
 .tabele-event tr{
 	border-bottom: 2px solid #E2E2E4;
@@ -76,7 +75,6 @@
 .tabele-company table{
 	width: 100%;
 	margin: 10px auto;
-	table-layout: fixed;
 }
 .tabele-company tr{
 	border-bottom: 2px solid #E2E2E4;
