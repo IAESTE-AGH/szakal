@@ -38,7 +38,7 @@ def filter_by_word(name, A):
 
         res[best].append(row)
     result = []
-    for i in range(len(res)):
+    for i in range(len(res)-1):
         for j in range(len(res[i])):
             result.append(res[i][j])
     return result
