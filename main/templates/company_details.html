@@ -6,6 +6,12 @@
 <div class="title">
     <h1>Informacje o firmie: </h1>
 </div>
+    <form action="/company/{{ company.id }}" method="get">
+        <p style="text-align: right">
+            <input type="hidden" name="company" value="{{ company.id }}">
+            <input class="button" type="submit" value="Aktualizuj informacje">
+        </p>
+    </form>
     <div class="tabele">
         <table>
             <tbody>
@@ -80,6 +86,7 @@
                 <td>Date: </td>
                 <td>Comment: </td>
                 <td>Rating: </td>
+                <td>Edit: </td>
             </tr>
             {% for contact in contacts %}
              <tr>
@@ -94,6 +101,7 @@
                  <td>{{contact.date}}</td>
                  <td>{{contact.comment}}</td>
                  <td>{{contact.rating}}</td>
+                 <td><a href="/contact/{{contact.id}}">Edytuj</a></td>
             </tr>
 
     {% endfor %}
