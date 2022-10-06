@@ -54,12 +54,6 @@
 .tabele-event tr{
 	border-bottom: 2px solid #E2E2E4;
 }
-.tabele-event th{
-	width: min-content;
-}
-.tabele-event td{
-	width: min-content;
-}
 
 .tabele-company{
     width: 100%;
