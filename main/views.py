@@ -68,6 +68,9 @@ def assign_form(obj="", create=False, update=False, delete=False):
                     pass
 
                 self.success_url = f'/{object.lower()}/list'
+                if object.lower() == 'contact':
+                    self.success_url = f'/company/list'
+
                 return func(self, request, *args, **kwargs)
             return ValueError
 
@@ -113,8 +116,7 @@ def handle_extended_form(create=False, update=False, obj=""):
                         }
                         new = self.form_class.MANY_TO_MANY_MODEL(**parameters)
                         new.save()
-
-                    return HttpResponseRedirect(self.success_url, status=200)
+                    return HttpResponseRedirect(self.success_url)
             else:
                 return func(self, request, *args, **kwargs)
 
@@ -218,7 +220,6 @@ class ListObjectsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         model = self.kwargs['object'].capitalize()
-        print(model)
         if model in PREDEFINED_MODELS:
             self.template_name = f'{model.lower()}.html'
         else:
@@ -226,9 +227,7 @@ class ListObjectsView(LoginRequiredMixin, ListView):
 
         sort_by = self.request.GET.get('sort_by', 'id')
         sort_order = '-' + sort_by if not self.request.GET.get('order') == 'asc' else sort_by
-
         whos = self.kwargs.get('whos')
-        print("whos", whos)
         if not whos:
             model = eval(model)
             self.model = model
