@@ -239,6 +239,8 @@ class ListObjectsView(LoginRequiredMixin, ListView):
                 return model.objects.filter(local=True).order_by(sort_order)
             elif whos == 'global':
                 return model.objects.filter(local=False).order_by(sort_order)
+            elif whos == 'active':
+                return model.objects.filter(active=True).order_by(sort_order)
             else:
                 raise ValueError
         elif model in PREDEFINED_MODELS_USER_MANAGED:
@@ -248,6 +250,8 @@ class ListObjectsView(LoginRequiredMixin, ListView):
                 return model.objects.filter(user=self.request.user).order_by(sort_order)
             elif whos == 'taken':
                 return model.objects.filter(user__isnull=False).order_by(sort_order)
+            elif whos == 'free':
+                return model.objects.filter(user__isnull=True).order_by(sort_order)
             else:
                 raise ValueError
         else:
