@@ -10,3 +10,5 @@ __pychache__/
 
 # secrets
 backend/backend/settings_secret.py
+**service-account.json
+.idea

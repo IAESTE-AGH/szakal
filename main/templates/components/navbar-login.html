@@ -1,6 +1,7 @@
+{% load static %}
 <div class="navbar-login">
     <div class="logo-wrapper">
-        <img src="/static/logo.png"/>
+        <img src="{% static 'logo.png' %}"/>
     </div>
     <nav class="top-login" name="pot" >
         <a href="{% url 'register' %}">Zarejestruj sie</a>
