@@ -18,10 +18,10 @@ import environ
 import google.auth
 from google.cloud import secretmanager
 
-# for parent in Path().resolve().parents:
-#     if (google_credentials := parent / 'service-account.json').is_file():
-#         os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = str(google_credentials.resolve())
-#         break
+for parent in Path().resolve().parents:
+    if (google_credentials := parent / 'service-account.json').is_file():
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = str(google_credentials.resolve())
+        break
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,19 +40,7 @@ except google.auth.exceptions.DefaultCredentialsError:
 
 if os.path.isfile(env_file):
     # Use a local secret file, if provided
-
     env.read_env(env_file)
-# [START_EXCLUDE]
-elif os.getenv("TRAMPOLINE_CI", None):
-    # Create local settings if running with CI, for unit testing
-
-    placeholder = (
-        f"SECRET_KEY=a\n"
-        "GS_BUCKET_NAME=None\n"
-        f"DATABASE_URL=sqlite://{os.path.join(BASE_DIR, 'db.sqlite3')}"
-    )
-    env.read_env(io.StringIO(placeholder))
-# [END_EXCLUDE]
 elif os.environ.get("GOOGLE_CLOUD_PROJECT", None):
     # Pull secrets from Secret Manager
     client = secretmanager.SecretManagerServiceClient()
@@ -64,10 +52,9 @@ elif os.environ.get("GOOGLE_CLOUD_PROJECT", None):
 else:
     raise Exception("No local .env or GOOGLE_CLOUD_PROJECT detected. No secrets found.")
 # [END cloudrun_django_secret_config]
+
 SECRET_KEY = env("SECRET_KEY")
-
 DEBUG = env("DEBUG")
-
 
 # [START cloudrun_django_csrf]
 # SECURITY WARNING: It's recommended that you use this when
@@ -130,7 +117,7 @@ WSGI_APPLICATION = 'szakal.wsgi.application'
 DATABASES = {"default": env.db()}
 
 # If the flag as been set, configure to use proxy
-if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", None):
+if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", False):
     DATABASES["default"]["HOST"] = "127.0.0.1"
     DATABASES["default"]["PORT"] = 5432
 
