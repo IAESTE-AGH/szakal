@@ -27,7 +27,7 @@
 8. Run the Django migrations to set up your models and assets
     >python manage.py makemigrations
     > 
-    >python manage.py makemigrations polls
+    >python manage.py makemigrations szakal
     > 
     >python manage.py migrate
 9. Start the Django web server:
