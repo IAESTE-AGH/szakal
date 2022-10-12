@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
@@ -39,7 +41,7 @@ class Assignment(TimeStampMixin):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -70,11 +72,12 @@ class Company(TimeStampMixin):
     phone = models.CharField(max_length=15)
     address = models.TextField(blank=True, null=True)
     www = models.TextField(blank=True, null=True)
-    email = models.CharField(max_length=50, blank=True, null=True)
+    email = models.CharField(max_length=100, blank=True, null=True)
     update_person_name = models.CharField(max_length=100, blank=True, null=True)
     user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
     deleted = models.BooleanField(default=False)
-    delete_date = models.DateTimeField(blank=True, null=True)
+    delete_date = models.DateTimeField(blank=True, null=True, default=datetime.datetime.now())
+    updated_at = models.DateTimeField(blank=True, null=True, default=datetime.datetime.now())
     rating = models.FloatField(blank=True, null=True)
     number_of_ratings = models.IntegerField(blank=True, null=True)
 
@@ -92,10 +95,10 @@ class Company(TimeStampMixin):
 
 class ContactPerson(TimeStampMixin):  # more than 1 per company
     company = models.ForeignKey('Company', models.DO_NOTHING)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
     email = models.CharField(max_length=75)
-    position = models.CharField(max_length=50, blank=True, null=True)
+    position = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return f'{self.company} - {self.name}'
@@ -129,7 +132,7 @@ class Contact(TimeStampMixin):
 
 
 class Event(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
     local = models.BooleanField(default=True)
     active = models.BooleanField(default=False)
 
@@ -144,7 +147,7 @@ class Event(models.Model):
 
 
 class Industry(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -171,7 +174,7 @@ class IndustryCompany(models.Model):
 
 
 class Status(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
     sort_order = models.IntegerField()
 
     def __str__(self):
@@ -185,7 +188,7 @@ class Status(models.Model):
 
 
 class ContactType(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
