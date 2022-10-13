@@ -69,7 +69,7 @@ def assign_form(obj="", create=False, update=False, delete=False):
 
                 self.success_url = f'/{object.lower()}/list'
                 if object.lower() == 'contact':
-                    self.success_url = f'/company/list'
+                    self.success_url = f'/company/my'
 
                 return func(self, request, *args, **kwargs)
             return ValueError
@@ -116,7 +116,11 @@ def handle_extended_form(create=False, update=False, obj=""):
                         }
                         new = self.form_class.MANY_TO_MANY_MODEL(**parameters)
                         new.save()
-                    return HttpResponseRedirect(self.success_url)
+
+                    if update:
+                        return func(self, request, *args, **kwargs)
+                    else:
+                        return HttpResponseRedirect(self.success_url)
             else:
                 return func(self, request, *args, **kwargs)
 
