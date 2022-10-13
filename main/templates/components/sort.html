@@ -2,19 +2,9 @@
 <form method="get" action=".">
     <label for="sort_by">Sortuj po:</label>
     <select name="sort_by" id="sort_by">
-        {%  if "company" in  request.path%}
-            <option value="name">Nazwa</option>
-            <option value="next_contact_date">Następna data kontaktu</option>
-            <option value="">Ranking</option>
-            <option value="number_of_ratings">Ilość ocen</option>
-        {% elif "industry" in  request.path%}
-            <option value="name">Nazwa</option>
-        {% elif "event" in  request.path%}
-            <option value="name">Nazwa</option>
-            <option value="local">Lokalne</option>
-            <option value="active">Aktywne</option>
-        {%  endif %}
-
+        {% for field in fields %}
+            <option value={{ field.name }}>{{ field.name }}</option>
+        {% endfor %}
     </select>
     <select name="order" id="order">
         <option value="asc">rosnąco</option>
