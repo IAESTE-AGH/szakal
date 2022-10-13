@@ -21,24 +21,22 @@ def levenschtein_distance(string1, string2):
     return build_array(string1, string2)[len(string1)][len(string2)]
 
 
-def filter_by_word(name, A):
-    print(name)
+def filter_by_word(searched, A):
     res = []
     for i in range(10):
         res.append([])
     for row in A:
         best = 9
-        if len(name.split())>1:
-            best = min(levenschtein_distance(name.lower(), row.name.lower()), best)
-        else:
-            for word in row.name.split():
-                best = min(levenschtein_distance(name.lower(), word[:len(name)].lower()), best)
-
-
+        best = min(levenschtein_distance(searched.lower(), row.name[:len(searched)].lower()), best)
+        # if len(name.split()) > 1:
+        #     best = min(levenschtein_distance(name.lower(), row.name.lower()), best)
+        # else:
+        #     for word in row.name.split():
+        #         best = min(levenschtein_distance(name.lower(), word[:len(name)].lower()), best)
 
         res[best].append(row)
     result = []
     for i in range(len(res)-1):
         for j in range(len(res[i])):
             result.append(res[i][j])
-    return result
+    return result[:100]
