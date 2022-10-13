@@ -18,7 +18,7 @@ import environ
 import google.auth
 from google.cloud import secretmanager
 
-for parent in Path().resolve().parents:
+for parent in Path(__file__).resolve().parents:
     if (google_credentials := parent / 'service-account.json').is_file():
         os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = str(google_credentials.resolve())
         break
@@ -120,7 +120,6 @@ DATABASES = {"default": env.db()}
 if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", False):
     DATABASES["default"]["HOST"] = "127.0.0.1"
     DATABASES["default"]["PORT"] = 5432
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
