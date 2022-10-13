@@ -47,29 +47,40 @@ PREDEFINED_MODELS = [
 def assign_form(obj="", create=False, update=False, delete=False):
     def decorator(func):
         def wrap(self, request, *args, **kwargs):
+            print('args', args)
+            print('kwargs', kwargs)
+            print('request', request)
             if not obj:
                 object = self.kwargs['object'].capitalize()
             else:
                 object = obj.capitalize()
             if object in PREDEFINED_MODELS:
-                if not request.user.is_staff and object not in PREDEFINED_MODELS_USER:
-                    return PermissionError
-
                 self.model = eval(object)
                 self.object = None
                 if update:
-                    if request.user.is_staff or eval(object).objects.get(id=kwargs['pk']).user == request.user:
+                    if request.user.is_staff:
+                        self.form_class = eval(f'{object}UpdateForm')
+                    elif object == 'Company' and eval(object).objects.get(id=kwargs['pk']).user == request.user:
+                        self.form_class = eval(f'{object}UpdateForm')
+                    elif object == 'User' and eval(object).objects.get(id=kwargs['pk']) == request.user:
+                        self.form_class = eval(f'{object}UpdateForm')
+                    elif object == 'Contact' and eval(object).objects.get(id=kwargs['pk']).user == request.user:
                         self.form_class = eval(f'{object}UpdateForm')
                     else:
                         return PermissionError
                 elif create:
-                    self.form_class = eval(f'{object}CreateForm')
+                    if request.user.is_staff:
+                        self.form_class = eval(f'{object}CreateForm')
+                    elif object == 'Contact':
+                        self.form_class = eval(f'{object}CreateForm')
+                    else:
+                        return PermissionError
                 elif delete:
                     pass
 
                 self.success_url = f'/{object.lower()}/list'
                 if object.lower() == 'contact':
-                    self.success_url = f'/company/list'
+                    self.success_url = f'/company/my'
 
                 return func(self, request, *args, **kwargs)
             return ValueError
@@ -260,7 +271,6 @@ class ListObjectsView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['fields'] = self.model._meta.get_fields()
-
         return context
 
     def post(self, request, *args, **kwargs):
@@ -339,7 +349,6 @@ def assigning_decorator(func):
             raise ValueError
         func(request, object_, pk, *args, **kwargs)
         return HttpResponseRedirect(f'/{object}/list')
-
     return wrap
 
 
@@ -375,6 +384,8 @@ class AddContactView(LoginRequiredMixin, CreateView):
 
     def get(self, request, *args, **kwargs):
         company_id = request.GET['company']
+        if Company.objects.get(id=company_id).user != request.user and not request.user.is_staff:
+            return PermissionError
         context = {
             "company": Company.objects.get(id=company_id),
             "contact_people": ContactPerson.objects.filter(company_id=company_id),
