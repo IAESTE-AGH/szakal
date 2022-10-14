@@ -1,92 +1,95 @@
 {% extends "base.html" %}
 {% block content %}
-
-<main>
+<main style="text-align: center;">
     <br>
 <div class="title">
-    <h1>Informacje o firmie: </h1>
+    <h1>Informację o firmie: </h1>
 </div>
-    <form action="/company/{{ company.id }}" method="get">
-        <p style="text-align: right">
-            <input type="hidden" name="company" value="{{ company.id }}">
-            <input class="button" type="submit" value="Aktualizuj informacje">
-        </p>
-    </form>
-    <div class="tabele">
+        <div class="tabele-event">
         <table>
             <tbody>
             <tr>
-                <td>Name: </td>
+                <td class="bold-tabele">Nazwa: </td>
                 <td>{{company.name}}</td>
             </tr>
             <tr>
-                <td>Phone: </td>
+                <td class="bold-tabele">Numer telefonu: </td>
                 <td>{{company.phone}}</td>
             </tr>
             <tr>
-                <td>Address: </td>
+                <td class="bold-tabele">Adres: </td>
                 <td>{{company.address}}</td>
             </tr>
             <tr>
-                <td>WWW: </td>
+                <td class="bold-tabele">Strona internetowa firmy: </td>
                 <td><a href={{company.www}}>{{company.www}}</a></td>
             </tr>
               <tr>
-                <td>Deleted:: </td>
+                <td class="bold-tabele">Usunięcie firmy: </td>
                 <td>{{company.deleted}}</td>
             </tr>
               <tr>
-                <td>Delete date: </td>
+                <td class="bold-tabele">Data usunięcia: </td>
                 <td>{{company.delete_date}}</td>
             </tr>
               <tr>
-                <td>Rating: </td>
+                <td class="bold-tabele">Wskaźnik: </td>
                 <td>{{company.rating}}</td>
             </tr>
               <tr>
-                <td>Number of ratings: </td>
+                <td class="bold-tabele">Numer wskaźnika: </td>
                 <td>{{company.number_of_ratings}}</td>
             </tr>
              <tr>
-                <td>Next contact date: </td>
+                <td class="bold-tabele">Data następnego kontaktu: </td>
                 <td>{{company.next_contact_date}}</td>
             </tr>
               <tr>
-                <td>Created at: </td>
+                <td class="bold-tabele">Utworzono w: </td>
                 <td>{{company.created_at}}</td>
             </tr>
               <tr>
-                <td>Updated at: </td>
+                <td class="bold-tabele">Zaktualizowano w: </td>
                 <td>{{company.updated_at}}</td>
             </tr>
             </tbody>
         </table>
+    <form action="/company/{{ company.id }}" method="get">
+        <p style="text-align: center">
+            <input type="hidden" name="company" value="{{ company.id }}">
+            <input class="button" type="submit" value="Aktualizuj informacje">
+        </p>
+    </form>
     </div>
+
+
+
+
+        <div class="tabele-event">
     <div class="title">
     <h1>Kontakty z firmą: </h1>
         <form action="/contact/list/add/" method="get">
             <p style="text-align: right">
                 <input type="hidden" name="company" value="{{ company.id }}">
-                <input class="button" type="submit" value="Dodaj Nowy Kontakt">
+                <input class="button" type="submit" value="Dodaj nowy kontakt">
             </p>
         </form>
     </div>
-    <div class="tabele">
-
+    <div class="content-table"></div>
         <table>
             <tr>
                 <td>Nr.</td>
-                <td>Contact person: </td>
-                <td>Type: </td>
+                <td>Osoba kontaktowa: </td>
+                <td>Rodzaj: </td>
                 <td>Event: </td>
                 <td>Status: </td>
-                <td>Company: </td>
-                <td>User: </td>
-                <td>Accepted: </td>
-                <td>Date: </td>
-                <td>Comment: </td>
-                <td>Rating: </td>
-                <td>Edit: </td>
+                <td>Firma: </td>
+                <td>Użytkownik: </td>
+{#                 <td>Zaakceptowany: </td>#}
+                <td>Data: </td>
+{#                <td>Komentarz: </td>#}
+                <td>Wskaźnik: </td>
+                <td>Edycja: </td>
             </tr>
             {% for contact in contacts %}
              <tr>
@@ -97,9 +100,9 @@
                  <td>{{contact.status}}</td>
                  <td>{{contact.company}}</td>
                  <td>{{contact.user}}</td>
-                 <td>{{contact.accepted}}</td>
+{#                  <td>{{contact.accepted}}</td>#}
                  <td>{{contact.date}}</td>
-                 <td>{{contact.comment}}</td>
+{#                  <td>{{contact.comment}}</td>#}
                  <td>{{contact.rating}}</td>
                  <td><a href="/contact/{{contact.id}}">Edytuj</a></td>
             </tr>
