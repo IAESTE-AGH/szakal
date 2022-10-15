@@ -11,9 +11,9 @@
             <thead>
             <tr>
                 <th class="bold-tabele">ID</th>
-                <th class="bold-tabele">Name</th>
-                <th class="bold-tabele">Active</th>
-                <th class="bold-tabele">Local</th>
+                <th class="bold-tabele">Nazwa</th>
+                <th class="bold-tabele">Aktywny</th>
+                <th class="bold-tabele">Lokalny</th>
             </tr>
             </thead>
             <tbody>
@@ -24,7 +24,7 @@
                     <td>{{ event.name }}</td>
                     <td>{{ event.active }}</td>
                     <td>{{ event.local }}</td>
-                    <td><a href="/event/{{ event.id }}"><input class="button" type="submit" value="edit"></a></td>
+                    <td><a href="/event/{{ event.id }}"><input class="button" type="submit" value="Edytuj"></a></td>
                 </tr>
             {% endfor %}
             </tbody>

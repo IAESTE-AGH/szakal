@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <main>
-            <div class="tabele-company">
+            <div class="tabele-event">
                 <h1 class="title">Kontakty</h1>
                 <p style="text-align: left">{% include 'components/sort.html' %}
                 </p>
@@ -12,15 +12,15 @@
                     <thead>
                     <tr>
                         <th class="bold-tabele">ID</th>
-                        <th class="bold-tabele">Contact person</th>
-                        <th class="bold-tabele">Type</th>
+                        <th class="bold-tabele">Osoba kontaktowa</th>
+                        <th class="bold-tabele">Rodzaj</th>
                         <th class="bold-tabele">Event</th>
                         <th class="bold-tabele">Status</th>
-                        <th class="bold-tabele">Company</th>
-                        <th class="bold-tabele">Accepted</th>
-                        <th class="bold-tabele">Comment</th>
-                        <th class="bold-tabele">Rating</th>
-                        <th class="bold-tabele">Date</th>
+                        <th class="bold-tabele">Firma</th>
+                        <th class="bold-tabele">Przyjęty</th>
+                        <th class="bold-tabele">Komentarz</th>
+                        <th class="bold-tabele">Wskaźnik</th>
+                        <th class="bold-tabele">Data</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -35,9 +35,9 @@
                         <td>{{ contact.accepted }}</td>
                         <td>{{ contact.comment }}</td>
                         <td>{{ contact.rating }}</td>
-                        <td><a>Date: </a>{{ contact.date }}
-                            <p><a>Created: </a>{{ company.created_at }}</p>
-                            <p><a>Update: </a>{{ company.updated_at }}</p></td>
+                        <td><a>Data: </a>{{ contact.date }}
+                            <p><a>Data utworzenia: </a>{{ company.created_at }}</p>
+                            <p><a>Data aktualizacji: </a>{{ company.updated_at }}</p></td>
                     </tr>
                     <tr>
                         {% endfor %}
@@ -46,7 +46,4 @@
                 </table>
             </div>
 </main>
-
-<h2>{{ request.user.username }}</h2>
-
 {% endblock %}

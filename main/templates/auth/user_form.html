@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl-PL">
 {% extends "base-login.html" %}
 {% block content %}
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tytuł</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
@@ -24,7 +24,7 @@
         {% endfor %}
 
 {#        {{ form.as_p }}#}
-    <button class="button" type="submit">SUBMIT</button>
+    <button class="button" type="submit">ZATWIERDŹ</button>
     </form>
 </div>
 {% include 'components/footer.html' %}

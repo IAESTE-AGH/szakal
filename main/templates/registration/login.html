@@ -4,15 +4,15 @@
 
     <div class="message">
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<p>Nieprawidłowa nazwa użytkownika lub hasło.</p>
 {% endif %}
 
 {% if next %}
     {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
+    <p>Twoje konto nie ma dostępu do tej strony. Aby kontynuować,
+        zaloguj się na konto, które ma dostęp.</p>
     {% else %}
-    <p>Please login to see this page.</p>
+    <p>Zaloguj się, aby zobaczyć tę stronę.</p>
     {% endif %}
 {% endif %}
         </div>
@@ -39,7 +39,7 @@
 </form>
 
 {# Assumes you setup the password_reset view in your URLconf #}
-<p class="lost-password"><a href="{% url 'password_reset' %}">Lost password?</a></p>
+<p class="lost-password"><a href="{% url 'password_reset' %}">Ustaw nowe hasło</a></p>
 
 </div>
 {% endblock %}

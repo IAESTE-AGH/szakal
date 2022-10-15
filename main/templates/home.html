@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 
-
 {% block content %}
     <div class="container-fluid" id="ramka">
         <h1 class="title">Baza firm - Pulpit</h1>
@@ -128,7 +127,7 @@
                                                     <tbody class="homeBody">
                                                     {% for user in users %}
                                                         <tr>
-                                                            <td>{{ forloop.counter }}</td>
+                                                            <td>{{ forloop.counter }}.</td>
                                                             <td>{{ user.first_name }} {{ user.last_name }}</td>
                                                             <td>{{ user.companyCount }}</td>
                                                         </tr>
@@ -152,7 +151,7 @@
                                                     <tbody class="homeBody" id="myCompaniesStates">
                                                     {% for company in myCompanies %}
                                                         <tr>
-                                                            <td>{{ forloop.counter }}</td>
+                                                            <td>{{ forloop.counter }}.</td>
                                                             <td>{{ company.company.name }}</td>
                                                             <td>{{ company.event.name }}</td>
                                                             <td>{{ company.status.name }}</td>
