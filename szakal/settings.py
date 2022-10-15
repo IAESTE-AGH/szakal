@@ -166,12 +166,13 @@ STATICFILES_DIRS = (
     ('main/static'),
 )
 
-GS_BUCKET_NAME = env("GS_BUCKET_NAME")
+if not os.getenv("USE_CLOUD_SQL_AUTH_PROXY", False):
+    GS_BUCKET_NAME = env("GS_BUCKET_NAME")
 
-DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
-STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
-# GS_DEFAULT_ACL = "publicRead"
-GS_QUERYSTRING_AUTH = False
+    DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+    STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+    # GS_DEFAULT_ACL = "publicRead"
+    GS_QUERYSTRING_AUTH = False
 
 LOGIN_REDIRECT_URL = '/'  # todo remove after (if) implementing profile using generic stuff
 LOGOUT_REDIRECT_URL = '/'
