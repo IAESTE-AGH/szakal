@@ -1,7 +1,8 @@
-from django.forms import ModelForm, PasswordInput, MultipleChoiceField, DateInput
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.forms import ModelForm, PasswordInput, MultipleChoiceField, DateInput
 
 from main.models import User, Industry, Company, Category, Event, CategoryCompany, Assignment, Contact, CategoryContact
+
 
 class DateWidget(DateInput):
     input_type = 'date'
@@ -55,7 +56,7 @@ class CompanyCreateForm(ExtendedForm):
 
     class Meta(ExtendedForm.Meta):
         model = Company
-        exclude = ('user', 'update_date', 'insert_date')
+        exclude = ('user', 'update_date', 'insert_date', 'number_of_ratings')
         widgets = {
             'delete_date': DateWidget(),
             'next_contact_date': DateWidget(),
