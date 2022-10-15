@@ -211,13 +211,17 @@
   border-top: 2px solid #436374;
 }
 
+.main-nav dropdown-content a {
+    display: block;
+}
+
 .container-fluid {
   border: 1px solid lightgray;
-  padding: 5%;
-  width: 90%;
+  padding: 3%;
+  width: 97%;
   background-color: #fffffc;
   font-family: "Open Sans";
-  white-space: nowrap;
+  //white-space: nowrap;
   overflow: hidden;
 }
 
@@ -240,10 +244,13 @@
   background-color: #f5f3f4;
   color: black;
   text-align: center;
-  margin: 5%;
-  width: 70%;
+  margin: 3%;
+  //width: 70%;
   border-radius: 10px;
   display: block;
+  tbody{
+    display:block;
+  }
 }
 
 .homeBody tr {
@@ -252,18 +259,52 @@
   display: block;
   text-align: center;
   font-size: 75%;
+
+
+
 }
 
 .homeBody {
     display: block;
     width: 100%;
+    &#myCompaniesStates {
+        tr {
+            text-align: initial;
+        }
+        td {
+          display: inline-block;
+          &:first-child {
+            width:5%;
+          }
+          &:nth-child(2) {
+            width: 50%;
+          }
+          &:nth-child(3) {
+            width:20%;
+          }
+          &:nth-child(4) {
+            width: 20%;
+          }
+      }
+    }
 }
 
 .homeSlice {
-  display: inline-block;
-  width: 35%;
+  display: inline-flex;
+  flex-direction: column;
+  width: 33%;
   height: 500px;
   position: static;
+
+  #top10 {
+  tr {
+    text-align: initial;
+  }
+    td {
+        display: inline-block;
+        margin-left: 10px;
+    }
+  }
 }
 
 .bold-text {

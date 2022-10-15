@@ -242,13 +242,16 @@
   border-top: 2px solid #436374;
 }
 
+.main-nav dropdown-content a {
+  display: block;
+}
+
 .container-fluid {
   border: 1px solid lightgray;
-  padding: 5%;
-  width: 90%;
+  padding: 3%;
+  width: 97%;
   background-color: #fffffc;
   font-family: "Open Sans";
-  white-space: nowrap;
   overflow: hidden;
 }
 
@@ -271,9 +274,11 @@
   background-color: #f5f3f4;
   color: black;
   text-align: center;
-  margin: 5%;
-  width: 70%;
+  margin: 3%;
   border-radius: 10px;
+  display: block;
+}
+.table tbody {
   display: block;
 }
 
@@ -289,12 +294,38 @@
   display: block;
   width: 100%;
 }
+.homeBody#myCompaniesStates tr {
+  text-align: initial;
+}
+.homeBody#myCompaniesStates td {
+  display: inline-block;
+}
+.homeBody#myCompaniesStates td:first-child {
+  width: 5%;
+}
+.homeBody#myCompaniesStates td:nth-child(2) {
+  width: 50%;
+}
+.homeBody#myCompaniesStates td:nth-child(3) {
+  width: 20%;
+}
+.homeBody#myCompaniesStates td:nth-child(4) {
+  width: 20%;
+}
 
 .homeSlice {
-  display: inline-block;
-  width: 35%;
+  display: inline-flex;
+  flex-direction: column;
+  width: 33%;
   height: 500px;
   position: static;
+}
+.homeSlice #top10 tr {
+  text-align: initial;
+}
+.homeSlice #top10 td {
+  display: inline-block;
+  margin-left: 10px;
 }
 
 .bold-text {
