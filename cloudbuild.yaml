@@ -1,0 +1,7 @@
+steps:
+  - name: 'gcr.io/kaniko-project/executor:latest'
+    args:
+    - --destination=gcr.io/szakal-365017/szakal
+    - --cache=true
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'szakal', '--image', 'gcr.io/szakal-365017/szakal', '--region', 'europe-central2', '--platform', 'managed', '--allow-unauthenticated']
