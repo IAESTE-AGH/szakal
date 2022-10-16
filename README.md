@@ -35,21 +35,29 @@
 10. In your browser, go to http://localhost:8000
 
 TODO:
-- permission to edit user(me) data + everywhere - Szymon
-- phone -> default instead of None - Michał
-- center text in home box data - Jakub
-- line from left to right - Jakub
-- objects delete id or fix sorting by id(display) - fix sorting - reduce number of possibilities to filter - Szymon
-- delete https://szakal-tbvozkjslq-lm.a.run.app/user/list/ - Michał
-- link fill div(hamburger) - Jakub
-- language code to PL and all text to PL - Daniel
-- add category - check how often - v2
-- update person name ???????????? - hide from display - Michał
-- deleted + delete date - not able to check during adding - Michał
-- not set "Number of ratings" - Jakuba
-- fix css - 
-- delete own username in right upper corner - Daniel
-- add code to add contact person + button in company details page - Michał
-- add boundaries to rating(consult with JFR) - v2
-- css - https://szakal-tbvozkjslq-lm.a.run.app/company/1/company_details/ - Daniel
-- fix contact and company update - Szymon
+- [ ] permission to edit user(me) data + everywhere - Szymon
+- [X] phone -> default instead of None - Michał
+- [ ] center text in home box data - Jakub
+- [ ] line from left to right - Jakub
+- [ ] objects delete id or fix sorting by id(display) - fix sorting - reduce number of possibilities to filter - Szymon
+- [x] delete https://szakal-tbvozkjslq-lm.a.run.app/user/list/ - Michał
+- [ ] link fill div(hamburger) - Jakub
+- [ ] language code to PL and all text to PL - Daniel
+- [ ] add category - check how often - v2
+- [X] update person name ???????????? - hide from display - Michał - to discuss
+- [X] deleted + delete date - not able to check during adding - Michał
+- [x] not set "Number of ratings" - Jakuba
+- [ ] fix css - 
+- [ ] delete own username in right upper corner - Daniel
+- [X] add code to add contact person + button in company details page - Michał
+- [ ] add boundaries to rating(consult with JFR) - v2
+- [ ] css - https://szakal-tbvozkjslq-lm.a.run.app/company/1/company_details/ - Daniel
+- [ ] fix contact and company update - Szymon
+- [ ] fix rating
+- [ ] CRUD for industry company
+- [ ] display all info for company
+- [ ] MANY TO MANY in form, better solution
+- [ ] Purpose of categories? What values?
+- [ ] CRUD for contact person
+- [ ] Simplify DB design
+- [ ] Add common errors to README(Michał)
