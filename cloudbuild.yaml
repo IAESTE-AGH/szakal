@@ -59,7 +59,6 @@ steps:
 options:
   logging: CLOUD_LOGGING_ONLY
 substitutions:
-  PROJECT_ID: szakal-365017
   _INSTANCE_NAME: szakal
   _REGION: europe-central2
   _SERVICE_NAME: szakal
