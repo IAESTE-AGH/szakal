@@ -61,3 +61,5 @@ TODO:
 - [ ] CRUD for contact person
 - [ ] Simplify DB design
 - [ ] Add common errors to README(Michał)
+- [ ] Clean DB
+- [ ] Fix return after update
