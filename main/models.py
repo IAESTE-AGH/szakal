@@ -1,7 +1,7 @@
 import datetime
 
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 from main.managers import CustomUserManager
@@ -9,14 +9,14 @@ from main.managers import CustomUserManager
 
 class TimeStampMixin(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     class Meta:
         abstract = True
 
 
 class User(AbstractUser):
-    phone_number = PhoneNumberField(blank=True, null=True)
+    phone_number = PhoneNumberField(blank=True, null=True, default='')
     accepted = models.BooleanField(default=False)
     logins = models.IntegerField(default=0)
 
@@ -67,17 +67,47 @@ class CategoryCompany(models.Model):
         unique_together = (('category', 'company'),)
 
 
+class Industry(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Industry'
+        verbose_name_plural = 'Industries'
+        managed = True
+        db_table = 'szakal_industries'
+
+
+class IndustryCompany(models.Model):
+    industry = models.ForeignKey('Industry', models.DO_NOTHING)
+    company = models.ForeignKey('Company', models.CASCADE)
+
+    def __str__(self):
+        return f'{self.industry.name} - {self.company.name}'
+
+    class Meta:
+        verbose_name_plural = 'Industries Companies'
+        managed = True
+        db_table = 'szakal_industries_companies'
+        unique_together = (('industry', 'company'),)
+
+
 class Company(TimeStampMixin):
     name = models.TextField()
     phone = models.CharField(max_length=15)
     address = models.TextField(blank=True, null=True)
     www = models.TextField(blank=True, null=True)
     email = models.CharField(max_length=100, blank=True, null=True)
+
     update_person_name = models.CharField(max_length=100, blank=True, null=True)
     user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
+    # category = models.ForeignKey(Category, models.DO_NOTHING, blank=True, null=True)
+    industry = models.ForeignKey(Industry, models.DO_NOTHING, blank=True, null=True)
     deleted = models.BooleanField(default=False)
-    delete_date = models.DateTimeField(blank=True, null=True, default=datetime.datetime.now())
-    updated_at = models.DateTimeField(blank=True, null=True, default=datetime.datetime.now())
+    delete_date = models.DateTimeField(blank=True, null=True)
+    # updated_at = models.DateTimeField(blank=True, default=datetime.datetime.now())
     rating = models.FloatField(blank=True, null=True)
     number_of_ratings = models.IntegerField(blank=True, null=True)
 
@@ -110,7 +140,8 @@ class ContactPerson(TimeStampMixin):  # more than 1 per company
 
 
 class Contact(TimeStampMixin):
-    contact_person = models.ForeignKey('ContactPerson', models.CASCADE)  # will delete Contact on delete of ContactPerson
+    contact_person = models.ForeignKey('ContactPerson',
+                                       models.CASCADE)  # will delete Contact on delete of ContactPerson
     type = models.ForeignKey('ContactType', models.DO_NOTHING)
     event = models.ForeignKey('Event', models.DO_NOTHING)
     status = models.ForeignKey('Status', models.DO_NOTHING)
@@ -144,33 +175,6 @@ class Event(models.Model):
         verbose_name_plural = 'Events'
         managed = True
         db_table = 'szakal_events'
-
-
-class Industry(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Industry'
-        verbose_name_plural = 'Industries'
-        managed = True
-        db_table = 'szakal_industries'
-
-
-class IndustryCompany(models.Model):
-    industry = models.ForeignKey('Industry', models.DO_NOTHING)
-    company = models.ForeignKey('Company', models.CASCADE)
-
-    def __str__(self):
-        return f'{self.industry.name} - {self.company.name}'
-
-    class Meta:
-        verbose_name_plural = 'Industries Companies'
-        managed = True
-        db_table = 'szakal_industries_companies'
-        unique_together = (('industry', 'company'),)
 
 
 class Status(models.Model):

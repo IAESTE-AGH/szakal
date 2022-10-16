@@ -18,7 +18,7 @@
       <div class="dropdown">
 
             <div class="dropdown-button">
-              <div class="dropdown-logo"><img width="30" height="30" src="{% static 'main-nav-logos/pointer.svg' %}"></div> <div class="dropdown-text">Firmy</div><div class="arrow up"></div>
+              <div class="dropdown-logo"><img width="30" height="30" src="{% static 'main-nav-logos/pointer.svg' %}"></div> <div class="dropdown-text">Firmy</div><div class="arrow down"></div>
             </div>
 
         <div class="dropdown-content">
@@ -43,7 +43,7 @@
 
         <div class="dropdown-button">
           <div class="dropdown-logo"><img width="30" height="30" src="{% static 'main-nav-logos/calendar.svg' %}"></div> <div class="dropdown-text">Eventy</div>
-            <div class="arrow up"></div>
+            <div class="arrow down"></div>
         </div>
         <div class="dropdown-content">
             <div><a href="/event/list/" style="color:white"><div class="dropdown-logo"><img width="30" height="30" src="{% static 'main-nav-logos/burger.svg' %}"></div> <div class="dropdown-text">Wszystkie eventy</div></a></div>
@@ -53,13 +53,13 @@
         </div>
 
       </div>
-      <div class="dropdown">
-          <a href="/user/" style="color:white">
-        <div class="dropdown-button">
-          <div class="dropdown-logo"><img width="30" height="30" src="{% static 'main-nav-logos/user.svg' %}"></div> <div class="dropdown-text">Użytkownicy</div>
-        </div>
-          </a>
-      </div>
+{#      <div class="dropdown">#}
+{#          <a href="/user/" style="color:white">#}
+{#        <div class="dropdown-button">#}
+{#          <div class="dropdown-logo"><img width="30" height="30" src="{% static 'main-nav-logos/user.svg' %}"></div> <div class="dropdown-text">Użytkownicy</div>#}
+{#        </div>#}
+{#          </a>#}
+{#      </div>#}
     </div>
   </div>
 
@@ -68,7 +68,6 @@
 
 <script>
   function navClick(e) {
-  console.log(e.target);
     let arrow;
     let navel;
     if (e.target.classList.contains("arrow")) {

@@ -1,7 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import ModelForm, PasswordInput, MultipleChoiceField, DateInput
 
-from main.models import User, Industry, Company, Category, Event, CategoryCompany, Assignment, Contact, CategoryContact
+from main.models import ContactPerson, User, Industry, Company, Category, Event,\
+    CategoryCompany, Assignment, Contact, CategoryContact
 
 
 class DateWidget(DateInput):
@@ -49,31 +50,29 @@ class IndustryCreateForm(DefaultForm):
         model = Industry
 
 
-class CompanyCreateForm(ExtendedForm):
-    RELATED_MODEL = Category
-    RELATED_DISPLAY_NAME = 'categories'
-    MANY_TO_MANY_MODEL = CategoryCompany
-
-    class Meta(ExtendedForm.Meta):
+class CompanyCreateForm(DefaultForm):
+    class Meta(DefaultForm.Meta):
         model = Company
-        exclude = ('user', 'update_date', 'insert_date', 'number_of_ratings')
-        widgets = {
-            'delete_date': DateWidget(),
-            'next_contact_date': DateWidget(),
-        }
-
-
-class CompanyUpdateForm(ExtendedForm):
-    RELATED_MODEL = Category
-    RELATED_DISPLAY_NAME = 'categories'
-    MANY_TO_MANY_MODEL = CategoryCompany
-
-    class Meta(ExtendedForm.Meta):
-        model = Company
-        exclude = ('update_date', 'insert_date', 'deleted', 'delete_date', 'number_of_ratings', 'update_person_name')
+        exclude = ('user', 'update_date', 'insert_date', 'number_of_ratings',
+                   'update_person_name', 'delete_date', 'deleted', 'rating', 'updated_at')
         widgets = {
             'next_contact_date': DateWidget(),
         }
+
+
+class CompanyUpdateForm(DefaultForm):
+    class Meta(DefaultForm.Meta):
+        model = Company
+        exclude = ('updated_at', 'insert_date', 'number_of_ratings', 'update_person_name', 'update_person_name')
+        widgets = {
+            'next_contact_date': DateWidget(),
+        }
+
+
+class ContactPersonCreateForm(DefaultForm):
+    class Meta(DefaultForm):
+        model = ContactPerson
+        fields = '__all__'
 
 
 class CategoryCreateForm(DefaultForm):
@@ -121,15 +120,6 @@ class UserUpdateForm(ModelForm):
         fields = ['username', 'first_name', 'last_name', 'email', 'phone_number']
 
 
-class ContactUpdateForm(ModelForm):
-    class Meta:
-        model = Contact
-        fields = ['accepted', 'date', 'comment', 'rating', 'company', 'contact_person', 'event', 'status', 'type']
-        widgets = {
-            'date': DateWidget(),
-        }
-
-
 class Meta(ExtendedForm.Meta):
     model = Contact
     exclude = ('user', 'update_date', 'insert_date')
@@ -147,6 +137,7 @@ class ContactUpdateForm(ExtendedForm):
             'date': DateWidget(),
         }
 
+
 class ContactCreateForm(ExtendedForm):
     RELATED_MODEL = Category
     RELATED_DISPLAY_NAME = 'categories'
@@ -160,6 +151,6 @@ class ContactCreateForm(ExtendedForm):
         }
 
 
-class CategoryContactCreateForm(ExtendedForm):
+class CategoryContactCreateForm(DefaultForm):
     class Meta(DefaultForm.Meta):
         model = CategoryContact

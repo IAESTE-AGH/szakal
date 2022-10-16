@@ -1,114 +1,145 @@
 {% extends "base.html" %}
 {% block content %}
-<main style="text-align: center;">
-    <br>
-<div class="title">
-    <h1>Informację o firmie: </h1>
-</div>
+    <main style="text-align: center;">
+        <br>
+        <div class="title">
+            <h1>Informację o firmie: </h1>
+        </div>
         <div class="tabele-event">
-        <table>
-            <tbody>
-            <tr>
-                <td class="bold-tabele">Nazwa: </td>
-                <td>{{company.name}}</td>
-            </tr>
-            <tr>
-                <td class="bold-tabele">Numer telefonu: </td>
-                <td>{{company.phone}}</td>
-            </tr>
-            <tr>
-                <td class="bold-tabele">Adres: </td>
-                <td>{{company.address}}</td>
-            </tr>
-            <tr>
-                <td class="bold-tabele">Strona internetowa firmy: </td>
-                <td><a href={{company.www}}>{{company.www}}</a></td>
-            </tr>
-              <tr>
-                <td class="bold-tabele">Usunięcie firmy: </td>
-                <td>{{company.deleted}}</td>
-            </tr>
-              <tr>
-                <td class="bold-tabele">Data usunięcia: </td>
-                <td>{{company.delete_date}}</td>
-            </tr>
-              <tr>
-                <td class="bold-tabele">Wskaźnik: </td>
-                <td>{{company.rating}}</td>
-            </tr>
-              <tr>
-                <td class="bold-tabele">Numer wskaźnika: </td>
-                <td>{{company.number_of_ratings}}</td>
-            </tr>
-             <tr>
-                <td class="bold-tabele">Data następnego kontaktu: </td>
-                <td>{{company.next_contact_date}}</td>
-            </tr>
-              <tr>
-                <td class="bold-tabele">Utworzono w: </td>
-                <td>{{company.created_at}}</td>
-            </tr>
-              <tr>
-                <td class="bold-tabele">Zaktualizowano w: </td>
-                <td>{{company.updated_at}}</td>
-            </tr>
-            </tbody>
-        </table>
-    <form action="/company/{{ company.id }}" method="get">
-        <p style="text-align: center">
-            <input type="hidden" name="company" value="{{ company.id }}">
-            <input class="button" type="submit" value="Aktualizuj informacje">
-        </p>
-    </form>
-    </div>
-
-
-
+            <table>
+                <tbody>
+                <tr>
+                    <td class="bold-tabele">Nazwa:</td>
+                    <td>{{ company.name }}</td>
+                </tr>
+                <tr>
+                    <td class="bold-tabele">Numer telefonu:</td>
+                    <td>{{ company.phone |default:'Brak' }}</td>
+                </tr>
+                <tr>
+                    <td class="bold-tabele">Adres:</td>
+                    <td>{{ company.address }}</td>
+                </tr>
+                <tr>
+                    <td class="bold-tabele">Strona internetowa firmy:</td>
+                    <td><a href={{ company.www }}>{{ company.www }}</a></td>
+                </tr>
+                <tr>
+                    <td class="bold-tabele">Firma usunięta:</td>
+                    <td>{{ company.deleted|yesno }}</td>
+                </tr>
+                <tr>
+                    <td class="bold-tabele">Data usunięcia:</td>
+                    <td>{{ company.delete_date|default:"" }}</td>
+                </tr>
+                <tr>
+                    <td class="bold-tabele">Ocena:</td>
+                    <td>{{ company.rating|default:"brak" }}</td>
+                </tr>
+                <tr>
+                    <td class="bold-tabele">Ilość ocen:</td>
+                    <td>{{ company.number_of_ratings|default:"brak" }}</td>
+                </tr>
+                <tr>
+                    <td class="bold-tabele">Data następnego kontaktu:</td>
+                    <td>{{ company.next_contact_date|default:"Brak ustalonego terminu" }}</td>
+                </tr>
+                <tr>
+                    <td class="bold-tabele">Utworzono w:</td>
+                    <td>{{ company.created_at }}</td>
+                </tr>
+                <tr>
+                    <td class="bold-tabele">Zaktualizowano w:</td>
+                    <td>{{ company.updated_at }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <form action="/company/{{ company.id }}" method="get">
+                <p style="text-align: center">
+                    <input type="hidden" name="company" value="{{ company.id }}">
+                    <input class="button" type="submit" value="Aktualizuj informacje">
+                </p>
+            </form>
+        </div>
 
         <div class="tabele-event">
-    <div class="title">
-    <h1>Kontakty z firmą: </h1>
-        <form action="/contact/list/add/" method="get">
-            <p style="text-align: right">
-                <input type="hidden" name="company" value="{{ company.id }}">
-                <input class="button" type="submit" value="Dodaj nowy kontakt">
-            </p>
-        </form>
-    </div>
-    <div class="content-table"></div>
-        <table>
-            <tr>
-                <td>Nr.</td>
-                <td>Osoba kontaktowa: </td>
-                <td>Rodzaj: </td>
-                <td>Event: </td>
-                <td>Status: </td>
-                <td>Firma: </td>
-                <td>Użytkownik: </td>
-{#                 <td>Zaakceptowany: </td>#}
-                <td>Data: </td>
-{#                <td>Komentarz: </td>#}
-                <td>Wskaźnik: </td>
-                <td>Edycja: </td>
-            </tr>
-            {% for contact in contacts %}
-             <tr>
-                 <td>{{ forloop.counter }}.</td>
-                 <td>{{contact.contact_person}}</td>
-                 <td>{{contact.type}}</td>
-                 <td>{{contact.event}}</td>
-                 <td>{{contact.status}}</td>
-                 <td>{{contact.company}}</td>
-                 <td>{{contact.user}}</td>
-{#                  <td>{{contact.accepted}}</td>#}
-                 <td>{{contact.date}}</td>
-{#                  <td>{{contact.comment}}</td>#}
-                 <td>{{contact.rating}}</td>
-                 <td><a href="/contact/{{contact.id}}">Edytuj</a></td>
-            </tr>
+            <div class="title">
 
-    {% endfor %}
-        </table>
-    </div>
-</main>
+                <h1>Osoby kontaktowe: </h1>
+                <form action="/contact-person/list/add/" method="get">
+                    <p style="text-align: right">
+                        <input type="hidden" name="company" value="{{ company.id }}">
+                        <input class="button" type="submit" value="Dodaj nową osobę kontaktową">
+                    </p>
+                </form>
+            </div>
+            <div class="content-table"></div>
+            <table>
+                <tr>
+                    <td>Nr.</td>
+                    <td>Godność:</td>
+                    <td>Phone:</td>
+                    <td>Email:</td>
+                    <td>Stanowisko:</td>
+
+                </tr>
+                {% for contact_person in contact_persons %}
+                    <tr>
+                        <td>{{ forloop.counter }}.</td>
+                        <td>{{ contact_person.name }}</td>
+                        <td>{{ contact_person.phone }}</td>
+                        <td>{{ contact_person.email }}</td>
+                        <td>{{ contact_person.position }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="tabele-event">
+            <div class="title">
+
+                <h1>Kontakty z firmą: </h1>
+                <form action="/contact/list/add/" method="get">
+                    <p style="text-align: right">
+                        <input type="hidden" name="company" value="{{ company.id }}">
+                        <input class="button" type="submit" value="Dodaj nowy kontakt">
+                    </p>
+                </form>
+            </div>
+            <div class="content-table"></div>
+            <table>
+                <tr>
+                    <td>Nr.</td>
+                    <td>Osoba kontaktowa:</td>
+                    <td>Rodzaj:</td>
+                    <td>Event:</td>
+                    <td>Status:</td>
+                    <td>Firma:</td>
+                    <td>Użytkownik:</td>
+                    {#                 <td>Zaakceptowany: </td>#}
+                    <td>Data:</td>
+                    {#                <td>Komentarz: </td>#}
+                    <td>Ocena:</td>
+                    <td>Edycja:</td>
+                </tr>
+                {% for contact in contacts %}
+                    <tr>
+                        <td>{{ forloop.counter }}.</td>
+                        <td>{{ contact.contact_person }}</td>
+                        <td>{{ contact.type }}</td>
+                        <td>{{ contact.event }}</td>
+                        <td>{{ contact.status }}</td>
+                        <td>{{ contact.company }}</td>
+                        <td>{{ contact.user }}</td>
+                        {#                  <td>{{contact.accepted}}</td>#}
+                        <td>{{ contact.date }}</td>
+                        {#                  <td>{{contact.comment}}</td>#}
+                        <td>{{ contact.rating }}</td>
+                        <td><a href="/contact/{{ contact.id }}">Edytuj</a></td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </main>
 {% endblock %}

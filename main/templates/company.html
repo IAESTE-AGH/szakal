@@ -1,62 +1,66 @@
 {% extends "base.html" %}
 {% block content %}
-<main>
-            <div class="tabele-event">
-                    <h1 class="title">Firmy</h1>
-                <p style="text-align: left">{% include 'components/sort.html' %}
-                </p>
-                <p style="text-align: right"><a href="/company/list/add"><button class="button">Dodaj Firmę</button></a></p>
+    <main>
+        <div class="tabele-event">
+            <h1 class="title">Firmy</h1>
+            <p style="text-align: left">{% include 'components/sort.html' %}
+            </p>
+            <p style="text-align: right"><a href="/company/list/add">
+                <button class="button">Dodaj Firmę</button>
+            </a></p>
 
-                <div class="content-table"></div>
-              <table>
-                    <thead>
-                    <tr>
-                        <th class="bold-tabele">ID</th>
-                        <th class="bold-tabele">Nazwa</th>
-                        <th class="bold-tabele">Strona internetowa firmy</th>
-                        <th class="bold-tabele">Przypisz</th>
-                        <th class="bold-tabele">Nazwa osoby aktualizującej</th>
-{#                        <th class="bold-tabele">Deleted</th>#}
-                        <th class="bold-tabele">Wskaźnik</th>
-                        <th class="bold-tabele">Daty</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for company in object_list %}
+            <div class="content-table"></div>
+            <table>
+                <thead>
+                <tr>
+                    <th class="bold-tabele">ID</th>
+                    <th class="bold-tabele">Nazwa</th>
+                    <th class="bold-tabele">Strona internetowa firmy</th>
+                    <th class="bold-tabele">Przypisz</th>
+                    <th class="bold-tabele">Nazwa osoby aktualizującej</th>
+                    <th class="bold-tabele">Ocena</th>
+                    <th class="bold-tabele">Daty</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for company in object_list %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td><a href='/company/{{ company.id }}/company_details'>{{ company.name }}</a>
-                        <p>{{ company.address }}</p>
-                        <p>{{ company.phone }}</p>
+                        <td><a href='/company/{{ company.id }}/company_details'>Nazwa firmy: {{ company.name }}</a>
+                            <p>Adres: {{ company.address }}</p>
+                            <p>Numer telefonu: {{ company.phone|default:'Brak' }}</p>
                         </td>
-                    {% if 'http://' in company.www or 'https://' in company.www %}
-                        <td> <a href={{ company.www }}><input class="button" type="submit" value="Strona"> </a></td>
-                    {% else %}
-                        <td> <a href="//{{ company.www }}"><input class="button" type="submit" value="Strona"> </a></td>
-                    {% endif %}
+                        {% if 'http://' in company.www or 'https://' in company.www %}
+                            <td><a href={{ company.www }}><input class="button" type="submit" value="Strona"> </a></td>
+                        {% else %}
+                            <td><a href="//{{ company.www }}"><input class="button" type="submit" value="Strona"> </a>
+                            </td>
+                        {% endif %}
 
 
 
                         <td>
                             {% if company.user.username == request.user.username %}
-                                <a href="/company/list/{{ company.id }}/unassign"><input class="button" type="submit" value="Wypisz mnie"></a>
+                                <a href="/company/list/{{ company.id }}/unassign"><input class="button" type="submit"
+                                                                                         value="Wypisz mnie"></a>
                             {% elif company.user.username == null %}
-                                <a href="/company/list/{{ company.id }}/assign"><input class="button" type="submit" value="Przypisz mnie"></a>
-                        {% endif %}
+                                <a href="/company/list/{{ company.id }}/assign"><input class="button" type="submit"
+                                                                                       value="Przypisz mnie"></a>
+                            {% endif %}
                         </td>
-                        <td>{{ company.update_person_name }}</td>
-{#                          <td>{{ company.deleted }}</td>#}
-                        <td>{{ company.rating }}</td>
-                        <td><a>Data aktualizacji: </a>{{ company.updated_at }}
-                        <p><a>Data utworzenia: </a>{{ company.created_at }}</p>
-                        <p><a>Data następnego kontaktu: </a>{{ company.next_contact_date }}</p>
-                        <p><a>Data usunięcia: </a>{{ company.delete_date }}</p></td>
+                        <td>{{ company.user.username|default:"Firma nie przypisana" }}</td>
+                        {#                          <td>{{ company.deleted }}</td>#}
+                        <td>{{ company.rating|default:"Brak" }}</td>
+                        <td><a>Data aktualizacji: </a>{{ company.updated_at|default:"" }}
+                            <p><a>Data utworzenia: </a>{{ company.created_at|default:"" }}</p>
+                            <p><a>Data następnego kontaktu: </a>{{ company.next_contact_date|default:"Brak ustalonego terminu" }}</p>
+                            <p><a>Data usunięcia: </a>{{ company.delete_date|default:"" }}</p></td>
                     </tr>
                     <tr>
-                        {% endfor %}
-                    </tr>
-                    </tbody>
-              </table>
-            </div>
-</main>
+                {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
 {% endblock %}

@@ -19,7 +19,7 @@
                         <th class="bold-tabele">Firma</th>
                         <th class="bold-tabele">Przyjęty</th>
                         <th class="bold-tabele">Komentarz</th>
-                        <th class="bold-tabele">Wskaźnik</th>
+                        <th class="bold-tabele">Ocena</th>
                         <th class="bold-tabele">Data</th>
                     </tr>
                     </thead>
@@ -34,7 +34,7 @@
                         <td><a>{{ contact.company }}</a></td>
                         <td>{{ contact.accepted }}</td>
                         <td>{{ contact.comment }}</td>
-                        <td>{{ contact.rating }}</td>
+                        <td>{{ contact.rating|default:"Brak" }}</td>
                         <td><a>Data: </a>{{ contact.date }}
                             <p><a>Data utworzenia: </a>{{ company.created_at }}</p>
                             <p><a>Data aktualizacji: </a>{{ company.updated_at }}</p></td>

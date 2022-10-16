@@ -1,17 +1,12 @@
-import datetime
-
-from django.db.models import Count
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse_lazy
-from django.contrib.auth.decorators import login_required
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django import template
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from django.db.models import Count
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from main.forms import *
 from main.helpers.filtering_algorithm import filter_by_word
@@ -48,27 +43,27 @@ def assign_form(obj="", create=False, update=False, delete=False):
     def decorator(func):
         def wrap(self, request, *args, **kwargs):
             if not obj:
-                object = self.kwargs['object'].capitalize()
+                _object = "".join([el.capitalize() for el in self.kwargs['object'].split('-')])
             else:
-                object = obj.capitalize()
-            if object in PREDEFINED_MODELS:
-                if not request.user.is_staff and object not in PREDEFINED_MODELS_USER:
+                _object = "".join([el.capitalize() for el in obj.split('-')])
+            if _object in PREDEFINED_MODELS:
+                if not request.user.is_staff and _object not in PREDEFINED_MODELS_USER:
                     return PermissionError
 
-                self.model = eval(object)
+                self.model = eval(_object)
                 self.object = None
                 if update:
-                    if request.user.is_staff or eval(object).objects.get(id=kwargs['pk']).user == request.user:
-                        self.form_class = eval(f'{object}UpdateForm')
+                    if request.user.is_staff or eval(_object).objects.get(id=kwargs['pk']).user == request.user:
+                        self.form_class = eval(f'{_object}UpdateForm')
                     else:
                         return PermissionError
                 elif create:
-                    self.form_class = eval(f'{object}CreateForm')
+                    self.form_class = eval(f'{_object}CreateForm')
                 elif delete:
                     pass
 
-                self.success_url = f'/{object.lower()}/list'
-                if object.lower() == 'contact':
+                self.success_url = f'/{_object.lower()}/list'
+                if _object.lower() == 'contact':
                     self.success_url = f'/company/my'
 
                 return func(self, request, *args, **kwargs)
@@ -83,14 +78,14 @@ def handle_extended_form(create=False, update=False, obj=""):
     def decorator(func):
         def wrap(self, request, *args, **kwargs):
             if not obj:
-                object = self.kwargs['object'].capitalize()
+                _object = "".join([el.capitalize() for el in self.kwargs['object'].split('-')])
             else:
-                object = obj.capitalize()
+                _object = "".join([el.capitalize() for el in obj.split('-')])
             if issubclass(self.form_class, ExtendedForm):
                 form = self.form_class(request.POST)
                 if form.is_valid():
                     if create:
-                        if object in PREDEFINED_MODELS_USER_MANAGED:
+                        if _object in PREDEFINED_MODELS_USER_MANAGED:
                             instance = form.save(commit=False)
                             instance.user = request.user
                             instance.save()
@@ -183,10 +178,7 @@ class Filtered(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         model = self.kwargs['object'].capitalize()
         searched = request.POST.get("searched")
-        # status = request.POST.get("company_status")
         status = request.POST.get("search_status")
-
-        print(request.POST)
 
         if model in PREDEFINED_MODELS:
             self.template = f'{model.lower()}.html'
@@ -369,6 +361,7 @@ def company_details(request, object, pk):
     context = {
         "company": get_object_or_404(Company, pk=pk),
         "contacts": Contact.objects.filter(company=pk).order_by('-date'),
+        "contact_persons": ContactPerson.objects.filter(company=pk)
     }
 
     return render(request, 'company_details.html', context)
@@ -394,3 +387,28 @@ class AddContactView(LoginRequiredMixin, CreateView):
     @handle_extended_form(create=True, obj='contact')
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, {**kwargs})
+
+
+class AddContactPersonView(LoginRequiredMixin, CreateView):
+    template = 'contact_person_form.html'
+    company_id = None
+
+    def get(self, request, *args, **kwargs):
+        company_id = request.GET['company']
+        context = {
+            "company": Company.objects.get(id=company_id),
+            "contact_people": ContactPerson.objects.filter(company_id=company_id),
+            "types": ContactType.objects.all(),
+            "events": Event.objects.all(),
+            "statuses": Status.objects.all(),
+            "categories": Category.objects.all(),
+        }
+
+        return render(request, self.template, context)
+
+    @assign_form(create=True, obj='contact-person')
+    @handle_extended_form(create=True, obj='contact-person')
+    def post(self, request, *args, **kwargs):
+        super().post(request, *args, {**kwargs})
+        company_id = request.POST.get('company', '/')
+        return HttpResponseRedirect(f'/company/{company_id}/company_details/')
