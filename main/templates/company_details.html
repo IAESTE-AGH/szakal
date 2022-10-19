@@ -22,7 +22,11 @@
                 </tr>
                 <tr>
                     <td class="bold-tabele">Strona internetowa firmy:</td>
-                    <td><a href={{ company.www }}>{{ company.www }}</a></td>
+                        {% if 'http://' in company.www or 'https://' in company.www %}
+                            <td> <a href={{ company.www }}>{{ company.www }}</a></td>
+                        {% else %}
+                            <td> <a href="//{{ company.www }}">{{ company.www }}</a></td>
+                        {% endif %}
                 </tr>
                 <tr>
                     <td class="bold-tabele">Firma usunięta:</td>
@@ -107,39 +111,34 @@
                 </form>
             </div>
             <div class="content-table"></div>
-            <table>
-                <tr>
-                    <td>Nr.</td>
-                    <td>Osoba kontaktowa:</td>
-                    <td>Rodzaj:</td>
-                    <td>Event:</td>
-                    <td>Status:</td>
-                    <td>Firma:</td>
-                    <td>Użytkownik:</td>
-                    {#                 <td>Zaakceptowany: </td>#}
-                    <td>Data:</td>
-                    {#                <td>Komentarz: </td>#}
-                    <td>Ocena:</td>
-                    <td>Edycja:</td>
-                </tr>
-                {% for contact in contacts %}
+                <table>
                     <tr>
-                        <td>{{ forloop.counter }}.</td>
-                        <td>{{ contact.contact_person }}</td>
-                        <td>{{ contact.type }}</td>
-                        <td>{{ contact.event }}</td>
-                        <td>{{ contact.status }}</td>
-                        <td>{{ contact.company }}</td>
-                        <td>{{ contact.user }}</td>
-                        {#                  <td>{{contact.accepted}}</td>#}
-                        <td>{{ contact.date }}</td>
-                        {#                  <td>{{contact.comment}}</td>#}
-                        <td>{{ contact.rating }}</td>
-                        <td><a href="/contact/{{ contact.id }}">Edytuj</a></td>
+                        <td>Nr.</td>
+                        <td>Data: </td>
+                        <td>Rodzaj: </td>
+                        <td>Status: </td>
+                        <td>Wskaźnik: </td>
+                        <td>Event: </td>
+                        <td>Osoba kontaktowa: </td>
+                        <td>Firma: </td>
+                        <td>Użytkownik: </td>
+                        <td>Edycja: </td>
                     </tr>
-
-                {% endfor %}
-            </table>
+                    {% for contact in contacts %}
+                         <tr>
+                             <td>{{ forloop.counter }}.</td>
+                             <td>{{contact.date}}</td>
+                             <td>{{contact.type}}</td>
+                             <td>{{contact.status}}</td>
+                             <td>{{contact.rating}}</td>
+                             <td>{{contact.event}}</td>
+                             <td>{{contact.contact_person}}</td>
+                             <td>{{contact.company}}</td>
+                             <td>{{contact.user}}</td>
+                             <td><a href="/contact/{{contact.id}}">Edytuj</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
         </div>
     </main>
 {% endblock %}
