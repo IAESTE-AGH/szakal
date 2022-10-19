@@ -56,6 +56,8 @@ steps:
         "2",
         "--no-input",
       ]
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [ 'run', 'deploy', 'szakal', '--image', 'gcr.io/szakal-365017/szakal', '--region', 'europe-central2', '--platform', 'managed', '--allow-unauthenticated' ]
 options:
   logging: CLOUD_LOGGING_ONLY
 substitutions:
