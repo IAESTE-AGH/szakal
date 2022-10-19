@@ -17,7 +17,7 @@
                     <th class="bold-tabele">Nazwa</th>
                     <th class="bold-tabele">Strona internetowa firmy</th>
                     <th class="bold-tabele">Przypisz</th>
-                    <th class="bold-tabele">Nazwa osoby aktualizującej</th>
+                    <th class="bold-tabele">Osoba przypisana</th>
                     <th class="bold-tabele">Ocena</th>
                     <th class="bold-tabele">Daty</th>
                 </tr>
@@ -36,9 +36,6 @@
                             <td><a href="//{{ company.www }}"><input class="button" type="submit" value="Strona"> </a>
                             </td>
                         {% endif %}
-
-
-
                         <td>
                             {% if company.user.username == request.user.username %}
                                 <a href="/company/list/{{ company.id }}/unassign"><input class="button" type="submit"
@@ -49,7 +46,6 @@
                             {% endif %}
                         </td>
                         <td>{{ company.user.username|default:"Firma nie przypisana" }}</td>
-                        {#                          <td>{{ company.deleted }}</td>#}
                         <td>{{ company.rating|default:"Brak" }}</td>
                         <td><a>Data aktualizacji: </a>{{ company.updated_at|default:"" }}
                             <p><a>Data utworzenia: </a>{{ company.created_at|default:"" }}</p>
