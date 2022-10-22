@@ -33,7 +33,7 @@ def createsuperuser(apps: StateApps, schema_editor: DatabaseSchemaEditor) -> Non
 
         # Retrieve the previously stored admin password
         PASSWORD_NAME = os.environ.get("PASSWORD_NAME", "superuser_password")
-        name = f"projects/53950424268/secrets/{PASSWORD_NAME}/versions/latest"
+        name = f"projects/907354752059/secrets/{PASSWORD_NAME}/versions/latest"
         admin_password = client.access_secret_version(name=name).payload.data.decode(
             "UTF-8"
         )

@@ -58,9 +58,9 @@ steps:
       ]
 
 substitutions:
-  _INSTANCE_NAME: szakal
+  _INSTANCE_NAME: szakal-iaeste
   _REGION: europe-central2
-  _SERVICE_NAME: szakal
+  _SERVICE_NAME: szakal-iaeste
   _SECRET_SETTINGS_NAME: django_settings
 
 images:
