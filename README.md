@@ -1,6 +1,10 @@
 # WORK IN PROGRESS
 # IAESTE Szakal
 
+## Deployed version
+
+Link to service: https://szakal-iaeste-7x36w6uefq-lm.a.run.app
+
 ## Local Project Setup
 1. You can either [download the sample](https://github.com/IAESTE-AGH/szakal/archive/refs/heads/main.zip) as a ZIP file and extract it or clone the repository to your local machine:
     >git clone https://github.com/IAESTE-AGH/szakal.git
