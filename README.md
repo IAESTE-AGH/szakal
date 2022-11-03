@@ -21,7 +21,7 @@ Link to service: https://szakal-iaeste-7x36w6uefq-lm.a.run.app
 4. [Download](https://iaestepolska.sharepoint.com/:u:/s/GrupaITIAESTE/EbwM7zr3WZ9Biq9FxLuEldwB3cafW-AltdKbV38MaxGRhA?e=ED1995) Google Service Account file from MSTeams. Save it into repository folder but DO NOT ADD THIS FILE TO REPOSITORY!!!!!!
 5. [Download and install](https://cloud.google.com/sql/docs/mysql/sql-proxy) the Cloud SQL Auth proxy to your local machine and rename it to `cloud_sql_proxy.exe`
 6. In a separate terminal, go to localization where downloaded file `cloud_sql_proxy.exe` is saved and start the Cloud SQL Auth proxy, before make sure than port 5432 is free:
-    >cloud_sql_proxy.exe -instances=szakal-365017:europe-central2:szakal=tcp:5432 -credential_file={Absolute Path to Google Service Account file}
+    >cloud_sql_proxy.exe -instances=szakal-iaeste:europe-central2:szakal-iaeste=tcp:5432 -credential_file={Absolute Path to Google Service Account file}
 7. Set an environment variable to indicate you are using Cloud SQL Auth proxy `USE_CLOUD_SQL_AUTH_PROXY=true` (this value is recognised in the code)
     > (PowerShell) $env:USE_CLOUD_SQL_AUTH_PROXY="true"
     >
