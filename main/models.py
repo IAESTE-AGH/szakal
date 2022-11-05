@@ -18,6 +18,7 @@ class TimeStampMixin(models.Model):
 class User(AbstractUser):
     phone_number = PhoneNumberField(blank=True, null=True, default='')
     accepted = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
     logins = models.IntegerField(default=0)
 
     objects = CustomUserManager()
